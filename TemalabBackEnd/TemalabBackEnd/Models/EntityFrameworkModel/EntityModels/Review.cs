@@ -1,7 +1,6 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.Tables;
-
-namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
+﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
+    //Értékelés típust reprezentáló osztály
     public class Review
     {
         public int Id { get; set; }

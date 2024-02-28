@@ -1,5 +1,6 @@
-﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.Tables
+﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
+    //Felhasználó típust reprezentáló osztály
     public class User
     {
         public int Id { get; set; }

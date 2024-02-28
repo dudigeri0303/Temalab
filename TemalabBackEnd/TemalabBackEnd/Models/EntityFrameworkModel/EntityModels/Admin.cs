@@ -1,7 +1,6 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.Tables;
-
-namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
+﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
+    //Admin típust reprezentáló osztály
     public class Admin
     {
         public int Id { get; set; }

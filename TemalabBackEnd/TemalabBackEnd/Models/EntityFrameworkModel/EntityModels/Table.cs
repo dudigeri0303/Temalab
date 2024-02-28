@@ -1,5 +1,6 @@
 ﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
+    //Asztal típust reprezentáló osztály
     public class Table
     {
         public int Id { get; set; }

@@ -2,6 +2,7 @@
 {
     public class Restaurant
     {
+        //Étterem típust reprezentáló osztály
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

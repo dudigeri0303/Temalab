@@ -1,7 +1,6 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.Tables;
-
-namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
+﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
+    //Foglalás típust reprezentáló osztály
     public class Reservation
     {
         public int Id { get; set; }

@@ -1,7 +1,6 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.Tables;
-
-namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
+﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
+    //Kedvelt Étterem típust reprezentáló osztály
     public class LikedRestaurant
     {
         public int Id { get; set; }
