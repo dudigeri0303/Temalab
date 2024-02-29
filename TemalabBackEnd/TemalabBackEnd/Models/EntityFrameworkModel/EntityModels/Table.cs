@@ -8,9 +8,12 @@
         public int NumOfSeats { get; set; }
         public bool IsReserved { get; set; }
 
-        public Table(Restaurant restaurantId)
+        public Table(int id, Restaurant restaurantId, int numofseats)
         {
+            Id = id;
             RestaurantId = restaurantId;
+            NumOfSeats = numofseats;
+            IsReserved = false;
         }
     }
 }

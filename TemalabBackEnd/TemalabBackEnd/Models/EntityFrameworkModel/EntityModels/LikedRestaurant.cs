@@ -7,8 +7,9 @@
         public User UserId { get; set; }
         public Restaurant RestaurantId { get; set; }
     
-        public LikedRestaurant(User userid, Restaurant restaurantid)
+        public LikedRestaurant(int id, User userid, Restaurant restaurantid)
         {
+            Id = id;
             UserId = userid;
             RestaurantId = restaurantid;
         }

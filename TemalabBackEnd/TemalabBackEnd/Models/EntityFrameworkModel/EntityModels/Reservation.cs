@@ -9,8 +9,9 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public Reservation(User reserverid, Table tableid) 
+        public Reservation(int id, User reserverid, Table tableid) 
         {
+            Id = id;
             ReserverId = reserverid;
             TableId = tableid;
         }

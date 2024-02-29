@@ -4,6 +4,7 @@
     {
         //Étterem típust reprezentáló osztály
         public int Id { get; set; }
+        public Menu? MenuId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Label { get; set; }

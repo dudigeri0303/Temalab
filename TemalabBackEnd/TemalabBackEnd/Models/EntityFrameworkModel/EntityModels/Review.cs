@@ -9,10 +9,12 @@
         public int Rating { get; set; }
         public string Description { get; set; }
 
-        public Review(User userid, Restaurant restaurantid, string description) 
+        public Review(int id, User userid, Restaurant restaurantid, int rating, string description) 
         {
+            Id = id;
             UserId = userid;
             RestaurantId = restaurantid;
+            Rating = rating;
             Description = description;
         }
     }

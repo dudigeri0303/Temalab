@@ -7,10 +7,11 @@
         public User UserId { get; set; }
         public string Token { get; set; }
 
-        public Admin(string token, User userid) 
+        public Admin(int id, User userid, string token) 
         {
-            Token = token;
+            Id = id;
             UserId = userid;
+            Token = token;
         }
     }
 }

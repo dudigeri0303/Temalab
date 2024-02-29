@@ -10,12 +10,14 @@
         public string PhoneNumber { get; set; }
         public string UserRole { get; set; }
 
-        public User(string username, string password, string email, string phoneNumber) 
+        public User(int id, string username, string password, string email, string phoneNumber, string userrole) 
         {
+            Id = id;
             UserName = username;
             Password = password;
             Email = email;
             PhoneNumber = phoneNumber; 
+            UserRole = userrole;
         }
     }
 }
