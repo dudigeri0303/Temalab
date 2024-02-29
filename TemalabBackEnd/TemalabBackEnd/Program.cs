@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 
 internal class Program
@@ -30,6 +31,7 @@ internal class Program
 
         //Adatbázis hozzáadás a builderhez
         builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
         var app = builder.Build();
         //CreateDbIfNotExists<Program>(app);
 
@@ -51,6 +53,9 @@ internal class Program
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+        
+        //Adatbázis létrehozása
+        CreateDbIfNotExists(app);
 
         app.Run();
     }
