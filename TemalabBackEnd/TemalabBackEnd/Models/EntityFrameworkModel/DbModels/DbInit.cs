@@ -11,8 +11,8 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             
             var users = new User[] 
             {
-                //User objektumok létrehozása
-            
+                new User(),
+                
             };
             foreach (User user in users) 
             {
