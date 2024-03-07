@@ -9,6 +9,12 @@ body {
   background-color: #C0D6DF;
 }
 
+.btnstyle {
+  background-color: #FFC300;
+  border-radius: 5px;
+  color: black;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
