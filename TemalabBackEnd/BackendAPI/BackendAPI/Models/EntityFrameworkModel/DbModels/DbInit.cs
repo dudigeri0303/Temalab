@@ -1,4 +1,5 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
+﻿using Microsoft.EntityFrameworkCore;
+using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
 {
@@ -11,66 +12,46 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
 
             var existingAdmins = databaseContext.Admins.ToList();
             databaseContext.Admins.RemoveRange(existingAdmins);
-
             databaseContext.SaveChanges();
 
             var existinUsers = databaseContext.Users.ToList();
             databaseContext.Users.RemoveRange(existinUsers);
-
             databaseContext.SaveChanges();
 
             var existingCategories = databaseContext.Categories.ToList();
             databaseContext.Categories.RemoveRange(existingCategories);
-
             databaseContext.SaveChanges();
 
             var existinFoods = databaseContext.Foods.ToList();
             databaseContext.Foods.RemoveRange(existinFoods);
-
             databaseContext.SaveChanges();
-
 
             var existinLikedRestaurants = databaseContext.LikedRestaurants.ToList();
             databaseContext.LikedRestaurants.RemoveRange(existinLikedRestaurants);
-
             databaseContext.SaveChanges();
-
 
             var existinMenus = databaseContext.Menus.ToList();
             databaseContext.Menus.RemoveRange(existinMenus);
-
             databaseContext.SaveChanges();
-
 
             var existinOwners = databaseContext.Owners.ToList();
             databaseContext.Owners.RemoveRange(existinOwners);
-
             databaseContext.SaveChanges();
-
-
 
             var existinReservations = databaseContext.Reservations.ToList();
             databaseContext.Reservations.RemoveRange(existinReservations);
-
             databaseContext.SaveChanges();
-
-
 
             var existinRestaurants = databaseContext.Restaurants.ToList();
             databaseContext.Restaurants.RemoveRange(existinRestaurants);
-
             databaseContext.SaveChanges();
-
 
             var existinReviews = databaseContext.Reviews.ToList();
             databaseContext.Reviews.RemoveRange(existinReviews);
-
             databaseContext.SaveChanges();
-
 
             var existinTables = databaseContext.Tables.ToList();
             databaseContext.Tables.RemoveRange(existinTables);
-
             databaseContext.SaveChanges();
 
             //USERS
@@ -207,9 +188,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
                 databaseContext.Reservations.Add(reservation);
             }
             databaseContext.SaveChanges();
-
-
-            //A user-hez hasonlóan az összes táblát így kell létrehozni
         }
     }
 }
