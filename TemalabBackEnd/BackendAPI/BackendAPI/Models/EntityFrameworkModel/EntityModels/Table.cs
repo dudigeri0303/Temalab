@@ -7,6 +7,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class Table
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(Restaurant))]
         public int RestaurantId { get; set; }
@@ -15,11 +16,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public int NumOfSeats { get; set; }
         [Column]
         public bool IsReserved { get; set; }
-        
         public Table() { }
-        public Table(int id, Restaurant restaurant, int numofseats)
+        public Table(Restaurant restaurant, int numofseats)
         {
-            Id = id;
             Restaurant = restaurant;
             RestaurantId = restaurant.Id;
             NumOfSeats = numofseats;

@@ -7,17 +7,16 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class Admin
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
         public User User { get; set; } //Navigation property
         [Column]
         public string Token { get; set; }
-        
         public Admin() { }
-        public Admin(int id, User user, string token) 
+        public Admin(User user, string token) 
         {
-            Id = id;
             User = user;
             UserId = user.Id;
             Token = token;

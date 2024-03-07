@@ -8,25 +8,90 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         public static void Init(DatabaseContext databaseContext) 
         {
             databaseContext.Database.EnsureCreated();
-            
+
+            var existingAdmins = databaseContext.Admins.ToList();
+            databaseContext.Admins.RemoveRange(existingAdmins);
+
+            databaseContext.SaveChanges();
+
+            var existinUsers = databaseContext.Users.ToList();
+            databaseContext.Users.RemoveRange(existinUsers);
+
+            databaseContext.SaveChanges();
+
+            var existingCategories = databaseContext.Categories.ToList();
+            databaseContext.Categories.RemoveRange(existingCategories);
+
+            databaseContext.SaveChanges();
+
+            var existinFoods = databaseContext.Foods.ToList();
+            databaseContext.Foods.RemoveRange(existinFoods);
+
+            databaseContext.SaveChanges();
+
+
+            var existinLikedRestaurants = databaseContext.LikedRestaurants.ToList();
+            databaseContext.LikedRestaurants.RemoveRange(existinLikedRestaurants);
+
+            databaseContext.SaveChanges();
+
+
+            var existinMenus = databaseContext.Menus.ToList();
+            databaseContext.Menus.RemoveRange(existinMenus);
+
+            databaseContext.SaveChanges();
+
+
+            var existinOwners = databaseContext.Owners.ToList();
+            databaseContext.Owners.RemoveRange(existinOwners);
+
+            databaseContext.SaveChanges();
+
+
+
+            var existinReservations = databaseContext.Reservations.ToList();
+            databaseContext.Reservations.RemoveRange(existinReservations);
+
+            databaseContext.SaveChanges();
+
+
+
+            var existinRestaurants = databaseContext.Restaurants.ToList();
+            databaseContext.Restaurants.RemoveRange(existinRestaurants);
+
+            databaseContext.SaveChanges();
+
+
+            var existinReviews = databaseContext.Reviews.ToList();
+            databaseContext.Reviews.RemoveRange(existinReviews);
+
+            databaseContext.SaveChanges();
+
+
+            var existinTables = databaseContext.Tables.ToList();
+            databaseContext.Tables.RemoveRange(existinTables);
+
+            databaseContext.SaveChanges();
+
             //USERS
             var users = new User[] 
             {
-                new User(1,"Jozsi","asd","jozsi@gmail.com","111","customer"),
-                new User(2,"Anna","asd","anna@gmail.com","222","customer"),
-                new User(3,"admin","asd","admin@gmail.com","333","admin"),
-                new User(4,"boss","asd","boss@gmail.com","444","owner")                
+                new User("Jozsi","asd","jozsi@gmail.com","111","customer"),
+                new User("Anna","asd","anna@gmail.com","222","customer"),
+                new User("admin","asd","admin@gmail.com","333","admin"),
+                new User("boss","asd","boss@gmail.com","444","owner")                
             };            
             foreach (User user in users) 
             {
                 databaseContext.Users.Add(user);
             }
+         
             databaseContext.SaveChanges();
-
+        
             //ADMINS
             var admins = new Admin[]
             {
-                new Admin(1,users[2],"ahfjkhaskj")
+                new Admin(users[2],"ahfjkhaskj")
             };
             foreach (Admin admin in admins)
             {
@@ -37,7 +102,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //MENUS
             var menus = new Menu[]
             {
-                new Menu(1)
+                new Menu()
             };
             foreach (Menu menu in menus)
             {
@@ -48,7 +113,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //CATEGORIES
             var categories = new Category[]
             {
-                new Category(1,menus[0],"leves-torta")
+                new Category(menus[0],"leves-torta")
             };
             foreach (Category category in categories)
             {
@@ -59,9 +124,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //FOODS
             var foods = new Food[]
             {
-                new Food(1,categories[0],"fank","fini es mini",6969),
-                new Food(2,categories[0],"cica","meow",1244),
-                new Food(3,categories[0],"kuta","vau",542)
+                new Food(categories[0],"fank","fini es mini",6969),
+                new Food(categories[0],"cica","meow",1244),
+                new Food(categories[0],"kuta","vau",542)
             };
             foreach (Food food in foods)
             {
@@ -72,7 +137,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REASTAURANTS
             var restaurants = new Restaurant[]
             {
-                new Restaurant(1,menus[0],"Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24")
+                new Restaurant(menus[0],"Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24")
             };
             foreach (Restaurant restaurant in restaurants)
             {
@@ -83,7 +148,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //OWNERS
             var owners = new Owner[]
             {
-                new Owner(1,users[3],restaurants[0])
+                new Owner(users[3],restaurants[0])
             };
             foreach (Owner owner in owners)
             {
@@ -94,9 +159,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //TABLES
             var tables = new Table[]
             {
-                new Table(1,restaurants[0],4),
-                new Table(2,restaurants[0],6),
-                new Table(3,restaurants[0],8)
+                new Table(restaurants[0],4),
+                new Table(restaurants[0],6),
+                new Table(restaurants[0],8)
             };
             foreach (Table table in tables)
             {
@@ -107,9 +172,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //LIKED RESTAURANTS
             var likedrestaurants = new LikedRestaurant[]
             {
-                new LikedRestaurant(1,users[0],restaurants[0]),
-                new LikedRestaurant(2,users[1],restaurants[0]),
-                new LikedRestaurant(3,users[2],restaurants[0])
+                new LikedRestaurant(users[0],restaurants[0]),
+                new LikedRestaurant(users[1],restaurants[0]),
+                new LikedRestaurant(users[2],restaurants[0])
             };
             foreach (LikedRestaurant likedrestaurant in likedrestaurants)
             {
@@ -120,9 +185,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REVIEWS
             var reviews = new Review[]
             {
-                new Review(1,users[0],restaurants[0],4,"fincsa es mincsa"),
-                new Review(2,users[1],restaurants[0],4,"fincsa es mincsa"),
-                new Review(3,users[2],restaurants[0],4,"fincsa es mincsa")
+                new Review(users[0],restaurants[0],4,"fincsa es mincsa"),
+                new Review(users[1],restaurants[0],4,"fincsa es mincsa"),
+                new Review(users[2],restaurants[0],4,"fincsa es mincsa")
             };
             foreach (Review review in reviews)
             {
@@ -133,9 +198,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //RESERVATIONS
             var reservations = new Reservation[]
             {
-                new Reservation(1,users[0],tables[0]),
-                new Reservation(2,users[1],tables[1]),
-                new Reservation(3,users[2],tables[2])
+                new Reservation(users[0],tables[0]),
+                new Reservation(users[1],tables[1]),
+                new Reservation(users[2],tables[2])
             };
             foreach (Reservation reservation in reservations)
             {

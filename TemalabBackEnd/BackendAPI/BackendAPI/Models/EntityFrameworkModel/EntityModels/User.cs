@@ -7,6 +7,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class User
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column]
         public string UserName { get; set; }
@@ -18,11 +19,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public string PhoneNumber { get; set; }
         [Column]
         public string UserRole { get; set; }
-        
         public User() { }
-        public User(int id, string username, string password, string email, string phoneNumber, string userrole) 
+        public User(string username, string password, string email, string phoneNumber, string userrole) 
         {
-            Id = id;
             UserName = username;
             Password = password;
             Email = email;

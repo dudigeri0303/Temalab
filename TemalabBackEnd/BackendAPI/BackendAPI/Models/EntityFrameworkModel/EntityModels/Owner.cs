@@ -7,6 +7,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class Owner
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
@@ -14,11 +15,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         [ForeignKey(nameof(Restaurant))]
         public int RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; } //Navigation property
-        
         public Owner() { }
-        public Owner(int id, User user, Restaurant restaurant)
+        public Owner(User user, Restaurant restaurant)
         {
-            Id = id;
             User = user;
             UserId = user.Id;
             Restaurant = restaurant;

@@ -7,6 +7,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class Review
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
@@ -18,11 +19,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public int Rating { get; set; }
         [Column]
         public string Description { get; set; }
-        
         public Review() { }
-        public Review(int id, User user, Restaurant restaurant, int rating, string description) 
+        public Review(User user, Restaurant restaurant, int rating, string description) 
         {
-            Id = id;
             User = user;
             UserId = user.Id;
             Restaurant = restaurant;

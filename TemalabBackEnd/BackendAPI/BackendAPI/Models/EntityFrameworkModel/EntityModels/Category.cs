@@ -7,17 +7,16 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class Category
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(Menu))]
         public int MenuId { get; set; }
         public Menu Menu { get; set; } //Navigation property
         [Column]
         public string Name { get; set; }
-        
         public Category() { }
-        public Category(int id, Menu menu ,string name) 
+        public Category(Menu menu ,string name) 
         {
-            Id = id;
             Menu = menu;
             MenuId = menu.Id;
             Name = name;

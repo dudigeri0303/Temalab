@@ -7,6 +7,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class Reservation
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(Table))]
         public int TableId { get; set; }
@@ -18,11 +19,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public DateTime StartDate { get; set; }
         [Column]
         public DateTime EndDate { get; set; }
-        
         public Reservation() { }
-        public Reservation(int id, User reserver, Table table) 
+        
+        public Reservation(User reserver, Table table) 
         {
-            Id = id;
             Reserver = reserver;
             ReserverId = reserver.Id;
             Table = table;

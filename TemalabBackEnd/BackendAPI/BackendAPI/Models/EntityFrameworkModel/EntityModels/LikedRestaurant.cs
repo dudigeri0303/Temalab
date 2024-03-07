@@ -7,6 +7,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class LikedRestaurant
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
@@ -14,11 +15,13 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         [ForeignKey(nameof(Restaurant))]
         public int RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; } //Navigation property
-        
-        public LikedRestaurant() { }
-        public LikedRestaurant(int id, User user, Restaurant restaurant)
+
+        public LikedRestaurant()
         {
-            Id = id;
+        }
+
+        public LikedRestaurant(User user, Restaurant restaurant)
+        {
             User = user;
             UserId = user.Id;
             Restaurant = restaurant;
