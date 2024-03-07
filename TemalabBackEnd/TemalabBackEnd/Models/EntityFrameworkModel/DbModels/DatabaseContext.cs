@@ -14,8 +14,12 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         public DbSet<LikedRestaurant> LikedRestaurants { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Food> Foods { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-        {
+        { 
+        
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +31,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             modelBuilder.Entity<LikedRestaurant>().ToTable("LikedRestaurants");
             modelBuilder.Entity<Reservation>().ToTable("Reservations");
             modelBuilder.Entity<Review>().ToTable("Reviews");
+            modelBuilder.Entity<Menu>().ToTable("Menus");
+            modelBuilder.Entity<Category>().ToTable("Categories");
+            modelBuilder.Entity<Food>().ToTable("Foods");
         }
     } 
 }
