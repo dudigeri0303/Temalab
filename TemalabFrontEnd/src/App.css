@@ -50,3 +50,17 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+footer {
+  background-color: #001D3D;
+  color:white;
+}
+
+footer a {
+  color:white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color:black;
+}
