@@ -15,10 +15,10 @@ export default function Footer() {
                 </p>
               </div>
 
-              <div className="col-md-2 col-lg-2 col-xl-2 mt-1">
+              <div className="col-md-2 col-lg-2 col-xl-2 mt-1 text-center">
                 <img
                   src="logorestaurant-resizedForFooter.png"
-                  style={{ width: "90%" }}
+                  style={{ width: "50%" }}
                 />
               </div>
 
