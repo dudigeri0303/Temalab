@@ -1,7 +1,7 @@
 import "../App.css";
 import React, { useEffect } from "react";
 
-export default function CreateRestaurant() {
+export default function Profile() {
   useEffect(() => {
     document.title = "Profile | DineTab";
   }, []);
