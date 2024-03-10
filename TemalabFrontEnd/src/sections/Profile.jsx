@@ -5,6 +5,16 @@ export default function Profile() {
   useEffect(() => {
     document.title = "Profile | DineTab";
   }, []);
+
+  const deleteProfile = () => {
+    const IsProfileDeleted = window.confirm('Biztos törlöd a profilod?');
+    if (IsProfileDeleted) {
+      {/*Profil törlése method hívás*/}
+      window.open("/createRestaurant", "_self");
+      {/*Visszairányít a login oldalra _self, hogy ne új lapon nyissa meg*/}
+    }
+  };
+
   return (
     <>
       <section id="main" className="container py-3">
@@ -25,7 +35,7 @@ export default function Profile() {
 
             <div className="col-md-8">
             <div className="col-md-3 offset-md-4 mb-2">
-              <button type="submit" className="btnstyle float-md-right">
+              <button type="button" className="btnstyle float-md-right">
               Profil szerkesztése
               </button>
             </div>
@@ -128,13 +138,14 @@ export default function Profile() {
             </div>
           </div>
 
-          <div>
-              <button type="button" className="redbtn">
+        </form>
+ 
+        <div>
+              <button onClick={deleteProfile} type="button" className="redbtn">
                 Profil törlése
               </button>
             </div>
 
-        </form>
       </section>
     </>
   );
