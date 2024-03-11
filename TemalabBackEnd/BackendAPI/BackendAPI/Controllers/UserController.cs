@@ -27,7 +27,7 @@ namespace TemalabBackEnd.Controllers
         [HttpGet("searchByID/{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            User user = await _context.Users.FindAsync(id);
+            User user = await this._context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound("User not found!");
@@ -38,7 +38,7 @@ namespace TemalabBackEnd.Controllers
         [HttpGet("serachByName/{name}")]
         public async Task<ActionResult<List<User>>> GetUserByName(string name)
         {
-            List<User> users = await _context.Users.Where(u => u.UserName == name).ToListAsync();
+            List<User> users = await this._context.Users.Where(u => u.UserName == name).ToListAsync();
             if (users == null)
             {
                 return NotFound("User not found!");
@@ -50,14 +50,14 @@ namespace TemalabBackEnd.Controllers
         public async Task<ActionResult<User>> DeleteUserById(int id)
         {
             //User userToDelete = this.GetUserById(id).Result;
-            User user = await _context.Users.FindAsync(id);
+            User user = await this._context.Users.FindAsync(id);
 
             if (user == null)
             {
                 return NotFound("User not fount, you cant delete it");
             }
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            this._context.Users.Remove(user);
+            this._context.SaveChanges();
             return Ok(user);
         }
 
