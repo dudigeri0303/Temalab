@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+input{
+  font-family: Regular;
+  color: black;
+}
+
 form div{
   width: 400px;
 }
@@ -17,6 +22,8 @@ form div button{
   background-color: #FFC300;
   border-radius: 5px;
   color: black;
+  border: none 0px;
+  text-decoration: none;
 }
 
 body {
@@ -58,3 +65,19 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+
+.navbarcss {
+  background-color: #001d3d;
+}
+
+.navitemcss {
+  color: white;
+  font-family: "Jacques Francois", serif;
+}
+
+.navbarlogo {
+  max-width: 100px;
+}
+
+
