@@ -61,25 +61,61 @@ namespace TemalabBackEnd.Controllers
             return Ok(user);
         }
 
-        /*
-        //KELL??
+        
+        //HTTP POST
         [HttpPost("createNewUser/")]
-        public User CreateNewUser(string username, string password, string email, string phoneNumber, string userrole) 
+        public async Task<ActionResult> CreateNewUser(User user) 
         {
-            return new User(username, password, email, phoneNumber, userrole);
+            try 
+            {
+                this._context.Users.Add(user);
+                this._context.SaveChanges();
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            
+            return Ok(user);
         }
-        //KELL??
-        */
 
-        /*
-        //Password küldése így????
+        //TODO password validation
         [HttpPut("updateUserPropertiesByID/{id}")]
         public async Task<ActionResult<User>> UpdateUserPropertiesByID(int id, User newUser) 
         {
             User user = await _context.Users.FindAsync(id);
+            if (user == null) 
+            {
+                return NotFound("User not found!");
+            }
+            if (newUser.UserName != "string" && newUser.UserName.Trim() != "") 
+            {
+                user.UserName = newUser.UserName;
+            }
+            if (newUser.Password != "string" && newUser.Password.Trim() != "") 
+            {
+                user.UserName = newUser.Password;
+            }
+            if (newUser.Email != "string" && newUser.Email.Trim() != "")
+            {
+                user.Email = newUser.Email;
+            }
+            if (newUser.PhoneNumber != "string" && newUser.PhoneNumber.Trim() != "")
+            {
+                user.PhoneNumber = newUser.PhoneNumber;
+            }
+            this._context.SaveChanges();
+            return Ok(user);
         }
 
         //string username, string password, string email, string phoneNumber, string userrole
-        */
+    
+    
+        //++++++++++++++++++++++++++++++++++++
+        /*private bool IsValidUser(User user) 
+        {
+            return true;
+        }*/
+    
     }
 }

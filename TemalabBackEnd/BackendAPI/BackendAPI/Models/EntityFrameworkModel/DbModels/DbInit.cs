@@ -118,7 +118,8 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REASTAURANTS
             var restaurants = new Restaurant[]
             {
-                new Restaurant(menus[0],"Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24")
+                new Restaurant(menus[0],"Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
+                new Restaurant(menus[0],"Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
             };
             foreach (Restaurant restaurant in restaurants)
             {
@@ -129,7 +130,8 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //OWNERS
             var owners = new Owner[]
             {
-                new Owner(users[3],restaurants[0])
+                new Owner(users[3],restaurants[0]),
+                new Owner(users[3],restaurants[1])
             };
             foreach (Owner owner in owners)
             {
