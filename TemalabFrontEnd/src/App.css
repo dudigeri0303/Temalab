@@ -5,6 +5,20 @@
   text-align: center;
 }
 
+form div{
+  width: 400px;
+}
+
+form div button{
+  width: 160px;
+}
+
+.btnstyle {
+  background-color: #FFC300;
+  border-radius: 5px;
+  color: black;
+}
+
 body {
   background-color: #C0D6DF;
 }

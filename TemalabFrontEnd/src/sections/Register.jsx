@@ -7,16 +7,24 @@ const RegisterForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordAgain, setPasswordAgain] = useState('');
-  const [customer, setCustomer] = useState(false);
+  const [customer, setCustomer] = useState(true);
   const [owner, setOwner] = useState(false);
+  // Legyenek kötelező mezők
+  const [fieldsRequired, setFieldsRequired] = useState(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Ez fog a submit gomb megynyomásakor lefutni
+  // Regisztrációs gomb eseménykezelő fv
+  const handleRegister = () => {
+    
+  };
+
+  // Mégse gomb eseménykezelő fv
+  const handleCancel = () => { 
+    setFieldsRequired(false);  // Kötelező mezőket "kikapcsolja" => nem kell kitölteni ha a mégse gombra kattintunk
+
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
 
       <div className="mb-3">
         <input
@@ -25,7 +33,7 @@ const RegisterForm = () => {
           placeholder="UserName"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
-          required
+          required={fieldsRequired}
         />
       </div>
 
@@ -36,7 +44,7 @@ const RegisterForm = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
+          required={fieldsRequired}
         />
       </div>
 
@@ -57,7 +65,7 @@ const RegisterForm = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          required={fieldsRequired}
         />
       </div>
 
@@ -68,7 +76,7 @@ const RegisterForm = () => {
           placeholder="Password again"
           value={passwordAgain}
           onChange={(e) =>  setPasswordAgain(e.target.value)}
-          required
+          required={fieldsRequired}
         />
       </div>
 
@@ -78,8 +86,10 @@ const RegisterForm = () => {
             type="checkbox"
             checked={customer}
             onChange={(e) => {
-            setCustomer(e.target.checked);
-            setOwner(false); // Ha a "Customer" checkbox ki van választva, a "Owner" checkbox legyen kikapcsolva
+              if(e.target.checked != false){
+                setCustomer(e.target.checked);
+                setOwner(false); // Ha a "Customer" checkbox ki van választva, a "Owner" checkbox legyen kikapcsolva
+              }
             }}
           />
           Customer
@@ -92,16 +102,19 @@ const RegisterForm = () => {
             type="checkbox"
             checked={owner}
             onChange={(e) => {
-            setOwner(e.target.checked);
-            setCustomer(false); // Ha az "Owner" checkbox ki van választva, a "Customer" checkbox legyen kikapcsolva
+              if(e.target.checked != false){
+              setOwner(e.target.checked);
+              setCustomer(false); // Ha az "Owner" checkbox ki van választva, a "Customer" checkbox legyen kikapcsolva
+              }
           }}
           />
           Owner
         </label>
       </div>
 
-      <div className="mb-3">
-        <button type="submit">Register</button>
+      <div>
+        <button className='btnstyle m-3' type="submit" onClick={handleRegister} >Register</button>
+        <button className='btnstyle m-3' type="submit" onClick={handleCancel} >Mégse</button>
       </div>
 
     </form>
