@@ -1,5 +1,6 @@
 import "../App.css";
 import React, { useEffect } from "react";
+import Navbar from "../components/Navbar";
 
 export default function CreateRestaurant() {
   useEffect(() => {
@@ -7,8 +8,8 @@ export default function CreateRestaurant() {
   }, []);
   return (
     <>
+    <Navbar></Navbar>
       <section id="main" className="container py-3">
-        <h1 className="display-3">Create Restaurant</h1>
 
         <form method="post">
           <div className="mb-3">
@@ -132,13 +133,13 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="row">
-            <div className="col-md-6 mb-2">
-              <button type="submit" className="btnstyle">
+            <div className="col-md-3 offset-sm-4 mb-2">
+              <button type="submit" className="avgbtn">
                 Létrehoz
               </button>
             </div>
-            <div className="col-md-6 mb-2">
-              <button type="button" className="btnstyle">
+            <div className="col-md-2 mb-2">
+              <button type="button" className="avgbtn">
                 Mégse
               </button>
             </div>

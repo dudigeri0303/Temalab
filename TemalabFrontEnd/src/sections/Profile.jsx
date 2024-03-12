@@ -1,5 +1,6 @@
 import "../App.css";
 import React, { useEffect } from "react";
+import Navbar from "../components/Navbar";
 
 export default function Profile() {
   useEffect(() => {
@@ -17,9 +18,8 @@ export default function Profile() {
 
   return (
     <>
+    <Navbar></Navbar>
       <section id="main" className="container py-3">
-        <h1 className="display-3">Profile</h1>
-        <br/>
         
         <form method="post">
 
@@ -35,7 +35,7 @@ export default function Profile() {
 
             <div className="col-md-8">
             <div className="col-md-3 offset-md-4 mb-2">
-              <button type="button" className="btnstyle float-md-right">
+              <button type="button" className="avgbtn float-md-right">
               Profil szerkesztése
               </button>
             </div>
@@ -126,13 +126,13 @@ export default function Profile() {
           </div>
 
           <div className="row">
-            <div className="col-md-3 offset-md-3 mb-2">
-              <button type="submit" className="btnstyle float-md-right">
+            <div className="col-md-3 offset-md-5 mb-2">
+              <button type="submit" className="avgbtn">
                 Változtatások mentése
               </button>
             </div>
-            <div className="col-md-2 offset-md-0.5 mb-2">
-              <button type="button" className="btnstyle">
+            <div className="col-md-2 offset-md-1 mb-2">
+              <button type="button" className="avgbtn">
                 Mégse
               </button>
             </div>
@@ -140,10 +140,12 @@ export default function Profile() {
 
         </form>
  
-        <div>
+        <div className="row">
+        <div className="col-md-3 offset-md-5 mb-2">
               <button onClick={deleteProfile} type="button" className="redbtn">
                 Profil törlése
               </button>
+        </div>
             </div>
 
       </section>
