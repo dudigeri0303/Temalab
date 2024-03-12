@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BackendAPI.Controllers;
+using BackendAPI.Models.EntityFrameworkModel.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -8,26 +9,26 @@ namespace TemalabBackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseEntityController<User>
     {
-        private readonly DatabaseContext _context;
-
-        public UserController(DatabaseContext context)
+        public UserController(DatabaseContext context) : base(context) 
         {
-            this._context = context;
+
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<User>>> GetAllUsers()
+        #region CrudOperations
+
+        [HttpGet("getAllRows/")]
+        public override async Task<ActionResult<List<IEntityModelBase>>> GetAllRows() 
         {
-            List<User> users = await _context.Users.ToListAsync();
+            List<User> users = await this._dbContext.Users.ToListAsync();
             return Ok(users);
         }
 
         [HttpGet("searchByID/{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        public override async Task<ActionResult<IEntityModelBase>> GetRowById(int id) 
         {
-            User user = await this._context.Users.FindAsync(id);
+            User? user = await this._dbContext.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound("User not found!");
@@ -35,64 +36,49 @@ namespace TemalabBackEnd.Controllers
             return Ok(user);
         }
 
-        [HttpGet("serachByName/{name}")]
-        public async Task<ActionResult<List<User>>> GetUserByName(string name)
-        {
-            List<User> users = await this._context.Users.Where(u => u.UserName == name).ToListAsync();
-            if (users == null)
-            {
-                return NotFound("User not found!");
-            }
-            return Ok(users);
-        }
-
         [HttpDelete("deleteByID/{id}")]
-        public async Task<ActionResult<User>> DeleteUserById(int id)
+        public override async Task<ActionResult<IEntityModelBase>> DeleteUserById(int id) 
         {
-            //User userToDelete = this.GetUserById(id).Result;
-            User user = await this._context.Users.FindAsync(id);
+            User? user = await this._dbContext.Users.FindAsync(id);
 
             if (user == null)
             {
                 return NotFound("User not fount, you cant delete it");
             }
-            this._context.Users.Remove(user);
-            this._context.SaveChanges();
+            this._dbContext.Users.Remove(user);
+            this._dbContext.SaveChanges();
             return Ok(user);
         }
 
-        
-        //HTTP POST
-        [HttpPost("createNewUser/")]
-        public async Task<ActionResult> CreateNewUser(User user) 
+        [HttpPost("insertNewRow/{newEntity}")]
+        public override async Task<ActionResult> InsertNewRow(User entity)
         {
-            try 
+            try
             {
-                this._context.Users.Add(user);
-                this._context.SaveChanges();
+                this._dbContext.Users.Add(entity);
+                this._dbContext.SaveChanges();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            
-            return Ok(user);
+            return Ok(entity);
         }
 
-        //TODO password validation
-        [HttpPut("updateUserPropertiesByID/{id}")]
-        public async Task<ActionResult<User>> UpdateUserPropertiesByID(int id, User newUser) 
+        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
+        public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, User updatedEntity) 
         {
-            User user = await _context.Users.FindAsync(id);
-            if (user == null) 
+            User newUser = updatedEntity;
+            User? user = await this._dbContext.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound("User not found!");
             }
-            if (newUser.UserName != "string" && newUser.UserName.Trim() != "") 
+            if (newUser.UserName != "string" && newUser.UserName.Trim() != "")
             {
                 user.UserName = newUser.UserName;
             }
-            if (newUser.Password != "string" && newUser.Password.Trim() != "") 
+            if (newUser.Password != "string" && newUser.Password.Trim() != "")
             {
                 user.UserName = newUser.Password;
             }
@@ -104,18 +90,25 @@ namespace TemalabBackEnd.Controllers
             {
                 user.PhoneNumber = newUser.PhoneNumber;
             }
-            this._context.SaveChanges();
+            this._dbContext.SaveChanges();
             return Ok(user);
         }
 
-        //string username, string password, string email, string phoneNumber, string userrole
-    
-    
-        //++++++++++++++++++++++++++++++++++++
-        /*private bool IsValidUser(User user) 
+        #endregion
+
+        #region UniqueOperations
+
+        [HttpGet("serachByName/{name}")]
+        public async Task<ActionResult<List<User>>> GetUserByName(string name)
         {
-            return true;
-        }*/
-    
+            List<User> users = await this._dbContext.Users.Where(u => u.UserName == name).ToListAsync();
+            if (users == null)
+            {
+                return NotFound("User not found!");
+            }
+            return Ok(users);
+        }
+
+        #endregion
     }
 }

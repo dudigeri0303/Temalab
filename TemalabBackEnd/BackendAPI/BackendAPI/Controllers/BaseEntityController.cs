@@ -1,12 +1,10 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
-using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI.Controllers
 {
-    public abstract class BaseEntityController : ControllerBase
+    public abstract class BaseEntityController<ControllerClass> : ControllerBase
     {
         protected readonly DatabaseContext _dbContext;
 
@@ -24,9 +22,10 @@ namespace BackendAPI.Controllers
         [HttpDelete("deleteByID/{id}")]
         public abstract Task<ActionResult<IEntityModelBase>> DeleteUserById(int id);
 
-        //HTTP POST
         [HttpPost("insertNewRow/{newEntity}")]
-        public abstract Task<ActionResult> InsertNewRow(IEntityModelBase newEntity);
+        public abstract Task<ActionResult> InsertNewRow(ControllerClass newEntity);
 
+        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
+        public abstract Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, ControllerClass updatedEntity);
     }
 }
