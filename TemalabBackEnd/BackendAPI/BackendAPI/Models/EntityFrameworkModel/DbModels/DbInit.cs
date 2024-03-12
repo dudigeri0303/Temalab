@@ -10,12 +10,14 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             databaseContext.Database.EnsureCreated();
 
             //Az a sok sor elvileg így kiváltható. Ehhez viszont létre kell hozni a szótárat a DbContext-ben a táblákkal
+            //Ahogy nézem a kulcsok nem növekednek így. Ezt le kéne még ellenőrizni.
             foreach (var kvp in databaseContext.EntityTables)
             {
                 Type entityType = kvp.Key;
                 dynamic dbSet = kvp.Value;
                 var existingEntities = dbSet.ToList();
                 dbSet.RemoveRange(existingEntities);
+                databaseContext.SaveChanges();
             }
 
             //USERS

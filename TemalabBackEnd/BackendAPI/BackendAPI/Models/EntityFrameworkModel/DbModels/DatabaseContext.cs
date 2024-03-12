@@ -1,5 +1,4 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
