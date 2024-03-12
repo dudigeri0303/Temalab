@@ -6,6 +6,7 @@ export default function CustomerReservations() {
   useEffect(() => {
     document.title = "Foglalások | DineTab";
   }, []);
+  {/*Reservation card meghív*/}
   return (
     <>
     <Navbar></Navbar>
