@@ -13,9 +13,9 @@ function App() {
     <>
       <Router>
             <Routes>
+              <Route path="/" element={<Login/>} />
               <Route path="/navowner" element={<OwnerNavbar/>} />
               <Route path="/register" element={<RegisterForm/>} />
-              <Route path="/" element={<Login/>} />
               <Route path="/createRestaurant" element={<CreateRestaurant/>} /> {/*Elérhető: http://localhost:valami_szám/createRestaurant*/}
               <Route path="/profile" element={<Profile/>} /> {/*Elérhető: http://localhost:valami_szám/Profile*/}
               <Route path='/navbartest' element={<Navbar/>} />

@@ -11,11 +11,11 @@ input{
   height: 100vh;
 }
 
-form div{
+.regform div{
   width: 400px;
 }
 
-form div button{
+.regform div button{
   width: 160px;
 }
 
