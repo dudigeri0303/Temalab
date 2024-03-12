@@ -19,16 +19,37 @@ form div button{
   width: 160px;
 }
 
+body {
+  background-color: #c0d6df;
+}
+
+.loginkulso {
+  height: 100vh;
+  max-width: 500px;
+}
+
+.logindiv {
+  width: 500px;
+}
+
+.loginbtn {
+  width: 200px;
+}
+
 .btnstyle {
-  background-color: #FFC300;
+  background-color: #ffc300;
   border-radius: 5px;
   color: black;
   border: none 0px;
   text-decoration: none;
 }
 
-body {
-  background-color: #C0D6DF;
+.redbtn {
+  background-color: #ff000d;
+  border-radius: 5px;
+  color: black;
+  margin-top: 20px;
+  align-content: end;
 }
 
 .logo {
@@ -43,14 +64,12 @@ body {
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
+.navbarcss {
+  background-color: #001d3d;
+}
 
 .card {
   padding: 2em;
-}
-
-.navbarcss {
-  background-color: #001d3d;
 }
 
 .navitemcss {
@@ -61,5 +80,32 @@ body {
 .navbarlogo {
   max-width: 100px;
 }
+  
+.navitemcss {
+  color: white;
+  font-family: "Jacques Francois", serif;
+}
 
+.navbarlogo {
+  max-width: 100px;
+}
 
+footer {
+  background-color: #001D3D;
+  color:white;
+}
+
+footer a {
+  color:white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color:black;
+}
+
+.h4-profile {
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 20;
+}

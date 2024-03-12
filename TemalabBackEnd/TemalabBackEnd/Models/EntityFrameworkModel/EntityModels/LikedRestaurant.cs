@@ -1,16 +1,28 @@
-﻿namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Kedvelt Étterem típust reprezentáló osztály
     public class LikedRestaurant
     {
+        [Key]
         public int Id { get; set; }
-        public User UserId { get; set; }
-        public Restaurant RestaurantId { get; set; }
-    
-        public LikedRestaurant(User userid, Restaurant restaurantid)
+        [ForeignKey(nameof(User))]
+        public int UserId { get; set; }
+        public User User { get; set; } //Navigation preoperty
+        [ForeignKey(nameof(Restaurant))]
+        public int RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; } //Navigation property
+        
+        public LikedRestaurant() { }
+        public LikedRestaurant(int id, User user, Restaurant restaurant)
         {
-            UserId = userid;
-            RestaurantId = restaurantid;
+            Id = id;
+            User = user;
+            UserId = user.Id;
+            Restaurant = restaurant;
+            RestaurantId = restaurant.Id;
         }
     }
 }
