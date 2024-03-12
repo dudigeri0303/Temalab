@@ -1,18 +1,26 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  background-color: #c0d6df;
 }
 
-body {
-  background-color: #C0D6DF;
+.loginkulso {
+  height: 100vh;
+  max-width: 500px;
+}
+
+.logindiv {
+  width: 500px;
+}
+
+.loginbtn {
+  width: 200px;
 }
 
 .btnstyle {
-  background-color: #FFC300;
+  background-color: #ffc300;
   border-radius: 5px;
   color: black;
+  border: none 0px;
+  text-decoration: none;
 }
 
 .redbtn {
@@ -35,28 +43,17 @@ body {
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbarcss {
+  background-color: #001d3d;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.navitemcss {
+  color: white;
+  font-family: "Jacques Francois", serif;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.navbarlogo {
+  max-width: 100px;
 }
 
 footer {
