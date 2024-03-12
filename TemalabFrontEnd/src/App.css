@@ -106,6 +106,10 @@ footer {
   color:white;
 }
 
+.footerlogo {
+  max-width: 100px;
+}
+
 footer a {
   color:white;
   text-decoration: none;

@@ -18,7 +18,7 @@ export default function Footer() {
               <div className="col-md-2 col-lg-2 col-xl-2 mt-1 text-center">
                 <img
                   src="logorestaurant-resizedForFooter.png"
-                  style={{ width: "50%" }}
+                  className="footerlogo"
                 />
               </div>
 
