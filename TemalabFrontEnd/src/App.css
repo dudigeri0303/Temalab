@@ -51,7 +51,19 @@ body {
   padding: 10px;
   border: none 0px;
   text-decoration: none;
-  padding: 20px 20px 20px, 10px;
+  padding: 5px 30px;
+  border-radius: 15px;
+}
+
+.cardbtn {
+  background-color: #ffc300;
+  border-radius: 5px;
+  color: black;
+  font-size: 36px;
+  padding: 5px 20px;
+  border: none 0px;
+  margin: 20px;
+  border-radius: 15px;
 }
 
 .redbtn {
@@ -61,6 +73,7 @@ body {
   padding: 10px;
   border: none 0px;
   margin-top: 20px;
+  border-radius: 15px;
 }
 
 .logo {
@@ -123,4 +136,16 @@ footer a:hover {
   text-align: left;
   margin-top: 20px;
   margin-bottom: 20;
+}
+
+.div-card {
+  background-color: #607A8E;
+  border-radius: 15px;
+  align-items: center;
+  padding: 1px 25px;
+}
+
+.card-text {
+  font-size: 36px;
+  color:white;
 }
