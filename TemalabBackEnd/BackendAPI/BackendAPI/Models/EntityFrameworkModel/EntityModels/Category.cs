@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
-    public class Category
+    public class Category : IEntityModelBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

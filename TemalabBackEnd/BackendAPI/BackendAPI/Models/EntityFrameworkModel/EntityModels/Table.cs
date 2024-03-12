@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Asztal típust reprezentáló osztály
-    public class Table
+    public class Table : IEntityModelBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
