@@ -36,10 +36,12 @@ export default function Footer() {
           </section>
 
           <div
-            className="text-center p-1 mt-1"
+            className=" row text-center p-1 mt-1"
             style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
           >
+            <div>
             © 2024 Témalabor | All rights reserved
+            </div>
           </div>
         </footer>
     </>
