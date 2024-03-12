@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
@@ -17,9 +19,24 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Food> Foods { get; set; }
+
+        public Dictionary<Type, object> EntityTables { get; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-        { 
-        
+        {
+            EntityTables = new Dictionary<Type, object>() 
+            {
+                { typeof(User), Users},
+                { typeof(Admin), Admins},
+                { typeof(Owner), Owners},
+                { typeof(Restaurant), Restaurants},
+                { typeof(Table), Tables},
+                { typeof(LikedRestaurant), LikedRestaurants},
+                { typeof(Reservation), Reservations},
+                { typeof(Review), Reviews},
+                { typeof(Menu), Menus},
+                { typeof(Category), Categories},
+                { typeof(Food), Foods}
+            };
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
