@@ -1,5 +1,4 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -18,54 +17,6 @@ namespace BackendAPI.Controllers
 
         #region CrudOperations
 
-        [HttpGet("getAllRows/")]
-        public override async Task<ActionResult<List<IEntityModelBase>>> GetAllRows() 
-        {
-            List<Restaurant> restaurants = await _dbContext.Restaurants.ToListAsync();
-            return Ok(restaurants);
-        }
-
-        [HttpGet("searchByID/{id}")]
-        public override async Task<ActionResult<IEntityModelBase>> GetRowById(int id) 
-        {
-            Restaurant? restaurant = await this._dbContext.Restaurants.FindAsync(id);
-            if (restaurant == null)
-            {
-                return NotFound("User not found!");
-            }
-            return Ok(restaurant);
-        }
-
-        [HttpDelete("deleteByID/{id}")]
-        public override async Task<ActionResult<IEntityModelBase>> DeleteUserById(int id) 
-        {
-            //Restaurant restaurantToDelete = this.GetRestaurantById(id).Result;
-            Restaurant? restaurant = await this._dbContext.Restaurants.FindAsync(id);
-
-            if (restaurant == null)
-            {
-                return NotFound("Restaurant not fount, you cant delete it");
-            }
-            this._dbContext.Restaurants.Remove(restaurant);
-            this._dbContext.SaveChanges();
-            return Ok(restaurant);
-        }
-
-        [HttpPost("insertNewRow/{newEntity}")]
-        public override async Task<ActionResult> InsertNewRow(Restaurant newEntity) 
-        {
-            try
-            {
-                this._dbContext.Restaurants.Add(newEntity);
-                this._dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-            return Ok(newEntity);
-        }
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
         public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Restaurant updatedEntity) 

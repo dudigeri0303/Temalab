@@ -1,6 +1,5 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -16,56 +15,6 @@ namespace BackendAPI.Controllers
         }
 
         #region CrudOperations
-
-        [HttpGet("getAllRows/")]
-        public override async Task<ActionResult<List<IEntityModelBase>>> GetAllRows()
-        {
-            List<Owner> owners = await this._dbContext.Owners.ToListAsync();
-            return Ok(owners);
-        }
-
-        [HttpGet("searchByID/{id}")]
-        public override async Task<ActionResult<IEntityModelBase>> GetRowById(int id) 
-        {
-
-            Owner? user = await this._dbContext.Owners.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound("Owner not found!");
-            }
-            return Ok(user);
-        }
-
-        [HttpDelete("deleteByID/{id}")]
-        public override async Task<ActionResult<IEntityModelBase>> DeleteUserById(int id) 
-        {
-            //Owner ownerToDelete = this.GetOwnerById(id).Result;
-            Owner? owner = await this._dbContext.Owners.FindAsync(id);
-
-            if (owner == null)
-            {
-                return NotFound("Owner not fount, you cant delete it");
-            }
-            this._dbContext.Owners.Remove(owner);
-            this._dbContext.SaveChanges();
-            return Ok(owner);
-        }
-
-        [HttpPost("insertNewRow/{newEntity}")]
-        public override async Task<ActionResult> InsertNewRow(Owner newEntity) 
-        {
-            try
-            {
-                this._dbContext.Owners.Add(newEntity);
-                this._dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-            return Ok(newEntity);
-        }
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
         public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Owner updatedEntity) 

@@ -52,18 +52,18 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             modelBuilder.Entity<Food>().ToTable("Foods");
         }
 
-        /*
-        public IQueryable<T> GetDbSet<T>() where T : class
+        public DbSet<T> GetDbSet<T>() where T : class
         {
             foreach (var kvp in this.EntityTables)
             {
-                if (kvp.Value.GetType() == typeof(DbSet<T>))
+                Debug.WriteLine(kvp.Value.GetType());
+                if (typeof(DbSet<T>).IsAssignableFrom(kvp.Value.GetType()))
                 {
                     return (DbSet<T>)kvp.Value;
                 }
             }
             return null;
-        }*/
+        }
 
     }
 }
