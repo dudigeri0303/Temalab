@@ -42,6 +42,7 @@ body {
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
 .navbarcss {
   background-color: #001d3d;
 }

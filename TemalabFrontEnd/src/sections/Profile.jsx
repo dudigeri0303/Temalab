@@ -10,7 +10,7 @@ export default function Profile() {
     const IsProfileDeleted = window.confirm('Biztos törlöd a profilod?');
     if (IsProfileDeleted) {
       {/*Profil törlése method hívás*/}
-      window.open("/createRestaurant", "_self");
+      window.open("/", "_self");
       {/*Visszairányít a login oldalra _self, hogy ne új lapon nyissa meg*/}
     }
   };
