@@ -11,17 +11,20 @@ export default function CreateRestaurant() {
     window.open("/mainPageOwner", "_self");
   };
 
-  {/*létrehoz: ha valid, új restaurant objectum bekerül a restaurants listába, majd visszatér a mainPageOwner-re*/}
-
+  {
+    /*létrehoz: ha valid, új restaurant objectum bekerül a restaurants listába, majd visszatér a mainPageOwner-re*/
+  }
+  {
+    /*nyitvatartásra valami megoldás*/
+  }
 
   return (
     <>
-    <Navbar></Navbar>
+      <Navbar></Navbar>
       <section id="main" className="container py-3">
-
         <form method="post">
           <div className="mb-3">
-            <label htmlFor="inputName" className="form-label">
+            <label htmlFor="nameForRestaurant" className="form-label">
               Étterem név
             </label>
             <input
@@ -35,7 +38,7 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="inputOpeningHours" className="form-label">
+            <label htmlFor="openingHoursForRestaurant" className="form-label">
               Nyitvatartás
             </label>
             <input
@@ -47,14 +50,12 @@ export default function CreateRestaurant() {
             />
           </div>
 
-          <label htmlFor="inputName" className="form-label">
-            Cím
-          </label>
+          <label className="form-label">Cím</label>
 
           <div className="row">
             <div className="col-md-2">
               <div className="mb-3">
-                <label htmlFor="inputPostalCode" className="form-label">
+                <label htmlFor="postalCodeForRestaurant" className="form-label">
                   Irányítószám
                 </label>
                 <input
@@ -69,7 +70,7 @@ export default function CreateRestaurant() {
             </div>
             <div className="col-md-4">
               <div className="mb-3">
-                <label htmlFor="inputCity" className="form-label">
+                <label htmlFor="cityNameForRestaurant" className="form-label">
                   Város
                 </label>
                 <input
@@ -84,7 +85,7 @@ export default function CreateRestaurant() {
             </div>
             <div className="col-md-4">
               <div className="mb-3">
-                <label htmlFor="intputStreet" className="form-label">
+                <label htmlFor="streetNameForRestaurant" className="form-label">
                   Utca
                 </label>
                 <input
@@ -99,7 +100,7 @@ export default function CreateRestaurant() {
             </div>
             <div className="col-md-2">
               <div className="mb-3">
-                <label htmlFor="inputHouseNumber" className="form-label">
+                <label htmlFor="houseNumber" className="form-label">
                   Házszám
                 </label>
                 <input
@@ -115,7 +116,7 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="col-md-6 mb-3">
-            <label htmlFor="inputPhoneNumber" className="form-label">
+            <label htmlFor="phoneNumberForRestaurant" className="form-label">
               Telefonszám
             </label>
             <input
@@ -128,7 +129,7 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="mb-3">
-            <label htmlFor="inputDescription" className="form-label">
+            <label htmlFor="descriptionForRestaurant" className="form-label">
               Leírás
             </label>
             <textarea
@@ -147,7 +148,11 @@ export default function CreateRestaurant() {
               </button>
             </div>
             <div className="col-md-2 mb-2">
-              <button onClick={backToRestaurantOwner} type="button" className="avgbtn">
+              <button
+                onClick={backToRestaurantOwner}
+                type="button"
+                className="avgbtn"
+              >
                 Mégse
               </button>
             </div>

@@ -7,15 +7,19 @@ export default function CustomerFavorites() {
     document.title = " Kedvencek | DineTab";
   }, []);
 
-{/*kedvencek betöltése adatbázisból, ha nincs, akkor a lenti label és link jelenik meg, mint placeholder*/}
+  {
+    /*kedvencek betöltése adatbázisból, ha nincs, akkor a lenti label és link jelenik meg, mint placeholder*/
+  }
 
   return (
     <>
-    <Navbar></Navbar>
-    <label className="placeholerLabel">Még nincsenek foglalások</label>
-    <div className="col-sm d-flex justify-content-center">
-    <a className="a-links" href="/mainPageCustomer">Éttermek megtekintése</a>
-    </div>
+      <Navbar></Navbar>
+      <label className="placeholerLabel">Még nincsenek foglalások</label>
+      <div className="col-sm d-flex justify-content-center">
+        <a className="a-links" href="/mainPageCustomer">
+          Éttermek megtekintése
+        </a>
+      </div>
     </>
-    );
-  }
+  );
+}

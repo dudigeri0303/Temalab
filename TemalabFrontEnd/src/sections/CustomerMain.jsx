@@ -7,12 +7,14 @@ export default function CustomerFavorites() {
     document.title = " Főoldal | DineTab";
   }, []);
 
-  {/*éttermek betöltése adatbázisból*/}
+  {
+    /*éttermek betöltése adatbázisból*/
+  }
 
   return (
     <>
-    <Navbar></Navbar>
-    <label className="placeholerLabel">Éttermek</label>
+      <Navbar></Navbar>
+      <label className="placeholerLabel">Éttermek</label>
     </>
-    );
-  }
+  );
+}

@@ -46,7 +46,6 @@ body {
 
 .avgbtn {
   background-color: #ffc300;
-  border-radius: 5px;
   color: black;
   padding: 10px;
   border: none 0px;
@@ -115,7 +114,7 @@ body {
 }
 
 footer {
-  background-color: #001d3d;
+  background-color: #001D3D;
   color: white;
   width: 100%;
   bottom: 0;
@@ -132,7 +131,7 @@ footer a {
 }
 
 footer a:hover {
-  color: black;
+  color:black;
 }
 
 .h4-profile {

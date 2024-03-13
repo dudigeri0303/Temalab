@@ -11,7 +11,9 @@ export default function OwnerMain() {
     window.open("/createRestaurant", "_self");
   };
 
-  {/*éttermek betöltése adatbázisból, ha nincs, akkor a lenti label jelenik meg, mint placeholder*/}
+  {
+    /*éttermek betöltése adatbázisból, ha nincs, akkor a lenti label jelenik meg, mint placeholder*/
+  }
 
   return (
     <>
@@ -19,7 +21,7 @@ export default function OwnerMain() {
       <label className="placeholerLabel">Még nincsenek éttermek</label>
       <div className="col-sm d-flex justify-content-center">
         <button type="button" onClick={createRestEvent} className="cardbtn">
-        ＋ Új étterem hozzáadása 
+          ＋ Új étterem hozzáadása
         </button>
       </div>
     </>
