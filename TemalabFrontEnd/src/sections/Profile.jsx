@@ -44,7 +44,7 @@ export default function Profile() {
             <h4 className="h4-profile">Profil Adatok:</h4>
 
           <div className="col-md-5">
-              <div className="mb-3">
+              <div className="mb-3 d-flex justify-content-center">
             <label htmlFor="inputName" className="form-label">
                   Név:
                 </label>
@@ -64,9 +64,9 @@ export default function Profile() {
             </div>
  
             <div className="col-md-5">
-              <div className="mb-6">
+              <div className="mb-6 d-flex justify-content-center">
                 <label htmlFor="inputPhone" className="form-label">
-                  Telefonszám:
+                  Tel:
                 </label>
                 </div>
                 </div>
@@ -84,7 +84,7 @@ export default function Profile() {
             </div>
 
             <div className="col-md-5">
-              <div className="mb-3">
+              <div className="mb-3 d-flex justify-content-center">
                 <label htmlFor="intputEmail" className="form-label">
                   Email:
                 </label>
@@ -104,7 +104,7 @@ export default function Profile() {
             </div>
 
             <div className="col-md-5">
-              <div className="mb-3">
+              <div className="mb-3 d-flex justify-content-center">
                 <label htmlFor="inputHouseNumber" className="form-label">
                   Jelszó:
                 </label>
