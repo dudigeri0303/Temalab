@@ -23,8 +23,8 @@ function App() {
               <Route path="/" element={<Login/>} />
               <Route path="/navowner" element={<OwnerNavbar/>} />
               <Route path="/register" element={<RegisterForm/>} />
-              <Route path="/createRestaurant" element={<CreateRestaurant/>} /> {/*Elérhető: http://localhost:valami_szám/createRestaurant*/}
-              <Route path="/profile" element={<Profile/>} /> {/*Elérhető: http://localhost:valami_szám/Profile*/}
+              <Route path="/createRestaurant" element={<CreateRestaurant/>} />
+              <Route path="/profile" element={<Profile/>} />
               <Route path='/navbartest' element={<Navbar/>} />
               <Route path="/template" element={<Template/>} />
               <Route path="/customerReservations" element={<CustomerReservations/>} />
@@ -35,7 +35,7 @@ function App() {
               <Route path="/tablesOwner" element={<OwnerTables/>} />
             </Routes>
       </Router>
-      <Footer /> {/* Elvileg így minden oldalra render-elve lesz*/}
+      <Footer /> {/*Minden oldalra render-elve lesz*/}
     </>
   )
 }

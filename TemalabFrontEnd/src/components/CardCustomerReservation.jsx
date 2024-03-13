@@ -1,43 +1,29 @@
 import "../App.css";
 
 export default function CardCustomerReservation() {
- 
   return (
     <>
       <section id="main" className="container py-2">
-
-          <div className="row div-card">
-            <div className="col-md-4">
-              <div className="mb-3">
-                <label htmlFor="restaurantName" className="card-text">
-                  Étterem neve
-                </label>
+        <div className="row div-card">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm d-flex align-items-center">
+                <label className="card-text">Étterem neve</label>
               </div>
-            </div>
-            <div className="col-md-2">
-              <div className="mb-3">
-                <label htmlFor="tableNumber" className="card-text">
-                  Asztal ID
-                </label>
-
+              <div className="col-sm d-flex align-items-center">
+                <label className="card-text">AsztalID</label>
               </div>
-            </div>
-            <div className="col-md-3">
-              <div className="mb-3">
-                <label htmlFor="dateTime" className="card-text">
-                  Dátum
-                </label>
-
+              <div className="col-sm d-flex align-items-center">
+                <label className="card-text">2024-03-12</label>
               </div>
-            </div>
-            <div className="col-md-2">
-              <div className="mb-3">
-              <button type="button" className="cardbtn">
-                Lemond
-              </button>
+              <div className="col-sm">
+                <button type="button" className="cardbtn float-end">
+                  Lemond
+                </button>
               </div>
             </div>
           </div>
+        </div>
       </section>
     </>
   );

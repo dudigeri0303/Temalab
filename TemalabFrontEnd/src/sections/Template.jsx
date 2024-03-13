@@ -14,19 +14,13 @@ export default function Template() {
           <div className="container">
             <div className="row">
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-text">
-                  Étterem neve
-                </label>
+                <label className="card-text">Étterem neve</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-text">
-                  AsztalID
-                </label>
+                <label className="card-text">AsztalID</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-text">
-                  2024-03-12
-                </label>
+                <label className="card-text">2024-03-12</label>
               </div>
               <div className="col-sm">
                 <button type="button" className="cardbtn float-end">
@@ -43,19 +37,13 @@ export default function Template() {
           <div className="container">
             <div className="row">
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-text">
-                  UserName
-                </label>
+                <label className="card-text">UserName</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-text">
-                  Email
-                </label>
+                <label className="card-text">Email</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-text">
-                  Role
-                </label>
+                <label className="card-text">Role</label>
               </div>
               <div className="col-sm">
                 <button type="button" className="cardbtn float-end">
@@ -72,21 +60,15 @@ export default function Template() {
           <div className="container">
             <div className="row">
               <div className="col-md-3">
-                <label htmlFor="restaurantName" className="card-text">
-                  Étterem név
-                </label>
+                <label className="card-text">Étterem név</label>
               </div>
               <div className="col-md-4">
-                <label htmlFor="stars" className="card-text">
-                  ★★★★★
-                </label>
+                <label className="card-text">★★★★★</label>
               </div>
             </div>
             <div className="row">
               <div className="col d-flex align-items-end">
-                <label htmlFor="restaurantStyle" className="card-Altext">
-                  Étterem stílusa
-                </label>
+                <label className="card-Altext">Étterem stílusa</label>
               </div>
               <div className="col">
                 <button
@@ -100,9 +82,7 @@ export default function Template() {
             </div>
             <div className="row">
               <div className="col">
-                <label htmlFor="restaurantPlace" className="card-Altext">
-                  Étterem helye
-                </label>
+                <label className="card-Altext">Étterem helye</label>
               </div>
             </div>
           </div>
@@ -114,19 +94,13 @@ export default function Template() {
           <div className="container">
             <div className="row">
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantStyle" className="card-text">
-                  Étterem neve
-                </label>{" "}
+                <label className="card-text">Étterem neve</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantStyle" className="card-text">
-                  ★★★★★
-                </label>{" "}
+                <label className="card-text">★★★★★</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantStyle" className="card-Altext">
-                  Étterem címe
-                </label>{" "}
+                <label className="card-Altext">Étterem címe</label>
               </div>
               <div className="col-sm">
                 <button type="button" className="cardbtn float-end">
@@ -143,21 +117,15 @@ export default function Template() {
           <div className="container">
             <div className="row">
               <div className="col-md-6">
-                <label htmlFor="restaurantName" className="card-text">
-                  Étterem név
-                </label>
+                <label className="card-text">Étterem név</label>
               </div>
               <div className="col-md-6 d-flex justify-content-end">
-                <label htmlFor="stars" className="card-text">
-                  ★★★★★
-                </label>
+                <label className="card-text">★★★★★</label>
               </div>
             </div>
             <div className="row">
               <div className="col d-flex align-items-end">
-                <label htmlFor="restaurantStyle" className="card-Altext">
-                  Étterem stílusa
-                </label>
+                <label className="card-Altext">Étterem stílusa</label>
               </div>
               <div className="col d-flex justify-content-end">
                 <button className="likebtn">
@@ -170,9 +138,7 @@ export default function Template() {
             </div>
             <div className="row">
               <div className="col">
-                <label htmlFor="restaurantPlace" className="card-Altext">
-                  Étterem helye
-                </label>
+                <label className="card-Altext">Étterem helye</label>
               </div>
             </div>
           </div>
@@ -184,19 +150,13 @@ export default function Template() {
           <div className="container">
             <div className="row">
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-Altext">
-                  AsztalID
-                </label>
+                <label className="card-Altext">AsztalID</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-Altext">
-                  Férőhely
-                </label>
+                <label className="card-Altext">Férőhely</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label htmlFor="restaurantPlace" className="card-Altext">
-                  IsFoglalt
-                </label>
+                <label className="card-Altext">IsFoglalt</label>
               </div>
               <div className="col-sm">
                 <button type="button" className="cardbtn float-end">
