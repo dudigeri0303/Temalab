@@ -37,7 +37,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpDelete("deleteByID/{id}")]
-        public async Task<ActionResult<IEntityModelBase>> DeleteUserById(int id) 
+        public async Task<ActionResult<ControllerClass>> DeleteUserById(int id) 
         {
             DbSet<ControllerClass> dbSet = this._dbContext.GetDbSet<ControllerClass>();
             ControllerClass? entity = await dbSet.FindAsync(id);
