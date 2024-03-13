@@ -5,15 +5,18 @@ using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class FoodController : BaseEntityController<Food>
     {
         public FoodController(DatabaseContext dbContext) : base(dbContext)
         {
         }
 
-        public override Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Food updatedEntity)
+        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
+        public override async Task<ActionResult<Food>> UpdateUserPropertiesByID(int id, Food updatedEntity)
         {
-            throw new NotImplementedException();
+            return NotFound("Not yet imlemented");
         }
     }
 }

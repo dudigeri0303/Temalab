@@ -20,7 +20,7 @@ namespace TemalabBackEnd.Controllers
 
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, User updatedEntity) 
+        public override async Task<ActionResult<User>> UpdateUserPropertiesByID(int id, User updatedEntity) 
         {
             User newUser = updatedEntity;
             User? user = await this._dbContext.Users.FindAsync(id);

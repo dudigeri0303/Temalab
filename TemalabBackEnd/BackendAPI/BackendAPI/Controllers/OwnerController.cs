@@ -17,13 +17,13 @@ namespace BackendAPI.Controllers
         #region CrudOperations
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Owner updatedEntity) 
+        public override async Task<ActionResult<Owner>> UpdateUserPropertiesByID(int id, Owner updatedEntity) 
         {
             return Ok("No update operation for owner!");
         }
         #endregion
 
-        #region niqueOperations
+        #region UniqueOperations
 
         [HttpGet("getRestaurantsByOwnerID/{id}")]
         public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByOwner(int id)

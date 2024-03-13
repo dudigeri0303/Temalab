@@ -19,7 +19,7 @@ namespace BackendAPI.Controllers
 
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Restaurant updatedEntity) 
+        public override async Task<ActionResult<Restaurant>> UpdateUserPropertiesByID(int id, Restaurant updatedEntity) 
         {
             Restaurant updatedRestaurant = updatedEntity;
             Restaurant? restaurant = await this._dbContext.Restaurants.FindAsync(id);

@@ -67,7 +67,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public abstract Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, ControllerClass updatedEntity);
+        public abstract Task<ActionResult<ControllerClass>> UpdateUserPropertiesByID(int id, ControllerClass updatedEntity);
 
         #endregion
     }

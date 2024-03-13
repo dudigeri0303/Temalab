@@ -11,9 +11,10 @@ namespace BackendAPI.Controllers
         {
         }
 
-        public override Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Category updatedEntity)
+        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
+        public override async Task<ActionResult<Category>> UpdateUserPropertiesByID(int id, Category updatedEntity)
         {
-            throw new NotImplementedException();
+            return NotFound("Method is not implemented yet");
         }
     }
 }

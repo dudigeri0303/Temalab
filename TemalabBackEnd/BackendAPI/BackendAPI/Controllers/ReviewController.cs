@@ -5,15 +5,18 @@ using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ReviewController : BaseEntityController<Review>
     {
         public ReviewController(DatabaseContext dbContext) : base(dbContext)
         {
         }
 
-        public override Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, Review updatedEntity)
+        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
+        public override async Task<ActionResult<Review>> UpdateUserPropertiesByID(int id, Review updatedEntity)
         {
-            throw new NotImplementedException();
+            return NotFound("Not yet implemented!");
         }
     }
 }
