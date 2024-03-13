@@ -10,7 +10,8 @@ export default function OwnerTables() {
   return (
     <>
     <Navbar></Navbar>
-    <h1>OwnerTables</h1>
+    <label className="placeholerLabel">Még nincsenek foglalások</label>
+
     </>
     );
   }

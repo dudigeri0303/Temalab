@@ -7,10 +7,19 @@ export default function OwnerMain() {
     document.title = " Főoldal | DineTab";
   }, []);
 
+  const createRestEvent = () => {
+    window.open("/createRestaurant", "_self");
+  };
+
   return (
     <>
-    <Navbar></Navbar>
-    <h1>OwnerMain</h1>
+      <Navbar></Navbar>
+      <label className="placeholerLabel">Még nincsenek éttermek</label>
+      <div className="col-sm d-flex justify-content-center">
+        <button type="button" onClick={createRestEvent} className="cardbtn">
+        ＋ Új étterem hozzáadása 
+        </button>
+      </div>
     </>
-    );
-  }
+  );
+}

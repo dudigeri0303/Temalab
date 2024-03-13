@@ -10,7 +10,10 @@ export default function CustomerFavorites() {
   return (
     <>
     <Navbar></Navbar>
-    <h1>Kedvencek</h1>
+    <label className="placeholerLabel">Még nincsenek kedvencek</label>
+    <a href="/mainPageCustomer">Éttermek megtekintése</a>
+
+
     </>
     );
   }

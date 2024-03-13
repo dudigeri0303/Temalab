@@ -10,7 +10,7 @@ export default function CustomerFavorites() {
   return (
     <>
     <Navbar></Navbar>
-    <h1>CustomerMain</h1>
+    <label className="placeholerLabel">Éttermek</label>
     </>
     );
   }

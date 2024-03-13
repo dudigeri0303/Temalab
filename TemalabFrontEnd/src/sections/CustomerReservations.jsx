@@ -10,7 +10,10 @@ export default function CustomerReservations() {
   return (
     <>
     <Navbar></Navbar>
-    <h1>CustomerReservations</h1>
+    <label className="placeholerLabel">Még nincsenek foglalások</label>
+    <div className="col-sm d-flex justify-content-center">
+    <a className="a-links" href="/mainPageCustomer">Éttermek megtekintése</a>
+    </div>
     </>
     );
   }
