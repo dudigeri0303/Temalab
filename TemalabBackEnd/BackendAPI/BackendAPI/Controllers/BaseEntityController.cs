@@ -5,7 +5,7 @@ using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 
 namespace BackendAPI.Controllers
 {
-    public abstract class BaseEntityController<ControllerClass> : ControllerBase where ControllerClass : class
+    public abstract class BaseEntityController<EntityClass> : ControllerBase where EntityClass : class
     {
         protected readonly DatabaseContext _dbContext;
 
@@ -17,18 +17,18 @@ namespace BackendAPI.Controllers
         #region GenericCrudOperations
 
         [HttpGet("getAllRows/")]
-        public async Task<ActionResult<List<ControllerClass>>> GetAllRows()
+        public async Task<ActionResult<List<EntityClass>>> GetAllRows()
         {
-            DbSet<ControllerClass> dbSet = this._dbContext.GetDbSet<ControllerClass>();
-            List <ControllerClass> entites = await dbSet.ToListAsync();
+            DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
+            List <EntityClass> entites = await dbSet.ToListAsync();
             return Ok(entites);
         }
 
         [HttpGet("searchByID/{id}")]
-        public async Task<ActionResult<ControllerClass>> GetRowById(int id) 
+        public async Task<ActionResult<EntityClass>> GetRowById(int id) 
         {
-            DbSet<ControllerClass> dbSet = this._dbContext.GetDbSet<ControllerClass>();
-            ControllerClass? entity = await dbSet.FindAsync(id);
+            DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
+            EntityClass? entity = await dbSet.FindAsync(id);
             if (entity == null) 
             {
                 return NotFound("Entity not found!");
@@ -37,10 +37,10 @@ namespace BackendAPI.Controllers
         }
 
         [HttpDelete("deleteByID/{id}")]
-        public async Task<ActionResult<ControllerClass>> DeleteUserById(int id) 
+        public async Task<ActionResult<EntityClass>> DeleteUserById(int id) 
         {
-            DbSet<ControllerClass> dbSet = this._dbContext.GetDbSet<ControllerClass>();
-            ControllerClass? entity = await dbSet.FindAsync(id);
+            DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
+            EntityClass? entity = await dbSet.FindAsync(id);
             if (entity == null) 
             {
                 return NotFound("Entity not found so it can not be deleted!");
@@ -51,9 +51,9 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("insertNewRow/{newEntity}")]
-        public async Task<ActionResult> InsertNewRow(ControllerClass newEntity) 
+        public async Task<ActionResult> InsertNewRow(EntityClass newEntity) 
         {
-            DbSet<ControllerClass> dbSet = this._dbContext.GetDbSet<ControllerClass>();
+            DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
             try
             {
                 dbSet.Add(newEntity);
@@ -67,7 +67,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public abstract Task<ActionResult<ControllerClass>> UpdateUserPropertiesByID(int id, ControllerClass updatedEntity);
+        public abstract Task<ActionResult<EntityClass>> UpdateUserPropertiesByID(int id, EntityClass updatedEntity);
 
         #endregion
     }
