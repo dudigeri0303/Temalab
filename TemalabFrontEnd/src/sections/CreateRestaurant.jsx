@@ -6,6 +6,11 @@ export default function CreateRestaurant() {
   useEffect(() => {
     document.title = "Étterem hozzáadás | DineTab";
   }, []);
+
+  const backToRestaurantOwner = () => {
+    window.open("/mainPageOwner", "_self");
+  };
+
   return (
     <>
     <Navbar></Navbar>
@@ -111,7 +116,7 @@ export default function CreateRestaurant() {
               Telefonszám
             </label>
             <input
-              type="tel"
+              type="text"
               className="form-control"
               id="phoneNumberForRestaurant"
               name="phoneNumberForRestaurant"
@@ -139,7 +144,7 @@ export default function CreateRestaurant() {
               </button>
             </div>
             <div className="col-md-2 mb-2">
-              <button type="button" className="avgbtn">
+              <button onClick={backToRestaurantOwner} type="button" className="avgbtn">
                 Mégse
               </button>
             </div>

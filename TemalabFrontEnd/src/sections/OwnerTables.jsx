@@ -7,11 +7,19 @@ export default function OwnerTables() {
     document.title = " Asztalok | DineTab";
   }, []);
 
+  const createTableEvent = () => {
+    window.open("/createTable", "_self");
+  };
+
   return (
     <>
     <Navbar></Navbar>
-    <label className="placeholerLabel">Még nincsenek foglalások</label>
-
+    <label className="placeholerLabel">Még nincsenek Asztalok</label>
+    <div className="col-sm d-flex justify-content-center">
+        <button type="button" onClick={createTableEvent} className="cardbtn">
+        ＋ Új asztal hozzáadása 
+        </button>
+      </div>
     </>
     );
   }

@@ -6,14 +6,13 @@ export default function CustomerFavorites() {
   useEffect(() => {
     document.title = " Kedvencek | DineTab";
   }, []);
-
   return (
     <>
     <Navbar></Navbar>
-    <label className="placeholerLabel">Még nincsenek kedvencek</label>
-    <a href="/mainPageCustomer">Éttermek megtekintése</a>
-
-
+    <label className="placeholerLabel">Még nincsenek foglalások</label>
+    <div className="col-sm d-flex justify-content-center">
+    <a className="a-links" href="/mainPageCustomer">Éttermek megtekintése</a>
+    </div>
     </>
     );
   }
