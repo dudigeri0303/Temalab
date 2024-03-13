@@ -18,7 +18,6 @@ namespace TemalabBackEnd.Controllers
 
         #region CrudOperations
 
-       
 
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
         public override async Task<ActionResult<IEntityModelBase>> UpdateUserPropertiesByID(int id, User updatedEntity) 
