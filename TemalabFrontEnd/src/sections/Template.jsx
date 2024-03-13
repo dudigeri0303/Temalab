@@ -88,7 +88,6 @@ export default function Template() {
                   Étterem stílusa
                 </label>
               </div>
-              <div className="col"></div>
               <div className="col">
                 <button
                   type="button"

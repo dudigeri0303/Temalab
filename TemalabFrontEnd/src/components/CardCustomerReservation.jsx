@@ -1,6 +1,6 @@
 import "../App.css";
 
-export default function ReservationCard() {
+export default function CardCustomerReservation() {
  
   return (
     <>

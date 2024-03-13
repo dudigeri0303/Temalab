@@ -2,15 +2,15 @@ import "../App.css";
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 
-export default function CustomerReservations() {
+export default function AdminDeleteUser() {
   useEffect(() => {
-    document.title = "Foglalások | DineTab";
+    document.title = "Felhasználó törlése | DineTab";
   }, []);
-  {/*Reservation card meghív*/}
+
   return (
     <>
     <Navbar></Navbar>
-    <h1>CustomerReservations</h1>
+    <h1>Delete user</h1>
     </>
     );
   }

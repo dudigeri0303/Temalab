@@ -2,15 +2,15 @@ import "../App.css";
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 
-export default function CustomerReservations() {
+export default function CustomerFavorites() {
   useEffect(() => {
-    document.title = "Foglalások | DineTab";
+    document.title = " Kedvencek | DineTab";
   }, []);
-  {/*Reservation card meghív*/}
+
   return (
     <>
     <Navbar></Navbar>
-    <h1>CustomerReservations</h1>
+    <h1>Kedvencek</h1>
     </>
     );
   }
