@@ -11,6 +11,9 @@ export default function CreateRestaurant() {
     window.open("/mainPageOwner", "_self");
   };
 
+  {/*létrehoz: ha valid, új restaurant objectum bekerül a restaurants listába, majd visszatér a mainPageOwner-re*/}
+
+
   return (
     <>
     <Navbar></Navbar>

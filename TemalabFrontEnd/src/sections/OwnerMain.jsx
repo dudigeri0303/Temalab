@@ -11,6 +11,8 @@ export default function OwnerMain() {
     window.open("/createRestaurant", "_self");
   };
 
+  {/*éttermek betöltése adatbázisból, ha nincs, akkor a lenti label jelenik meg, mint placeholder*/}
+
   return (
     <>
       <Navbar></Navbar>

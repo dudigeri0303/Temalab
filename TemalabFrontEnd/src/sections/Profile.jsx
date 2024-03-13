@@ -7,6 +7,12 @@ export default function Profile() {
     document.title = "Profile | DineTab";
   }, []);
 
+  {/*Adatok betöltése adatbázisból metódus*/}
+  {/*szerkeszt:feloldja a disable mezőket*/}
+  {/*mégse gomb: visszaállít adatbázisba mentett adatok és disable szerkesztés*/}
+  {/*mentés: elmenti az új adatokat adatbázisba*/}
+  {/*név/felhasználónév: kiolvas adatbázisból*/}
+
   const deleteProfile = () => {
     const IsProfileDeleted = window.confirm('Biztos törlöd a profilod?');
     if (IsProfileDeleted) {

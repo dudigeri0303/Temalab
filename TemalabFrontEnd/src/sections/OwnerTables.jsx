@@ -11,6 +11,9 @@ export default function OwnerTables() {
     window.open("/createTable", "_self");
   };
 
+  {/*étteremhez rendelt asztalok betöltése adatbázisból, ha nincs, akkor a lenti label jelenik meg, mint placeholder*/}
+  {/*createTable még nem létezik majd megfelően, ami a neve lesz, oda irányítson át, ha olyan lesz, mint a createRest*/}
+
   return (
     <>
     <Navbar></Navbar>

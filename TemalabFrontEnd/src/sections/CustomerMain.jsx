@@ -7,6 +7,8 @@ export default function CustomerFavorites() {
     document.title = " Főoldal | DineTab";
   }, []);
 
+  {/*éttermek betöltése adatbázisból*/}
+
   return (
     <>
     <Navbar></Navbar>

@@ -6,6 +6,9 @@ export default function CustomerFavorites() {
   useEffect(() => {
     document.title = " Kedvencek | DineTab";
   }, []);
+
+{/*kedvencek betöltése adatbázisból, ha nincs, akkor a lenti label és link jelenik meg, mint placeholder*/}
+
   return (
     <>
     <Navbar></Navbar>

@@ -6,7 +6,7 @@ export default function CustomerReservations() {
   useEffect(() => {
     document.title = "Foglalások | DineTab";
   }, []);
-  {/*Reservation card meghív*/}
+  {/*foglalások betöltése adatbázisból, ha nincs, akkor a lenti label és link jelenik meg, mint placeholder*/}
   return (
     <>
     <Navbar></Navbar>

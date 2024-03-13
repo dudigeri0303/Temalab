@@ -7,6 +7,8 @@ export default function AdminDeleteUser() {
     document.title = "Felhasználó törlése | DineTab";
   }, []);
 
+    {/*felhasználók betöltése adatbázisból, ha nincs, akkor a lenti label jelenik meg, mint placeholder*/}
+
   return (
     <>
     <Navbar></Navbar>
