@@ -117,6 +117,9 @@ body {
 footer {
   background-color: #001d3d;
   color: white;
+  position:fixed;
+  width: 100%;
+  bottom: 0;
 }
 
 .footerlogo {
@@ -159,4 +162,11 @@ footer a:hover {
   background-color: #607a8e;
   border: none;
   padding: 1px 50px;
+}
+
+.placeholerLabel {
+  font-size: 36px;
+  text-align: center;
+  display: block;
+  padding: 100px 100px;
 }

@@ -10,7 +10,7 @@ export default function AdminDeleteUser() {
   return (
     <>
     <Navbar></Navbar>
-    <h1>Delete user</h1>
+    <label className="placeholerLabel">Még nincsenek törlendő felhasználók</label>
     </>
     );
   }
