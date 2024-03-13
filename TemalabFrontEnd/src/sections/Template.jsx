@@ -11,32 +11,28 @@ export default function Template() {
       <Navbar></Navbar>
       <section id="main" className="container py-2">
         <div className="row div-card">
-          <div className="col-md-4">
-            <div className="mb-3">
-              <label htmlFor="restaurantName" className="card-text">
-                Hosszú étterem neve
-              </label>
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="mb-3">
-              <label htmlFor="tableNumber" className="card-text">
-                Asztal ID
-              </label>
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="mb-3">
-              <label htmlFor="dateTime" className="card-text">
-                2024-03-12
-              </label>
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="mb-3">
-              <button type="button" className="cardbtn">
-                Lemond
-              </button>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm d-flex align-items-center">
+                <label htmlFor="restaurantPlace" className="card-text">
+                  Étterem neve
+                </label>
+              </div>
+              <div className="col-sm d-flex align-items-center">
+                <label htmlFor="restaurantPlace" className="card-text">
+                  AsztalID
+                </label>
+              </div>
+              <div className="col-sm d-flex align-items-center">
+                <label htmlFor="restaurantPlace" className="card-text">
+                  2024-03-12
+                </label>
+              </div>
+              <div className="col-sm">
+                <button type="button" className="cardbtn float-end">
+                  Lemond
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -44,32 +40,28 @@ export default function Template() {
 
       <section id="main" className="container py-2">
         <div className="row div-card">
-          <div className="col-md-4">
-            <div className="mb-3">
-              <label htmlFor="restaurantName" className="card-text">
-                Username
-              </label>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="mb-4">
-              <label htmlFor="tableNumber" className="card-text">
-                Email
-              </label>
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="mb-3">
-              <label htmlFor="dateTime" className="card-text">
-                Role
-              </label>
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="mb-3">
-              <button type="button" className="cardbtn">
-                Töröl
-              </button>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm d-flex align-items-center">
+                <label htmlFor="restaurantPlace" className="card-text">
+                  UserName
+                </label>
+              </div>
+              <div className="col-sm d-flex align-items-center">
+                <label htmlFor="restaurantPlace" className="card-text">
+                  Email
+                </label>
+              </div>
+              <div className="col-sm d-flex align-items-center">
+                <label htmlFor="restaurantPlace" className="card-text">
+                  Role
+                </label>
+              </div>
+              <div className="col-sm">
+                <button type="button" className="cardbtn float-end">
+                  Töröl
+                </button>
+              </div>
             </div>
           </div>
         </div>
