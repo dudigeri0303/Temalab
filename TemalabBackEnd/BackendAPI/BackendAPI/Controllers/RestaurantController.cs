@@ -18,6 +18,7 @@ namespace BackendAPI.Controllers
         #region CrudOperations
 
 
+        /*
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
         public override async Task<ActionResult<Restaurant>> UpdateUserPropertiesByID(int id, Restaurant updatedEntity) 
         {
@@ -65,7 +66,7 @@ namespace BackendAPI.Controllers
             }
             this._dbContext.SaveChanges();
             return Ok(restaurant);
-        }
+        }*/
 
 
         #endregion

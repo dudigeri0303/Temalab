@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public AdminContoller(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Admin>> UpdateUserPropertiesByID(int id, Admin updatedEntity)
-        {
-            return NotFound("Not yet implemented!");
-        }
     }
 }

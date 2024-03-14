@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Értékelés típust reprezentáló osztály
-    public class Review : IEntityModelBase
+    public class Review : IEntityModelBase<Review>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -29,6 +29,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             RestaurantId = restaurant.Id;
             Rating = rating;
             Description = description;
+        }
+        public void updateEntity(Review entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

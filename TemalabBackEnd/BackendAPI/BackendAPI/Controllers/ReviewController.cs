@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public ReviewController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Review>> UpdateUserPropertiesByID(int id, Review updatedEntity)
-        {
-            return NotFound("Not yet implemented!");
-        }
     }
 }

@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public FoodController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Food>> UpdateUserPropertiesByID(int id, Food updatedEntity)
-        {
-            return NotFound("Not yet imlemented");
-        }
     }
 }

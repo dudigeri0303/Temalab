@@ -66,9 +66,19 @@ namespace BackendAPI.Controllers
             return Ok(newEntity);
         }
 
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public abstract Task<ActionResult<EntityClass>> UpdateUserPropertiesByID(int id, EntityClass updatedEntity);
-
+        [HttpPut("updateEntityPropertiesByID/{id}")]
+        public async Task<ActionResult<EntityClass>> UpdateUserPropertiesByID(int id, EntityClass updatedEntity) 
+        {
+            DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
+            EntityClass? entity = await dbSet.FindAsync(id);
+            if (entity == null) 
+            {
+                return NotFound("Entity not found");
+            }
+            ((IEntityModelBase<EntityClass>)entity).updateEntity(updatedEntity);
+            this._dbContext.SaveChanges();
+            return Ok(entity);
+        }
         #endregion
     }
 }

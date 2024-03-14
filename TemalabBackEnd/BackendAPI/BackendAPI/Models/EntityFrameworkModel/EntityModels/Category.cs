@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
-    public class Category : IEntityModelBase
+    public class Category : IEntityModelBase<Category>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,6 +20,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             Menu = menu;
             MenuId = menu.Id;
             Name = name;
+        }
+        public void updateEntity(Category entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

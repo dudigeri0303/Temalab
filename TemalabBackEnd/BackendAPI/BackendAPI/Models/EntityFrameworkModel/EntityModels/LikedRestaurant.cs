@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Kedvelt Étterem típust reprezentáló osztály
-    public class LikedRestaurant : IEntityModelBase
+    public class LikedRestaurant : IEntityModelBase<LikedRestaurant>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,6 +27,11 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             UserId = user.Id;
             Restaurant = restaurant;
             RestaurantId = restaurant.Id;
+        }
+
+        public void updateEntity(LikedRestaurant entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

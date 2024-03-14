@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Foglalás típust reprezentáló osztály
-    public class Reservation : IEntityModelBase
+    public class Reservation : IEntityModelBase<Reservation>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,6 +28,11 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             ReserverId = reserver.Id;
             Table = table;
             TableId = table.Id;
+        }
+
+        public void updateEntity(Reservation entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

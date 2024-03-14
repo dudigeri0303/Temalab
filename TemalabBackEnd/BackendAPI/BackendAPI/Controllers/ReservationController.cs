@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public ReservationController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Reservation>> UpdateUserPropertiesByID(int id, Reservation updatedEntity)
-        {
-            return NotFound("Not yet implemented!");
-        }
     }
 }

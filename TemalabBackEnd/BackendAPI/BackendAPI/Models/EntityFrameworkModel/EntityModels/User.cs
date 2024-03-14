@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Felhasználó típust reprezentáló osztály
-    public class User : IEntityModelBase
+    public class User : IEntityModelBase<User>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,6 +28,25 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             Email = email;
             PhoneNumber = phoneNumber; 
             UserRole = userrole;
+        }
+        public void updateEntity(User entity)
+        {
+            if (entity.UserName != "string" && entity.UserName.Trim() != "")
+            {
+                this.UserName = entity.UserName;
+            }
+            if (entity.Password != "string" && entity.Password.Trim() != "")
+            {
+                this.Password = entity.Password;
+            }
+            if (entity.Email != "string" && entity.Email.Trim() != "")
+            {
+                this.Email = entity.Email;
+            }
+            if (entity.PhoneNumber != "string" && entity.PhoneNumber.Trim() != "")
+            {
+                this.PhoneNumber = entity.PhoneNumber;
+            }
         }
     }
 }

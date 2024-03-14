@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public MenuController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Menu>> UpdateUserPropertiesByID(int id, Menu updatedEntity)
-        {
-            return NotFound("Not yet implemented!");
-        }
     }
 }

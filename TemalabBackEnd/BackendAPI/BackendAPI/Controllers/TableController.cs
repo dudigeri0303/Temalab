@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public TableController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Table>> UpdateUserPropertiesByID(int id, Table updatedEntity)
-        {
-            return NotFound("Not yet implemented!");
-        }
     }
 }

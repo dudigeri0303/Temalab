@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Asztal típust reprezentáló osztály
-    public class Table : IEntityModelBase
+    public class Table : IEntityModelBase<Table>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,6 +24,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             RestaurantId = restaurant.Id;
             NumOfSeats = numofseats;
             IsReserved = false;
+        }
+        public void updateEntity(Table entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

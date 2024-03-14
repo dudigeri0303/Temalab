@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Tulajdonos típust reprezentáló osztály
-    public class Owner : IEntityModelBase
+    public class Owner : IEntityModelBase<Owner>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,6 +23,11 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             UserId = user.Id;
             Restaurant = restaurant;
             RestaurantId = restaurant.Id;
+        }
+
+        public void updateEntity(Owner entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

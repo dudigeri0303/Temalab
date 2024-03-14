@@ -12,11 +12,5 @@ namespace BackendAPI.Controllers
         public LikedRestaurantController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<LikedRestaurant>> UpdateUserPropertiesByID(int id, LikedRestaurant updatedEntity)
-        {
-            return NotFound("Not yet implemented!");
-        }
     }
 }

@@ -4,12 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
-    public class Menu : IEntityModelBase
+    public class Menu : IEntityModelBase<Menu>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public Menu() { }
+
+        public void updateEntity(Menu entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Admin típust reprezentáló osztály
-    public class Admin : IEntityModelBase
+    public class Admin : IEntityModelBase<Admin>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,6 +21,11 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             User = user;
             UserId = user.Id;
             Token = token;
+        }
+
+        public void updateEntity(Admin entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

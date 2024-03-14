@@ -18,7 +18,7 @@ namespace TemalabBackEnd.Controllers
 
         #region CrudOperations
 
-
+        /*
         [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
         public override async Task<ActionResult<User>> UpdateUserPropertiesByID(int id, User updatedEntity) 
         {
@@ -46,7 +46,7 @@ namespace TemalabBackEnd.Controllers
             }
             this._dbContext.SaveChanges();
             return Ok(user);
-        }
+        }*/
 
         #endregion
 

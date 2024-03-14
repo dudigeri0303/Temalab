@@ -10,11 +10,5 @@ namespace BackendAPI.Controllers
         public CategoryController(DatabaseContext dbContext) : base(dbContext)
         {
         }
-
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Category>> UpdateUserPropertiesByID(int id, Category updatedEntity)
-        {
-            return NotFound("Method is not implemented yet");
-        }
     }
 }

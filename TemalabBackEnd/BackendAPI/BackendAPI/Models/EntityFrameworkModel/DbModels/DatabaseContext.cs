@@ -56,7 +56,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         {
             foreach (var kvp in this.EntityTables)
             {
-                Debug.WriteLine(kvp.Value.GetType());
                 if (typeof(DbSet<T>).IsAssignableFrom(kvp.Value.GetType()))
                 {
                     return (DbSet<T>)kvp.Value;

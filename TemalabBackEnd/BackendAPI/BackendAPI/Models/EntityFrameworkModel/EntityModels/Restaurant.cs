@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
     //Étterem típust reprezentáló osztály
-    public class Restaurant : IEntityModelBase
+    public class Restaurant : IEntityModelBase<Restaurant>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -45,6 +45,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             PostCode = postCode;
             PhoneNumber = phoneNumber;
             OpeningHours = openingHours;
+        }
+        public void updateEntity(Restaurant entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
