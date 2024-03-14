@@ -10,18 +10,6 @@ export default function Profile() {
   {
     /*Adatok betöltése adatbázisból metódus*/
   }
-  {
-    /*szerkeszt:feloldja a disable mezőket*/
-  }
-  {
-    /*mégse gomb: visszaállít adatbázisba mentett adatok és disable szerkesztés*/
-  }
-  {
-    /*mentés: elmenti az új adatokat adatbázisba*/
-  }
-  {
-    /*név/felhasználónév: kiolvas adatbázisból*/
-  }
 
   const deleteProfile = () => {
     const IsProfileDeleted = window.confirm("Biztos törlöd a profilod?");
@@ -45,8 +33,12 @@ export default function Profile() {
 
   const cancelModify = () => {
     setModifiable(false);
-    {/*fv. hívás: Visszatölti a régi az utolsó mentett adatokat*/}
+    {/*fv. hívás: Visszatölti a régi az utolsó mentett adatokat ugyanaz, mint az oldal betöltésekor*/}
   };
+
+  const saveChanges = () => {
+    {/*elmenti adatbázisba az adatokat, ha változtak, a mezők validáljanak*/}
+  }
 
   return (
     <>
@@ -157,7 +149,7 @@ export default function Profile() {
 
           <div className="row">
             <div className="col-md-3 offset-md-5 mb-2">
-              <button type="submit" className="avgbtn">
+              <button onClick={saveChanges} type="button" className="avgbtn">
                 Változtatások mentése
               </button>
             </div>
