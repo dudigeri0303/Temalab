@@ -16,6 +16,7 @@ export default function Profile() {
     if (IsProfileDeleted) {
       {
         /*Profil törlése method hívás*/
+        alert("Profil törölve")
       }
       window.open("/", "_self");
       {
@@ -37,7 +38,8 @@ export default function Profile() {
   };
 
   const saveChanges = () => {
-    {/*elmenti adatbázisba az adatokat, ha változtak, a mezők validáljanak*/}
+    {/*elmenti adatbázisba az adatokat, ha változtak, a mezők validáljanak + esetleg egy üzenet sikeres mentés esetén*/}
+    alert("Változtatások mentve");
   }
 
   return (

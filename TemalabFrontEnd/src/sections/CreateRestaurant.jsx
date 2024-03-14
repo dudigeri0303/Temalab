@@ -11,9 +11,14 @@ export default function CreateRestaurant() {
     window.open("/mainPageOwner", "_self");
   };
 
-  {
-    /*létrehoz: ha valid, új restaurant objectum bekerül a restaurants listába, majd visszatér a mainPageOwner-re*/
+  const addRestaurantToList = () => {
+    {
+      /*új étterem listához adása a DB-ben, validálást a mezők végezzék*/
+    }
+    alert("Étterem hozzáadva");
+    window.open("/mainPageOwner", "_self");
   }
+
   {
     /*nyitvatartásra valami megoldás*/
   }
@@ -143,7 +148,7 @@ export default function CreateRestaurant() {
 
           <div className="row">
             <div className="col-md-3 offset-sm-4 mb-2">
-              <button type="submit" className="avgbtn">
+              <button onClick={addRestaurantToList} type="button" className="avgbtn">
                 Létrehoz
               </button>
             </div>
