@@ -1,5 +1,5 @@
 import "../App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 
 export default function Profile() {
@@ -36,6 +36,18 @@ export default function Profile() {
     }
   };
 
+  {/*reactban:state hook kell, hogy azonnal renderelje a változást*/}
+  const [modifiable, setModifiable] = useState(false);
+
+  const modify = () => {
+    setModifiable(true);
+  };
+
+  const cancelModify = () => {
+    setModifiable(false);
+    {/*fv. hívás: Visszatölti a régi az utolsó mentett adatokat*/}
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -50,7 +62,7 @@ export default function Profile() {
 
             <div className="col-md-8">
               <div className="col-md-3 offset-md-4 mb-2">
-                <button type="button" className="avgbtn float-md-right">
+                <button onClick={modify} type="button" className="avgbtn float-md-right">
                   Profil szerkesztése
                 </button>
               </div>
@@ -73,6 +85,7 @@ export default function Profile() {
                   id="nameForProfile"
                   name="nameForProfile"
                   placeholder="Név"
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -93,6 +106,7 @@ export default function Profile() {
                   id="telForProfile"
                   name="telForProfile"
                   placeholder="Telefonszám"
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -113,6 +127,7 @@ export default function Profile() {
                   id="emailForProfile"
                   name="emailForProfile"
                   placeholder="Email"
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -133,6 +148,7 @@ export default function Profile() {
                   id="passwordForProfile"
                   name="passwordForProfile"
                   placeholder="Jelszó"
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -146,7 +162,7 @@ export default function Profile() {
               </button>
             </div>
             <div className="col-md-2 offset-md-1 mb-2">
-              <button type="button" className="avgbtn">
+              <button onClick={cancelModify} type="button" className="avgbtn">
                 Mégse
               </button>
             </div>
