@@ -48,6 +48,11 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         }
         public void updateEntity(Restaurant entity)
         {
+            if (entity.Menu != null) 
+            {
+                this.Menu = entity.Menu;
+                this.MenuId = entity.MenuId;
+            }
             if (entity.Name != "string" && entity.Name.Trim() != "")
             {
                 this.Name = entity.Name;
