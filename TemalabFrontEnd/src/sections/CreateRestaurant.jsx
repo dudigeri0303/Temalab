@@ -40,14 +40,25 @@ export default function CreateRestaurant() {
 
   const addDayOpeningHour = () => {
     {
-      const selectedDay = document.getElementById("days");
-      const selectedOpenHour = document.getElementById("openHour");
-      const selectedCloseHour = document.getElementById("closeHour");
+      const selectedDay = document.getElementById("days").value;
+      const selectedOpenHour = document.getElementById("openHour").value;
+      const selectedCloseHour = document.getElementById("closeHour").value;
 
-      const openingHours =
-        selectedOpenHour.toString() + selectedCloseHour.toString();
+      const openingHours = selectedOpenHour + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
+
+      console.log("választott nap", selectedDay);
+      console.log("nyitás", selectedOpenHour);
+      console.log("zárás", selectedCloseHour);
+      console.log("nyitás+zárás", openingHours);
+
+
+
+
+      for (const [key, value] of Object.entries(daysWithOpeningHours)) {
+        console.log(key, value);
+      }
     }
   };
 
