@@ -1,7 +1,9 @@
 import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import TimePicker from "react-bootstrap-time-picker";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 
 export default function CreateRestaurant() {
   useEffect(() => {
@@ -20,12 +22,11 @@ export default function CreateRestaurant() {
     window.open("/mainPageOwner", "_self");
   };
 
-
   {
     /*kicsit duplikált, de így tud csak frissülni mindkét select*/
   }
-  const [openHour, setOpenHour] = useState(0);
-  const [closeHour, setCloseHour] = useState(0);
+  const [openHour, setOpenHour] = useState("0:00");
+  const [closeHour, setCloseHour] = useState("23:59");
 
   const openingTime = (time) => {
     setOpenHour(time);
@@ -40,6 +41,7 @@ export default function CreateRestaurant() {
       <Navbar></Navbar>
       <section id="main" className="container py-3">
         <form method="post">
+          <div></div>
           <div className="mb-3">
             <label htmlFor="nameForRestaurant" className="form-label">
               Étterem név
@@ -75,27 +77,15 @@ export default function CreateRestaurant() {
               </div>
             </div>
             <div className="col-md-2">
-              <div className="mb-3">
+              <div>
                 <label className="form-label">Nyitás:</label>
-                <TimePicker
-                  onChange={openingTime}
-                  value={openHour}
-                  start="10:00"
-                  end="21:00"
-                  step={30}
-                />
+                <TimePicker onChange={openingTime} value={openHour} />
               </div>
             </div>
             <div className="col-md-2">
               <div className="mb-3">
                 <label className="form-label">Zárás:</label>
-                <TimePicker
-                  onChange={closingTime}
-                  value={closeHour}
-                  start="10:00"
-                  end="21:00"
-                  step={30}
-                />
+                <TimePicker onChange={closingTime} value={closeHour} />
               </div>
             </div>
           </div>
