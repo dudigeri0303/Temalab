@@ -40,7 +40,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             {
                 this.Description = entity.Description;
             }
-            if (entity.Price != 0)
+            if (entity.Price >= 0)
             {
                 this.Price = entity.Price;
             }
