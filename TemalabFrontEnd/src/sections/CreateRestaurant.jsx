@@ -1,6 +1,7 @@
 import "../App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import TimePicker from "react-bootstrap-time-picker";
 
 export default function CreateRestaurant() {
   useEffect(() => {
@@ -17,11 +18,22 @@ export default function CreateRestaurant() {
     }
     alert("Étterem hozzáadva");
     window.open("/mainPageOwner", "_self");
-  }
+  };
+
 
   {
-    /*nyitvatartásra valami megoldás*/
+    /*kicsit duplikált, de így tud csak frissülni mindkét select*/
   }
+  const [openHour, setOpenHour] = useState(0);
+  const [closeHour, setCloseHour] = useState(0);
+
+  const openingTime = (time) => {
+    setOpenHour(time);
+  };
+
+  const closingTime = (time) => {
+    setCloseHour(time);
+  };
 
   return (
     <>
@@ -42,17 +54,50 @@ export default function CreateRestaurant() {
             />
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="openingHoursForRestaurant" className="form-label">
-              Nyitvatartás
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="openingHoursForRestaurant"
-              name="openingHoursForRestaurant"
-              placeholder="Nyitvatartás API vagy szövegdoboz vagy select menü"
-            />
+          <div className="row">
+            <div className="col-md-5">
+              <div className="mb-3">
+                <div className="col-md-4">
+                  <label htmlFor="days" className="form-label">
+                    Nyitvatartás
+                  </label>
+                  <select className="form-select" id="days" name="days">
+                    <option selected>Napok...</option>
+                    <option value="1">Hétfő</option>
+                    <option value="2">Kedd</option>
+                    <option value="3">Szerda</option>
+                    <option value="3">Csütörtök</option>
+                    <option value="3">Péntek</option>
+                    <option value="3">Szombat</option>
+                    <option value="3">Vasárnap</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-2">
+              <div className="mb-3">
+                <label className="form-label">Nyitás:</label>
+                <TimePicker
+                  onChange={openingTime}
+                  value={openHour}
+                  start="10:00"
+                  end="21:00"
+                  step={30}
+                />
+              </div>
+            </div>
+            <div className="col-md-2">
+              <div className="mb-3">
+                <label className="form-label">Zárás:</label>
+                <TimePicker
+                  onChange={closingTime}
+                  value={closeHour}
+                  start="10:00"
+                  end="21:00"
+                  step={30}
+                />
+              </div>
+            </div>
           </div>
 
           <label className="form-label">Cím</label>
@@ -148,7 +193,11 @@ export default function CreateRestaurant() {
 
           <div className="row">
             <div className="col-md-3 offset-sm-4 mb-2">
-              <button onClick={addRestaurantToList} type="button" className="avgbtn">
+              <button
+                onClick={addRestaurantToList}
+                type="button"
+                className="avgbtn"
+              >
                 Létrehoz
               </button>
             </div>
