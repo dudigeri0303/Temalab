@@ -61,6 +61,8 @@ export default function CreateRestaurant() {
 
       daysWithOpeningHours[selectedDay] = openingHours;
 
+      alert("Nyitvatartás hozzáadva:\n"+ selectedDay +": "+ openingHours);
+
       for (const [key, value] of Object.entries(daysWithOpeningHours)) {
         console.log(key, value);
       }
@@ -88,13 +90,13 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="row">
-            <div className="col-md-5">
+            <div className="col-md-4 d-flex justify-content-center">
               <div className="mb-3">
                 <div className="col-md-4">
                   <label htmlFor="days" className="form-label">
                     Nyitvatartás
                   </label>
-                  <select className="form-select" id="days" name="days">
+                  <select className="form-select" id="days" name="days" style={{ width: "200px" }}>
                     <option value="Hétfő">Hétfő</option>
                     <option value="Kedd">Kedd</option>
                     <option value="Szerda">Szerda</option>
@@ -106,27 +108,31 @@ export default function CreateRestaurant() {
                 </div>
               </div>
             </div>
-            <div className="col-md-2">
-              <div>
+            <div className="col-md-3 d-flex justify-content-center">
+              <div className="mb-3">
                 <label className="label-time">Nyitás:</label>
                 <TimePicker
+                  className="time-pickerStart"
                   id="openHour"
                   onChange={openingTime}
                   value={openHour}
+                  clearIcon={null}
                 />
               </div>
             </div>
-            <div className="col-md-2">
+            <div className="col-md-3 d-flex justify-content-center">
               <div className="mb-3">
                 <label className="label-time">Zárás:</label>
                 <TimePicker
+                  className="time-pickerEnd"
                   id="closeHour"
                   onChange={closingTime}
                   value={closeHour}
+                  clearIcon={null}
                 />
               </div>
             </div>
-            <div className="col-md-3 offset-sm-4 mb-2">
+            <div className="col-md-2 d-flex justify-content-center">
               <button
                 onClick={addDayOpeningHour}
                 type="button"

@@ -186,3 +186,13 @@ footer a:hover {
   display: block;
   margin-bottom: 10px;
 }
+
+.time-pickerStart {
+  color: green;
+  font-size: 28px;
+}
+
+.time-pickerEnd {
+  color: red;
+  font-size: 28px;
+}
