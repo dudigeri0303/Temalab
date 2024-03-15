@@ -181,3 +181,8 @@ footer a:hover {
 .a-links:hover {
   color: black;
 }
+
+.label-time {
+  display: block;
+  margin-bottom: 10px;
+}

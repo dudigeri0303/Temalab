@@ -36,6 +36,21 @@ export default function CreateRestaurant() {
     setCloseHour(time);
   };
 
+  const daysWithOpeningHours = {};
+
+  const addDayOpeningHour = () => {
+    {
+      const selectedDay = document.getElementById("days");
+      const selectedOpenHour = document.getElementById("openHour");
+      const selectedCloseHour = document.getElementById("closeHour");
+
+      const openingHours =
+        selectedOpenHour.toString() + selectedCloseHour.toString();
+
+      daysWithOpeningHours[selectedDay] = openingHours;
+    }
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -64,7 +79,7 @@ export default function CreateRestaurant() {
                     Nyitvatartás
                   </label>
                   <select className="form-select" id="days" name="days">
-                    <option selected>Napok...</option>
+                    <option defaultValue>Napok...</option>
                     <option value="1">Hétfő</option>
                     <option value="2">Kedd</option>
                     <option value="3">Szerda</option>
@@ -78,15 +93,32 @@ export default function CreateRestaurant() {
             </div>
             <div className="col-md-2">
               <div>
-                <label className="form-label">Nyitás:</label>
-                <TimePicker onChange={openingTime} value={openHour} />
+                <label className="label-time">Nyitás:</label>
+                <TimePicker
+                  id="openHour"
+                  onChange={openingTime}
+                  value={openHour}
+                />
               </div>
             </div>
             <div className="col-md-2">
               <div className="mb-3">
-                <label className="form-label">Zárás:</label>
-                <TimePicker onChange={closingTime} value={closeHour} />
+                <label className="label-time">Zárás:</label>
+                <TimePicker
+                  id="closeHour"
+                  onChange={closingTime}
+                  value={closeHour}
+                />
               </div>
+            </div>
+            <div className="col-md-3 offset-sm-4 mb-2">
+              <button
+                onClick={addDayOpeningHour}
+                type="button"
+                className="avgbtn"
+              >
+                Hozzáad
+              </button>
             </div>
           </div>
 
