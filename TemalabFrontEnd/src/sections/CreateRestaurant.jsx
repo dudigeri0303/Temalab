@@ -53,9 +53,6 @@ export default function CreateRestaurant() {
       console.log("zárás", selectedCloseHour);
       console.log("nyitás+zárás", openingHours);
 
-
-
-
       for (const [key, value] of Object.entries(daysWithOpeningHours)) {
         console.log(key, value);
       }
@@ -91,13 +88,13 @@ export default function CreateRestaurant() {
                   </label>
                   <select className="form-select" id="days" name="days">
                     <option defaultValue>Napok...</option>
-                    <option value="1">Hétfő</option>
-                    <option value="2">Kedd</option>
-                    <option value="3">Szerda</option>
-                    <option value="3">Csütörtök</option>
-                    <option value="3">Péntek</option>
-                    <option value="3">Szombat</option>
-                    <option value="3">Vasárnap</option>
+                    <option value="Hétfő">Hétfő</option>
+                    <option value="Kedd">Kedd</option>
+                    <option value="Szerda">Szerda</option>
+                    <option value="Csütörtök">Csütörtök</option>
+                    <option value="Péntek">Péntek</option>
+                    <option value="Szombat">Szombat</option>
+                    <option value="Vasárnap">Vasárnap</option>
                   </select>
                 </div>
               </div>
