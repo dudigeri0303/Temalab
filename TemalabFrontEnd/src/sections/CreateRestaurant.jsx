@@ -36,7 +36,16 @@ export default function CreateRestaurant() {
     setCloseHour(time);
   };
 
-  const daysWithOpeningHours = {};
+
+  var daysWithOpeningHours = {
+    "Hétfő": "zárva",
+    "Kedd": "zárva",
+    "Szerda": "zárva",
+    "Csütörtök": "zárva",
+    "Péntek": "zárva",
+    "Szombat": "zárva",
+    "Vasárnap": "zárva",
+  };
 
   const addDayOpeningHour = () => {
     {
@@ -47,15 +56,7 @@ export default function CreateRestaurant() {
       const openingHours = selectedOpenHour + "-" + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
-
-      console.log("választott nap", selectedDay);
-      console.log("nyitás", selectedOpenHour);
-      console.log("zárás", selectedCloseHour);
-      console.log("nyitás+zárás", openingHours);
-      console.log("záróóóóóóóóóóra", closeHour);
-
-
-
+    
       for (const [key, value] of Object.entries(daysWithOpeningHours)) {
         console.log(key, value);
       }
