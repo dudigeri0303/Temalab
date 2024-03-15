@@ -41,10 +41,10 @@ export default function CreateRestaurant() {
   const addDayOpeningHour = () => {
     {
       const selectedDay = document.getElementById("days").value;
-      const selectedOpenHour = document.getElementById("openHour").value;
-      const selectedCloseHour = document.getElementById("closeHour").value;
+      const selectedOpenHour = openHour;
+      const selectedCloseHour = closeHour;
 
-      const openingHours = selectedOpenHour + selectedCloseHour;
+      const openingHours = selectedOpenHour + "-" + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
 
@@ -52,6 +52,9 @@ export default function CreateRestaurant() {
       console.log("nyitás", selectedOpenHour);
       console.log("zárás", selectedCloseHour);
       console.log("nyitás+zárás", openingHours);
+      console.log("záróóóóóóóóóóra", closeHour);
+
+
 
       for (const [key, value] of Object.entries(daysWithOpeningHours)) {
         console.log(key, value);
