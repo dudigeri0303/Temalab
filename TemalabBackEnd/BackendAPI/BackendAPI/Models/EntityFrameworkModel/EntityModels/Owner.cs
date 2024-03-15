@@ -27,6 +27,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 
         public void updateEntity(Owner entity)
         {
+            //Itt nincs ertelme az updateEntity-nek
             throw new NotImplementedException();
         }
     }

@@ -32,7 +32,18 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 
         public void updateEntity(Food entity)
         {
-            throw new NotImplementedException();
+            if (entity.Name != "string" && entity.Description.Trim() != "")
+            {
+                this.Name = entity.Name;
+            }
+            if (entity.Description != "string" && entity.Description.Trim() != "")
+            {
+                this.Description = entity.Description;
+            }
+            if (entity.Price != 0)
+            {
+                this.Price = entity.Price;
+            }
         }
     
     }

@@ -25,7 +25,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 
         public void updateEntity(Admin entity)
         {
-            throw new NotImplementedException();
+            if (entity.Token != "string" && entity.Description.Trim() != "")
+            {
+                this.Token = entity.Token;
+            }
         }
     }
 }

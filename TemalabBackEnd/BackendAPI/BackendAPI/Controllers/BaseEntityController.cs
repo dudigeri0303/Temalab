@@ -66,6 +66,7 @@ namespace BackendAPI.Controllers
             return Ok(newEntity);
         }
 
+        //Itt nem kene atnevezni siman UpdatePropertiesByID-re?
         [HttpPut("updateEntityPropertiesByID/{id}")]
         public async Task<ActionResult<EntityClass>> UpdateUserPropertiesByID(int id, EntityClass updatedEntity) 
         {

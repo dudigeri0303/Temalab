@@ -23,7 +23,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         }
         public void updateEntity(Category entity)
         {
-            throw new NotImplementedException();
+            if (entity.Name != "string" && entity.Description.Trim() != "")
+            {
+                this.Name = entity.Name;
+            }
         }
     }
 }
