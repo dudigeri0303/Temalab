@@ -42,13 +42,13 @@ export default function CreateRestaurant() {
   }
 
   const daysWithOpeningHours = {
-    Hétfő: "zárva",
-    Kedd: "zárva",
-    Szerda: "zárva",
-    Csütörtök: "zárva",
-    Péntek: "zárva",
-    Szombat: "zárva",
-    Vasárnap: "zárva",
+    Hétfő: " zárva",
+    Kedd: " zárva",
+    Szerda: " zárva",
+    Csütörtök: " zárva",
+    Péntek: " zárva",
+    Szombat: " zárva",
+    Vasárnap: " zárva",
   };
 
   const addDayOpeningHour = () => {
@@ -66,8 +66,12 @@ export default function CreateRestaurant() {
       for (const [key, value] of Object.entries(daysWithOpeningHours)) {
         console.log(key, value);
       }
+      const firstListItem = listItems[0];
+      console.log(firstListItem);
     }
   };
+
+  const listItems = Object.entries(daysWithOpeningHours).map(day => <li key={day}>{day}</li>);
 
   return (
     <>
@@ -140,6 +144,9 @@ export default function CreateRestaurant() {
               >
                 Hozzáad
               </button>
+            </div>
+            <div className="col-md-2 d-flex justify-content-center">
+            <ul>{listItems}</ul>
             </div>
           </div>
 
