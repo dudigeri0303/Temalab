@@ -36,15 +36,19 @@ export default function CreateRestaurant() {
     setCloseHour(time);
   };
 
+  {
+    /*kulcs értékpárok előre eltárolva, így megadásnál 1 naphoz csak 1 érték adható,
+    napok sem duplikálódnak, valamit sorrend is fix, ha nincs megadva nyitvatartás, akkor zárva a default érték*/
+  }
 
-  var daysWithOpeningHours = {
-    "Hétfő": "zárva",
-    "Kedd": "zárva",
-    "Szerda": "zárva",
-    "Csütörtök": "zárva",
-    "Péntek": "zárva",
-    "Szombat": "zárva",
-    "Vasárnap": "zárva",
+  const daysWithOpeningHours = {
+    Hétfő: "zárva",
+    Kedd: "zárva",
+    Szerda: "zárva",
+    Csütörtök: "zárva",
+    Péntek: "zárva",
+    Szombat: "zárva",
+    Vasárnap: "zárva",
   };
 
   const addDayOpeningHour = () => {
@@ -56,7 +60,7 @@ export default function CreateRestaurant() {
       const openingHours = selectedOpenHour + "-" + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
-    
+
       for (const [key, value] of Object.entries(daysWithOpeningHours)) {
         console.log(key, value);
       }
@@ -91,7 +95,6 @@ export default function CreateRestaurant() {
                     Nyitvatartás
                   </label>
                   <select className="form-select" id="days" name="days">
-                    <option defaultValue>Napok...</option>
                     <option value="Hétfő">Hétfő</option>
                     <option value="Kedd">Kedd</option>
                     <option value="Szerda">Szerda</option>
