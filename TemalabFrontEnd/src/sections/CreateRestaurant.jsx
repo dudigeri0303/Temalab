@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import { object } from "prop-types";
 
 export default function CreateRestaurant() {
   useEffect(() => {
@@ -41,7 +42,7 @@ export default function CreateRestaurant() {
     napok sem duplikálódnak, valamit sorrend is fix, ha nincs megadva nyitvatartás, akkor zárva a default érték*/
   }
 
-  const daysWithOpeningHours = {
+  const [daysWithOpeningHours, setDaysWithOpeningHours] = useState({
     Hétfő: " zárva",
     Kedd: " zárva",
     Szerda: " zárva",
@@ -49,7 +50,17 @@ export default function CreateRestaurant() {
     Péntek: " zárva",
     Szombat: " zárva",
     Vasárnap: " zárva",
+  });
+
+  const updateOpeningHours = () => {
+    setDaysWithOpeningHours(() => ({
+      ...daysWithOpeningHours,
+      ...daysWithOpeningHours,
+    }));
   };
+
+  //object to array, majd végigmappol a listán és minden kulcshoz/naphoz hozzárendel egy listaelemet-t, ami a nyitvatartást tartalmazza
+  const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(day => <li key={day}>{day}</li>);
 
   const addDayOpeningHour = () => {
     {
@@ -57,21 +68,12 @@ export default function CreateRestaurant() {
       const selectedOpenHour = openHour;
       const selectedCloseHour = closeHour;
 
-      const openingHours = selectedOpenHour + "-" + selectedCloseHour;
+      const openingHours = " " + selectedOpenHour + "-" + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
-
-      alert("Nyitvatartás hozzáadva:\n"+ selectedDay +": "+ openingHours);
-
-      for (const [key, value] of Object.entries(daysWithOpeningHours)) {
-        console.log(key, value);
-      }
-      const firstListItem = listItems[0];
-      console.log(firstListItem);
+      updateOpeningHours();
     }
   };
-
-  const listItems = Object.entries(daysWithOpeningHours).map(day => <li key={day}>{day}</li>);
 
   return (
     <>
@@ -100,7 +102,12 @@ export default function CreateRestaurant() {
                   <label htmlFor="days" className="form-label">
                     Nyitvatartás
                   </label>
-                  <select className="form-select" id="days" name="days" style={{ width: "200px" }}>
+                  <select
+                    className="form-select"
+                    id="days"
+                    name="days"
+                    style={{ width: "200px" }}
+                  >
                     <option value="Hétfő">Hétfő</option>
                     <option value="Kedd">Kedd</option>
                     <option value="Szerda">Szerda</option>
@@ -145,8 +152,8 @@ export default function CreateRestaurant() {
                 Hozzáad
               </button>
             </div>
-            <div className="col-md-2 d-flex justify-content-center">
-            <ul>{listItems}</ul>
+            <div className="col-md-3 d-flex justify-content-center">
+              <ul className="ul-days">{updatedOpeningHours}</ul>
             </div>
           </div>
 
