@@ -3,7 +3,7 @@ import "../App.css";
 export default function Footer() {
   return (
     <>
-      <footer className="text-center text-lg-start">
+      <footer className="text-center text-lg-start container-fluid">
         <section>
           <div className="row mt-3 justify-content-center">
             <div className="col-md-5 col-lg-5 col-xl-5 mt-3 text-center">
