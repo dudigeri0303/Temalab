@@ -1,21 +1,21 @@
-input{
+input {
   font-family: Regular;
   color: black;
 }
 
 .regform {
- max-width: 400px;
+  max-width: 400px;
 }
 
 .regdiv {
   height: 100vh;
 }
 
-.regform div{
+.regform div {
   width: 400px;
 }
 
-.regform div button{
+.regform div button {
   width: 160px;
 }
 
@@ -44,12 +44,35 @@ body {
   text-decoration: none;
 }
 
+.avgbtn {
+  background-color: #ffc300;
+  color: black;
+  padding: 10px;
+  border: none 0px;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+}
+
+.cardbtn {
+  background-color: #ffc300;
+  border-radius: 5px;
+  color: black;
+  font-size: 36px;
+  padding: 5px 20px;
+  border: none 0px;
+  margin: 20px;
+  border-radius: 15px;
+}
+
 .redbtn {
   background-color: #ff000d;
   border-radius: 5px;
   color: black;
+  padding: 10px;
+  border: none 0px;
   margin-top: 20px;
-  align-content: end;
+  border-radius: 15px;
 }
 
 .logo {
@@ -80,7 +103,7 @@ body {
 .navbarlogo {
   max-width: 100px;
 }
-  
+
 .navitemcss {
   color: white;
   font-family: "Jacques Francois", serif;
@@ -92,11 +115,18 @@ body {
 
 footer {
   background-color: #001D3D;
-  color:white;
+  color: white;
+  width: 100%;
+  bottom: 0;
+  position:relative;
+}
+
+.footerlogo {
+  max-width: 100px;
 }
 
 footer a {
-  color:white;
+  color: white;
   text-decoration: none;
 }
 
@@ -108,4 +138,65 @@ footer a:hover {
   text-align: left;
   margin-top: 20px;
   margin-bottom: 20;
+}
+
+.div-card {
+  background-color: #607a8e;
+  border-radius: 15px;
+  align-items: center;
+  padding: 1px 25px;
+}
+
+.card-text {
+  font-size: 36px;
+  color: white;
+}
+
+.card-Altext {
+  font-size: 26px;
+  color: white;
+}
+
+.likebtn {
+  background-color: #607a8e;
+  border: none;
+  padding: 1px 50px;
+}
+
+.placeholerLabel {
+  font-size: 36px;
+  color: white;
+  background-color: #607a8e;
+  text-align: center;
+  display: block;
+  padding: 100px 100px;
+}
+
+.a-links {
+  color: 607a8e;
+  font-size: 36px;
+  text-decoration: none;
+}
+
+.a-links:hover {
+  color: black;
+}
+
+.label-time {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.time-pickerStart {
+  color: green;
+  font-size: 28px;
+}
+
+.time-pickerEnd {
+  color: red;
+  font-size: 28px;
+}
+
+.ul-days {
+  list-style: none;
 }
