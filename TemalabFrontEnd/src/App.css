@@ -3,6 +3,32 @@ input {
   color: black;
 }
 
+.contactus {
+  background-color: #607a8e;
+  border-radius: 5px;
+}
+
+.heartstyle{
+  height: 45px;
+}
+
+.contactustext {
+  color: white;
+  text-align: center;
+  font-size: xx-large;
+}
+
+.starstyle {
+  max-height: 45px;
+}
+
+.restaurantpagebtn {
+  max-width: 100%;
+  display: block;
+  text-align: center;
+  font-size: large;
+}
+
 .regform {
   max-width: 400px;
 }
@@ -114,11 +140,11 @@ body {
 }
 
 footer {
-  background-color: #001D3D;
+  background-color: #001d3d;
   color: white;
   width: 100%;
   bottom: 0;
-  position:relative;
+  position: relative;
 }
 
 .footerlogo {
@@ -131,7 +157,7 @@ footer a {
 }
 
 footer a:hover {
-  color:black;
+  color: black;
 }
 
 .h4-profile {

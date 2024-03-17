@@ -14,6 +14,7 @@ import CustomerFavorites from './sections/CustomerFavorites';
 import CustomerMain from './sections/CustomerMain';
 import OwnerMain from './sections/OwnerMain';
 import OwnerTables from './sections/OwnerTables';
+import RestaurantPage from './sections/RestaurantPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Route path="/mainPageCustomer" element={<CustomerMain/>} />
               <Route path="/mainPageOwner" element={<OwnerMain/>} />
               <Route path="/tablesOwner" element={<OwnerTables/>} />
+              <Route path="/restaurant" element={<RestaurantPage/>}/>
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}
