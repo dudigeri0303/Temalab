@@ -25,11 +25,11 @@ export default function Footer() {
             <div className="col-md-5 col-lg-5 col-xl-5 mt-3 text-center">
               <p>
                 <i className="fas fa-home mr-3"></i>{" "}
-                <a href="https://facebook.com">ⓕ Facebook</a>
+                <a href="https://facebook.com"><img src="/facebook.svg"></img> Facebook</a>
               </p>
               <p>
                 <i className="fas fa-envelope mr-3"></i>{" "}
-                <a href="https://instagram.com">[◉°] Instagram</a>
+                <a href="https://instagram.com"><img src="/instagram.svg"></img> Instagram</a>
               </p>
             </div>
           </div>
