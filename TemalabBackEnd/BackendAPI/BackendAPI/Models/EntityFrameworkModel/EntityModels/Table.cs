@@ -27,7 +27,14 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         }
         public void updateEntity(Table entity)
         {
-            throw new NotImplementedException();
+            if(entity.NumOfSeats > 0) 
+            {
+                this.NumOfSeats = entity.NumOfSeats;
+            }
+            if(this.IsReserved != entity.IsReserved) 
+            {
+                this.IsReserved = entity.IsReserved;
+            }
         }
     }
 }

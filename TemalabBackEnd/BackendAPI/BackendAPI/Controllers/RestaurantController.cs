@@ -14,63 +14,6 @@ namespace BackendAPI.Controllers
         public RestaurantController(DatabaseContext context) : base(context)
         {
         }
-
-        #region CrudOperations
-
-
-        /*
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<Restaurant>> UpdateUserPropertiesByID(int id, Restaurant updatedEntity) 
-        {
-            Restaurant updatedRestaurant = updatedEntity;
-            Restaurant? restaurant = await this._dbContext.Restaurants.FindAsync(id);
-            if (restaurant == null)
-            {
-                return NotFound("Restaurant not found!");
-            }
-            if (updatedRestaurant.Name != "string" && updatedRestaurant.Name.Trim() != "")
-            {
-                restaurant.Name = updatedRestaurant.Name;
-            }
-            if (updatedRestaurant.Description != "string" && updatedRestaurant.Description.Trim() != "")
-            {
-                restaurant.Description = updatedRestaurant.Description;
-            }
-            if (updatedRestaurant.Label != "string" && updatedRestaurant.Label.Trim() != "")
-            {
-                restaurant.Label = updatedRestaurant.Label;
-            }
-            if (updatedRestaurant.City != "string" && updatedRestaurant.City.Trim() != "")
-            {
-                restaurant.City = updatedRestaurant.City;
-            }
-            if (updatedRestaurant.Street != "string" && updatedRestaurant.Street.Trim() != "")
-            {
-                restaurant.Street = updatedRestaurant.Street;
-            }
-            if (updatedRestaurant.HouseNumber != 0)
-            {
-                restaurant.HouseNumber = updatedRestaurant.HouseNumber;
-            }
-            if (updatedRestaurant.PostCode != 0)
-            {
-                restaurant.PostCode = updatedRestaurant.PostCode;
-            }
-            if (updatedRestaurant.PhoneNumber != "string" && updatedRestaurant.PhoneNumber.Trim() != "")
-            {
-                restaurant.PhoneNumber = updatedRestaurant.PhoneNumber;
-            }
-            if (updatedRestaurant.OpeningHours != "string" && updatedRestaurant.OpeningHours.Trim() != "")
-            {
-                restaurant.OpeningHours = updatedRestaurant.OpeningHours;
-            }
-            this._dbContext.SaveChanges();
-            return Ok(restaurant);
-        }*/
-
-
-        #endregion
-
         #region UniqueOperations
 
         [HttpGet("getOwnerByRestaurantID/{id}")]

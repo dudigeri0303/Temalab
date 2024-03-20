@@ -1,4 +1,5 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,7 +33,14 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         }
         public void updateEntity(Review entity)
         {
-            throw new NotImplementedException();
+            if(entity.Rating  > 0 && entity.Rating <=5)
+            {
+                this.Rating = entity.Rating;
+            }
+            if (entity.Description != "string" && entity.Description.Trim() != "") 
+            {
+                this.Description = entity.Description;
+            }
         }
     }
 }
