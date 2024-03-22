@@ -114,8 +114,8 @@ const RegisterForm = () => {
         </div>
 
         <div>
-          <button className='btnstyle m-3' type="submit" onClick={handleRegister} >Register</button>
-          <button className='btnstyle m-3' type="submit" onClick={handleCancel} >Mégse</button>
+          <button className='btnstyle m-3 py-2' type="submit" onClick={handleRegister} >Register</button>
+          <button className='btnstyle m-3 py-2' type="submit" onClick={handleCancel} >Mégse</button>
         </div>
 
       </form>

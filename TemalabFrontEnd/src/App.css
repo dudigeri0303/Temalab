@@ -226,3 +226,13 @@ footer a:hover {
 .ul-days {
   list-style: none;
 }
+
+.hr-menu{
+  color: white;
+  border-width: 4px;
+}
+
+.menu-price{
+  position: absolute;
+  right: 20px;
+}

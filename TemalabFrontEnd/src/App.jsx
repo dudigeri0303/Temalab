@@ -16,6 +16,7 @@ import OwnerMain from './sections/OwnerMain';
 import OwnerTables from './sections/OwnerTables';
 import RestaurantPage from './sections/RestaurantPage';
 import OwnerRestaurantPage from './sections/OwnerRestaurantPage';
+import Menu from './sections/Menu';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<Login/>} />
               <Route path="/navowner" element={<OwnerNavbar/>} />
               <Route path="/register" element={<RegisterForm/>} />
+              <Route path="/Menu" element={<Menu/>} />
               <Route path="/createRestaurant" element={<CreateRestaurant/>} />
               <Route path="/profile" element={<Profile/>} />
               <Route path='/navbartest' element={<Navbar/>} />
