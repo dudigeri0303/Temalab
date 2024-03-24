@@ -16,6 +16,8 @@ import OwnerMain from './sections/OwnerMain';
 import OwnerTables from './sections/OwnerTables';
 import RestaurantPage from './sections/RestaurantPage';
 import OwnerRestaurantPage from './sections/OwnerRestaurantPage';
+import OwnerProfile from './sections/OwnerProfile';
+
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
               <Route path="/tablesOwner" element={<OwnerTables/>} />
               <Route path="/restaurant" element={<RestaurantPage/>}/>
               <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
+              <Route path="/ownerProfile" element={<OwnerProfile/>}/>
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}

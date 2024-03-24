@@ -1,10 +1,10 @@
-import Navbar from "../components/Navbar";
+import OwnerNavbar from "../components/OwnerNavbar";
 import CommonProfile from "../components/CommonProfile";
 
 export default function Profile() {
   return (
     <>
-      <Navbar></Navbar>
+      <OwnerNavbar></OwnerNavbar>
       <CommonProfile></CommonProfile>
     </>
   );
