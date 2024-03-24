@@ -226,3 +226,14 @@ footer a:hover {
 .ul-days {
   list-style: none;
 }
+
+
+.section-bg {
+  background-color: #c0d6df;
+  border: 10px solid #001d3d;
+}
+
+.label-modal {
+  font-size: 26px;
+  padding: 20px 20px;
+}
