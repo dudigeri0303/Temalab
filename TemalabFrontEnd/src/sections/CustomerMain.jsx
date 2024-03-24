@@ -1,6 +1,7 @@
 import "../App.css";
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import SearchByName from "../components/SearchByName";
 
 export default function CustomerFavorites() {
   useEffect(() => {
@@ -14,6 +15,8 @@ export default function CustomerFavorites() {
   return (
     <>
       <Navbar></Navbar>
+      <SearchByName></SearchByName>
+
       <label className="placeholerLabel">Éttermek</label>
     </>
   );
