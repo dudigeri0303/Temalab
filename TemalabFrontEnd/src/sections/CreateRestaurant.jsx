@@ -4,7 +4,6 @@ import OwnerNavbar from "../components/OwnerNavbar";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { object } from "prop-types";
 
 export default function CreateRestaurant() {
   useEffect(() => {
@@ -23,9 +22,11 @@ export default function CreateRestaurant() {
     window.open("/mainPageOwner", "_self");
   };
 
-  {
-    /*kicsit duplikált, de így tud csak frissülni mindkét select*/
-  }
+    /*
+    kicsit duplikált, de így tud csak frissülni mindkét select
+    lehetne mergerlni a 2 useState-et, de elég körülményes
+    */
+  
   const [openHour, setOpenHour] = useState("0:00");
   const [closeHour, setCloseHour] = useState("23:59");
 
@@ -43,13 +44,13 @@ export default function CreateRestaurant() {
   }
 
   const [daysWithOpeningHours, setDaysWithOpeningHours] = useState({
-    Hétfő: " zárva",
-    Kedd: " zárva",
-    Szerda: " zárva",
-    Csütörtök: " zárva",
-    Péntek: " zárva",
-    Szombat: " zárva",
-    Vasárnap: " zárva",
+    Hétfő: ": zárva",
+    Kedd: ": zárva",
+    Szerda: ": zárva",
+    Csütörtök: ": zárva",
+    Péntek: ": zárva",
+    Szombat: ": zárva",
+    Vasárnap: ": zárva",
   });
 
   const updateOpeningHours = () => {
@@ -70,7 +71,7 @@ export default function CreateRestaurant() {
       const selectedOpenHour = openHour;
       const selectedCloseHour = closeHour;
 
-      const openingHours = " " + selectedOpenHour + "-" + selectedCloseHour;
+      const openingHours = ": " + selectedOpenHour + "-" + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
       updateOpeningHours();
@@ -169,7 +170,7 @@ export default function CreateRestaurant() {
             </div>
           </div>
         
-            <div className="col-md-6 d-flex justify-content-center">
+            <div className="col-md-12 d-flex justify-content-center">
               <ul className="ul-days">{updatedOpeningHours}</ul>
             </div>
 
