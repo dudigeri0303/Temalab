@@ -1,6 +1,6 @@
 import "../App.css";
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import OwnerNavbar from "../components/OwnerNavbar";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
@@ -77,7 +77,7 @@ export default function CreateRestaurant() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <OwnerNavbar></OwnerNavbar>
       <section id="main" className="container py-3">
         <form method="post">
           <div></div>
