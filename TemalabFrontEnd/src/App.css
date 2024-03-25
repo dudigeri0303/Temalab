@@ -209,18 +209,25 @@ footer a:hover {
 }
 
 .time-pickerStart {
-  color: green;
+  color: #006400;
   font-size: 28px;
 }
 
 .time-pickerEnd {
-  color: red;
+  color: #8B0000;
   font-size: 28px;
 }
 
 .ul-days {
   list-style: none;
+  font-size: 24px;
 }
+
+li {
+  border: 1px solid black;
+  padding: 5px;
+}
+
 
 
 .section-bg {

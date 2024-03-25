@@ -60,7 +60,9 @@ export default function CreateRestaurant() {
   };
 
   //object to array, majd végigmappol a listán és minden kulcshoz/naphoz hozzárendel egy listaelemet-t, ami a nyitvatartást tartalmazza
-  const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(day => <li key={day}>{day}</li>);
+  const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(
+    (day) => <li key={day}>{day}</li>
+  );
 
   const addDayOpeningHour = () => {
     {
@@ -73,6 +75,13 @@ export default function CreateRestaurant() {
       daysWithOpeningHours[selectedDay] = openingHours;
       updateOpeningHours();
     }
+  };
+
+  const closeDay = () => {
+    const selectedDay = document.getElementById("days").value;
+    const openingHours = " zárva";
+    daysWithOpeningHours[selectedDay] = openingHours;
+    updateOpeningHours();
   };
 
   return (
@@ -96,9 +105,8 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="row">
-            <div className="col-md-4 d-flex justify-content-center">
+            <div className="col-md-4">
               <div className="mb-3">
-                <div className="col-md-4">
                   <label htmlFor="days" className="form-label">
                     Nyitvatartás
                   </label>
@@ -116,10 +124,9 @@ export default function CreateRestaurant() {
                     <option value="Szombat">Szombat</option>
                     <option value="Vasárnap">Vasárnap</option>
                   </select>
-                </div>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-md-3">
               <div className="mb-3">
                 <label className="label-time">Nyitás:</label>
                 <TimePicker
@@ -131,7 +138,7 @@ export default function CreateRestaurant() {
                 />
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-md-3">
               <div className="mb-3">
                 <label className="label-time">Zárás:</label>
                 <TimePicker
@@ -144,18 +151,27 @@ export default function CreateRestaurant() {
               </div>
             </div>
             <div className="col-md-2 d-flex justify-content-center">
-              <button
+            <button onClick={closeDay} type="button" className="redbtn">
+                Zárva
+              </button>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12 d-flex justify-content-center" style={{ padding: '20px' }}>
+            <button
                 onClick={addDayOpeningHour}
                 type="button"
                 className="avgbtn"
               >
-                Hozzáad
+                Nyitvatartási nap hozzáadása
               </button>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+          </div>
+        
+            <div className="col-md-6 d-flex justify-content-center">
               <ul className="ul-days">{updatedOpeningHours}</ul>
             </div>
-          </div>
 
           <label className="form-label">Cím</label>
 
