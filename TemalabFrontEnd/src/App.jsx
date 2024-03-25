@@ -4,7 +4,7 @@ import Login from './sections/Login';
 import RegisterForm from './sections/Register';
 import OwnerNavbar from './components/OwnerNavbar';
 import CreateRestaurant from './sections/CreateRestaurant';
-import Profile from './sections/Profile';
+import CustomerProfile from './sections/CustomerProfile';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Template from './sections/Template';
@@ -28,7 +28,7 @@ function App() {
               <Route path="/navowner" element={<OwnerNavbar/>} />
               <Route path="/register" element={<RegisterForm/>} />
               <Route path="/createRestaurant" element={<CreateRestaurant/>} />
-              <Route path="/profile" element={<Profile/>} />
+              <Route path="/customerProfile" element={<CustomerProfile/>} />
               <Route path='/navbartest' element={<Navbar/>} />
               <Route path="/template" element={<Template/>} />
               <Route path="/customerReservations" element={<CustomerReservations/>} />

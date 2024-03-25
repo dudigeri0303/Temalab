@@ -11,7 +11,7 @@ export default function OwnerNavbar(){
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         <Nav.Link href="/mainPageOwner" className='navitemcss fs-4 px-4 py-2'>Éttermek</Nav.Link>
-                        <Nav.Link href="/OwnerProfile" className='navitemcss fs-4 px-4 py-2'>Profilom</Nav.Link>
+                        <Nav.Link href="/ownerProfile" className='navitemcss fs-4 px-4 py-2'>Profilom</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
