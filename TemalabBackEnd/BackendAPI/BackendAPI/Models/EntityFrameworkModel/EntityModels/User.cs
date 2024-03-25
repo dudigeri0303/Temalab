@@ -1,4 +1,5 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+using Isopoh.Cryptography.Argon2;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,7 +25,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public User(string username, string password, string email, string phoneNumber, string userrole) 
         {
             UserName = username;
-            Password = password;
+            Password = Argon2.Hash(password);
             Email = email;
             PhoneNumber = phoneNumber; 
             UserRole = userrole;
