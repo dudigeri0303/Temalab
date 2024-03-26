@@ -62,7 +62,7 @@ export default function CreateRestaurant() {
 
   //object to array, majd végigmappol a listán és minden kulcshoz/naphoz hozzárendel egy listaelemet-t, ami a nyitvatartást tartalmazza
   const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(
-    (day) => <li key={day}>{day}</li>
+    (day) => <li className="li-oph" key={day}>{day}</li>
   );
 
   const addDayOpeningHour = () => {
