@@ -1,10 +1,9 @@
 import "../App.css";
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import OwnerNavbar from "../components/OwnerNavbar";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
-import { object } from "prop-types";
 
 export default function CreateRestaurant() {
   useEffect(() => {
@@ -23,9 +22,11 @@ export default function CreateRestaurant() {
     window.open("/mainPageOwner", "_self");
   };
 
-  {
-    /*kicsit duplikált, de így tud csak frissülni mindkét select*/
-  }
+    /*
+    kicsit duplikált, de így tud csak frissülni mindkét select
+    lehetne mergerlni a 2 useState-et, de elég körülményes
+    */
+  
   const [openHour, setOpenHour] = useState("0:00");
   const [closeHour, setCloseHour] = useState("23:59");
 
@@ -43,13 +44,13 @@ export default function CreateRestaurant() {
   }
 
   const [daysWithOpeningHours, setDaysWithOpeningHours] = useState({
-    Hétfő: " zárva",
-    Kedd: " zárva",
-    Szerda: " zárva",
-    Csütörtök: " zárva",
-    Péntek: " zárva",
-    Szombat: " zárva",
-    Vasárnap: " zárva",
+    Hétfő: ": zárva",
+    Kedd: ": zárva",
+    Szerda: ": zárva",
+    Csütörtök: ": zárva",
+    Péntek: ": zárva",
+    Szombat: ": zárva",
+    Vasárnap: ": zárva",
   });
 
   const updateOpeningHours = () => {
@@ -60,7 +61,9 @@ export default function CreateRestaurant() {
   };
 
   //object to array, majd végigmappol a listán és minden kulcshoz/naphoz hozzárendel egy listaelemet-t, ami a nyitvatartást tartalmazza
-  const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(day => <li key={day}>{day}</li>);
+  const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(
+    (day) => <li key={day}>{day}</li>
+  );
 
   const addDayOpeningHour = () => {
     {
@@ -68,16 +71,23 @@ export default function CreateRestaurant() {
       const selectedOpenHour = openHour;
       const selectedCloseHour = closeHour;
 
-      const openingHours = " " + selectedOpenHour + "-" + selectedCloseHour;
+      const openingHours = ": " + selectedOpenHour + "-" + selectedCloseHour;
 
       daysWithOpeningHours[selectedDay] = openingHours;
       updateOpeningHours();
     }
   };
 
+  const closeDay = () => {
+    const selectedDay = document.getElementById("days").value;
+    const openingHours = " zárva";
+    daysWithOpeningHours[selectedDay] = openingHours;
+    updateOpeningHours();
+  };
+
   return (
     <>
-      <Navbar></Navbar>
+      <OwnerNavbar></OwnerNavbar>
       <section id="main" className="container py-3">
         <form method="post">
           <div></div>
@@ -96,9 +106,8 @@ export default function CreateRestaurant() {
           </div>
 
           <div className="row">
-            <div className="col-md-4 d-flex justify-content-center">
+            <div className="col-md-4">
               <div className="mb-3">
-                <div className="col-md-4">
                   <label htmlFor="days" className="form-label">
                     Nyitvatartás
                   </label>
@@ -116,10 +125,9 @@ export default function CreateRestaurant() {
                     <option value="Szombat">Szombat</option>
                     <option value="Vasárnap">Vasárnap</option>
                   </select>
-                </div>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-md-3">
               <div className="mb-3">
                 <label className="label-time">Nyitás:</label>
                 <TimePicker
@@ -131,7 +139,7 @@ export default function CreateRestaurant() {
                 />
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+            <div className="col-md-3">
               <div className="mb-3">
                 <label className="label-time">Zárás:</label>
                 <TimePicker
@@ -144,18 +152,27 @@ export default function CreateRestaurant() {
               </div>
             </div>
             <div className="col-md-2 d-flex justify-content-center">
-              <button
+            <button onClick={closeDay} type="button" className="redbtn">
+                Zárva
+              </button>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-12 d-flex justify-content-center" style={{ padding: '20px' }}>
+            <button
                 onClick={addDayOpeningHour}
                 type="button"
                 className="avgbtn"
               >
-                Hozzáad
+                Nyitvatartási nap hozzáadása
               </button>
             </div>
-            <div className="col-md-3 d-flex justify-content-center">
+          </div>
+        
+            <div className="col-md-12 d-flex justify-content-center">
               <ul className="ul-days">{updatedOpeningHours}</ul>
             </div>
-          </div>
 
           <label className="form-label">Cím</label>
 

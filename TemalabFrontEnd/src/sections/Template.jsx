@@ -1,11 +1,19 @@
 import "../App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 
 export default function Template() {
   useEffect(() => {
     document.title = "Template | DineTab";
   }, []);
+
+
+  const [currentImage, setCurrentImage] = useState('/heart-empty.svg');
+
+  const toggleImage = () => {
+      setCurrentImage(currentImage === '/heart-empty.svg' ? '/heart-full.svg' : '/heart-empty.svg');
+  };
+
   return (
     <>
       <Navbar></Navbar>
@@ -128,12 +136,7 @@ export default function Template() {
                 <label className="card-Altext">Étterem stílusa</label>
               </div>
               <div className="col d-flex justify-content-end">
-                <button className="likebtn">
-                  <img
-                    src="./public/likebtn.png"
-                    style={{ height: "40px", width: "40px" }}
-                  />
-                </button>
+                <a className="ms-5" href="#" onClick={toggleImage}><img src={currentImage} className="heartstyle"></img></a>
               </div>
             </div>
             <div className="row">

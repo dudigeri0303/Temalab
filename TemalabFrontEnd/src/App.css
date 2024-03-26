@@ -183,11 +183,6 @@ footer a:hover {
   color: white;
 }
 
-.likebtn {
-  background-color: #607a8e;
-  border: none;
-  padding: 1px 50px;
-}
 
 .placeholerLabel {
   font-size: 36px;
@@ -214,15 +209,39 @@ footer a:hover {
 }
 
 .time-pickerStart {
-  color: green;
+  color: #006400;
   font-size: 28px;
 }
 
 .time-pickerEnd {
-  color: red;
+  color: #8B0000;
   font-size: 28px;
 }
 
 .ul-days {
+  display: flex;
+  grid-gap: 10px;
   list-style: none;
+}
+
+li {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+@media (max-width: 1000px) {
+  .ul-days {
+    display: grid;
+  }
+
+.section-bg {
+  background-color: #c0d6df;
+  border: 10px solid #001d3d;
+}
+
+.label-modal {
+  font-size: 26px;
+  padding: 20px 20px;
+}
+
 }
