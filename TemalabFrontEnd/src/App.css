@@ -224,6 +224,16 @@ footer a:hover {
   list-style: none;
 }
 
+.hr-menu{
+  color: white;
+  border-width: 4px;
+}
+
+.menu-price{
+  position: absolute;
+  right: 20px;
+}
+
 li {
   border: 1px solid black;
   padding: 5px;
@@ -233,6 +243,7 @@ li {
   .ul-days {
     display: grid;
   }
+}
 
 .section-bg {
   background-color: #c0d6df;
@@ -244,4 +255,5 @@ li {
   padding: 20px 20px;
 }
 
-}
+
+
