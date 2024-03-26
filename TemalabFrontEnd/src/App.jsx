@@ -4,7 +4,7 @@ import Login from './sections/Login';
 import RegisterForm from './sections/Register';
 import OwnerNavbar from './components/OwnerNavbar';
 import CreateRestaurant from './sections/CreateRestaurant';
-import Profile from './sections/Profile';
+import CustomerProfile from './sections/CustomerProfile';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Template from './sections/Template';
@@ -17,6 +17,8 @@ import OwnerTables from './sections/OwnerTables';
 import RestaurantPage from './sections/RestaurantPage';
 import OwnerRestaurantPage from './sections/OwnerRestaurantPage';
 import MenuCreator from './sections/MenuCreator';
+import Menu from './sections/Menu';
+import OwnerProfile from './sections/OwnerProfile';
 
 function App() {
   return (
@@ -26,8 +28,9 @@ function App() {
               <Route path="/" element={<Login/>} />
               <Route path="/navowner" element={<OwnerNavbar/>} />
               <Route path="/register" element={<RegisterForm/>} />
+              <Route path="/Menu" element={<Menu/>} />
               <Route path="/createRestaurant" element={<CreateRestaurant/>} />
-              <Route path="/profile" element={<Profile/>} />
+              <Route path="/customerProfile" element={<CustomerProfile/>} />
               <Route path='/navbartest' element={<Navbar/>} />
               <Route path="/template" element={<Template/>} />
               <Route path="/customerReservations" element={<CustomerReservations/>} />
@@ -39,6 +42,7 @@ function App() {
               <Route path="/restaurant" element={<RestaurantPage/>}/>
               <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
               <Route path="/createmenu" element={<MenuCreator/>}/>
+              <Route path="/ownerProfile" element={<OwnerProfile/>}/>
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}

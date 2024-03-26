@@ -18,6 +18,7 @@ export default function NavbarAll(){
                             <Nav.Link href='/favorites' className='navitemcss fs-4 px-4 py-2'>Kedvencek</Nav.Link>
                             <Nav.Link href='/profile' className='navitemcss fs-4 px-4 py-2'>Profilom</Nav.Link>
                             <Nav.Link href='#' className='logoutbtn fs-4 px-4 py-2'>Kijelentkezés</Nav.Link>
+                            <Nav.Link href='/customerProfile' className='navitemcss fs-4 px-4 py-2'>Profilom</Nav.Link>
                         </Nav>
                         </Navbar.Collapse>
                 </Container>

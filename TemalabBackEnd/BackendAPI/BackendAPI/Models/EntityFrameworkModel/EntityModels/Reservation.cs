@@ -1,6 +1,7 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 {
@@ -32,7 +33,20 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 
         public void updateEntity(Reservation entity)
         {
-            throw new NotImplementedException();
+            var newStartDate = DateTime.Now;
+            if (DateTime.TryParse(entity.StartDate.ToString(), out newStartDate))
+            {
+                this.StartDate = newStartDate;
+            }
+            else 
+            {
+                Debug.WriteLine("Invalid start date");
+            }
+            var newEndDate = DateTime.Now;
+            if (DateTime.TryParse(entity.EndDate.ToString(), out newEndDate))
+            {
+                this.EndDate = newEndDate;
+            }
         }
     }
 }
