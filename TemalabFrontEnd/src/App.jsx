@@ -16,10 +16,9 @@ import OwnerMain from './sections/OwnerMain';
 import OwnerTables from './sections/OwnerTables';
 import RestaurantPage from './sections/RestaurantPage';
 import OwnerRestaurantPage from './sections/OwnerRestaurantPage';
+import MenuCreator from './sections/MenuCreator';
 import Menu from './sections/Menu';
 import OwnerProfile from './sections/OwnerProfile';
-
-
 
 function App() {
   return (
@@ -42,6 +41,7 @@ function App() {
               <Route path="/tablesOwner" element={<OwnerTables/>} />
               <Route path="/restaurant" element={<RestaurantPage/>}/>
               <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
+              <Route path="/createmenu" element={<MenuCreator/>}/>
               <Route path="/ownerProfile" element={<OwnerProfile/>}/>
             </Routes>
       </Router>
