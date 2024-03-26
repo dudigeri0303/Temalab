@@ -1,6 +1,6 @@
 import { Container, Navbar, Nav } from 'react-bootstrap';
 
-export default function OwnerNavbar(){
+export default function AdminNavbar(){
     return (
         <Navbar expand="lg" className="navbarcss p-0" data-bs-theme="dark">
             <Container>
@@ -10,8 +10,6 @@ export default function OwnerNavbar(){
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link href="/mainPageOwner" className='navitemcss fs-4 px-4 py-2'>Éttermek</Nav.Link>
-                        <Nav.Link href="/profile" className='navitemcss fs-4 px-4 py-2'>Profilom</Nav.Link>
                         <Nav.Link href='#' className='logoutbtn fs-4 px-4 py-2'>Kijelentkezés</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

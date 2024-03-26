@@ -8,6 +8,11 @@ input {
   border-radius: 5px;
 }
 
+.logoutbtn {
+  color: #FF0000;
+  font-family: "Jacques Francois", serif;
+}
+
 .heartstyle{
   height: 45px;
 }
@@ -15,7 +20,15 @@ input {
 .contactustext {
   color: white;
   text-align: center;
-  font-size: xx-large;
+  font-size: small;
+}
+
+@media (min-width: 576px){
+  .contactustext{
+    color: white;
+    text-align: center;
+    font-size: xx-large;
+  }
 }
 
 .starstyle {
