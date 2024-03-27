@@ -251,12 +251,6 @@ footer a:hover {
   font-size: 28px;
 }
 
-.ul-days {
-  display: flex;
-  grid-gap: 10px;
-  list-style: none;
-}
-
 .hr-menu{
   color: white;
   border-width: 4px;
@@ -267,15 +261,21 @@ footer a:hover {
   right: 20px;
 }
 
-li-oph {
-  border: 1px solid black;
-  padding: 5px;
+.ul-days {
+  display: flex;
+  grid-gap: 10px;
+  list-style: none;
 }
 
 @media (max-width: 1000px) {
   .ul-days {
     display: grid;
   }
+}
+
+.li-oph {
+  border: 1px solid black;
+  padding: 5px;
 }
 
 .section-bg {
