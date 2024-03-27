@@ -38,7 +38,7 @@ export default function OwnerTables() {
 
               <div className="row justify-content-center">
                 <div className="col-md-6">
-                  <div className="mb-3">
+                  <div className="mb-3 text-center">
                     <label htmlFor="numberForTable" className="label-modal">
                       Asztal férőhely
                     </label>
@@ -48,6 +48,21 @@ export default function OwnerTables() {
                       id="numberForTable"
                       name="numberForTable"
                       placeholder="Férőhely"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="col-md-7">
+                  <div className="mb-3 text-center">
+                    <label htmlFor="idForTable" className="label-modal">
+                      Asztal ID
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="idForTable"
+                      name="idForTable"
+                      placeholder="Asztalok megkülönböztetésére"
                       required
                     />
                   </div>
