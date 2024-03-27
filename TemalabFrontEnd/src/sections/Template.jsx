@@ -14,9 +14,13 @@ export default function Template() {
       setCurrentImage(currentImage === '/heart-empty.svg' ? '/heart-full.svg' : '/heart-empty.svg');
   };
 
+  //Nem responzív, de ez csak egy minta.
+
   return (
     <>
       <Navbar></Navbar>
+
+      <label>Foglalások Customer</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
@@ -40,6 +44,7 @@ export default function Template() {
         </div>
       </section>
 
+<label>DeleteUser dmin</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
@@ -63,6 +68,7 @@ export default function Template() {
         </div>
       </section>
 
+      <label>Kedvencek Customer</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
@@ -97,6 +103,7 @@ export default function Template() {
         </div>
       </section>
 
+      <label>MainPage Owner</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
@@ -120,6 +127,7 @@ export default function Template() {
         </div>
       </section>
 
+      <label>MainPage Customer</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
@@ -148,6 +156,7 @@ export default function Template() {
         </div>
       </section>
 
+      <label>Asztalok Owner</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
