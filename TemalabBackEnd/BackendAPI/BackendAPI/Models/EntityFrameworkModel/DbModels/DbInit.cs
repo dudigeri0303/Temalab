@@ -14,9 +14,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             foreach (var kvp in databaseContext.EntityTables)
             {
                 Type entityType = kvp.Key;
-                dynamic dbSet = kvp.Value;
+                var dbSet = (IQueryable<object>)kvp.Value;
                 var existingEntities = dbSet.ToList();
-                dbSet.RemoveRange(existingEntities);
+                databaseContext.RemoveRange(existingEntities);
                 databaseContext.SaveChanges();
             }
 

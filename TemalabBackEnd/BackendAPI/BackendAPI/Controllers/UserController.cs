@@ -63,6 +63,14 @@ namespace TemalabBackEnd.Controllers
             return Ok(users);
         }
 
+        [HttpGet("login/")]
+        public async Task<ActionResult<List<User>>> UserLogin(string name)
+        {
+            //Hogyan kene atadni az emailt es a jelszot?
+            //jelszo ellenorzese: Argon2.Verify(user.Password, password);
+            return BadRequest("Not implemented yet!");
+        }
+
         #endregion
     }
 }

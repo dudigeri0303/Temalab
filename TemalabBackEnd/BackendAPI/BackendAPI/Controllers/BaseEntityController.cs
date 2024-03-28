@@ -1,7 +1,9 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+using Isopoh.Cryptography.Argon2;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
+using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI.Controllers
 {
@@ -50,12 +52,16 @@ namespace BackendAPI.Controllers
             return Ok(entity);
         }
 
-        [HttpPost("insertNewRow/{newEntity}")]
+        [HttpPost("insertNewRow")]
         public async Task<ActionResult> InsertNewRow(EntityClass newEntity) 
         {
             DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
             try
             {
+                if (typeof(User).IsAssignableFrom(typeof(EntityClass)))
+                {
+                    (newEntity as User).Password = Argon2.Hash((newEntity as User).Password);
+                }
                 dbSet.Add(newEntity);
                 this._dbContext.SaveChanges();
             }
