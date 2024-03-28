@@ -8,10 +8,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public Category Category { get; set; } //Navigation property
         [ForeignKey(nameof(Category))]
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
         [Column]
         public string Name { get; set; }
         [Column]

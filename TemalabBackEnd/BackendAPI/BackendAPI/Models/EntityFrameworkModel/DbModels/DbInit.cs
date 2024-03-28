@@ -1,11 +1,12 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
+﻿using Microsoft.AspNetCore.Identity;
+using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
 {
     //Adatbázist statikus inicializáló metódust tartalmazó osztály
     public class DbInit
     {
-        public static void Init(DatabaseContext databaseContext) 
+        public static async void Init(DatabaseContext databaseContext, UserManager<User> userManager) 
         {
             databaseContext.Database.EnsureCreated();
 
@@ -26,8 +27,12 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
                 new User("Jozsi","asd","jozsi@gmail.com","111","customer"),
                 new User("Anna","asd","anna@gmail.com","222","customer"),
                 new User("admin","asd","admin@gmail.com","333","admin"),
-                new User("boss","asd","boss@gmail.com","444","owner")                
-            };            
+                new User("boss","asd","boss@gmail.com","444","owner")      
+            };
+            foreach(var user in users) 
+            {
+                await userManager.CreateAsync(user, "asd");
+            }
             foreach (User user in users) 
             {
                 databaseContext.Users.Add(user);

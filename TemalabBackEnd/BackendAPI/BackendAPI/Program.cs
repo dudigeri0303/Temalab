@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
+using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI
 {
@@ -11,9 +13,10 @@ namespace BackendAPI
             {
                 var services = scope.ServiceProvider;
                 try
-                {
+                { 
                     var context = services.GetRequiredService<DatabaseContext>();
-                    DbInit.Init(context);
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    DbInit.Init(context, userManager);
                 }
                 catch (Exception ex)
                 {
@@ -28,13 +31,17 @@ namespace BackendAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
             builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddAuthorization();
+            builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<DatabaseContext>();
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            
+        
 
             var app = builder.Build();
 
@@ -44,13 +51,13 @@ namespace BackendAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
 
             app.MapControllers();
+            app.MapIdentityApi<User>();
 
             //Adatbázis létrehozása
             CreateDbIfNotExists(app);

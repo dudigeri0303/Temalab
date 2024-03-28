@@ -27,7 +27,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("searchByID/{id}")]
-        public async Task<ActionResult<EntityClass>> GetRowById(int id) 
+        public async Task<ActionResult<EntityClass>> GetRowById(string id) 
         {
             DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
             EntityClass? entity = await dbSet.FindAsync(id);
@@ -39,7 +39,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpDelete("deleteByID/{id}")]
-        public async Task<ActionResult<EntityClass>> DeleteUserById(int id) 
+        public async Task<ActionResult<EntityClass>> DeleteUserById(string id) 
         {
             DbSet<EntityClass> dbSet = this._dbContext.GetDbSet<EntityClass>();
             EntityClass? entity = await dbSet.FindAsync(id);
@@ -60,7 +60,7 @@ namespace BackendAPI.Controllers
             {
                 if (typeof(User).IsAssignableFrom(typeof(EntityClass)))
                 {
-                    (newEntity as User).Password = Argon2.Hash((newEntity as User).Password);
+                    (newEntity as User).PasswordHash = Argon2.Hash((newEntity as User).PasswordHash);
                 }
                 dbSet.Add(newEntity);
                 this._dbContext.SaveChanges();

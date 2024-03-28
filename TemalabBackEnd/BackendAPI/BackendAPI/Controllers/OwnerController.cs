@@ -16,7 +16,7 @@ namespace BackendAPI.Controllers
         #region UniqueOperations
 
         [HttpGet("getRestaurantsByOwnerID/{id}")]
-        public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByOwner(int id)
+        public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByOwner(string id)
         {
             List<Owner> restaurantOwnedById = this._dbContext.Owners.Where(o => o.UserId == id).ToList();
             List<Restaurant> restaurants = new List<Restaurant>();

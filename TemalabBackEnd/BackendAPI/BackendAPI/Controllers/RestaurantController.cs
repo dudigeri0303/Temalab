@@ -17,7 +17,7 @@ namespace BackendAPI.Controllers
         #region UniqueOperations
 
         [HttpGet("getOwnerByRestaurantID/{id}")]
-        public async Task<ActionResult<Owner>> GetOwnerByRestaurantId(int id)
+        public async Task<ActionResult<Owner>> GetOwnerByRestaurantId(string id)
         {
             Owner? owner = await this._dbContext.Owners.Where(o => o.RestaurantId == id).FirstOrDefaultAsync();
             if (owner == null)
@@ -30,9 +30,9 @@ namespace BackendAPI.Controllers
         [HttpGet("getRestaurantByOwnerName/{name}")]
         public async Task<ActionResult<List<Restaurant>>> GetRestaurantByOwnerName(string name)
         {
-            List<int> ownerIds = this._dbContext.Users.Where(u => u.UserName == name).Select(u => u.Id).ToList();
+            List<string> ownerIds = this._dbContext.Users.Where(u => u.UserName == name).Select(u => u.Id).ToList();
             List<Owner> owners = new List<Owner>();
-            foreach (int id in ownerIds)
+            foreach (string id in ownerIds)
             {
                 foreach (var owner in this._dbContext.Owners)
                 {

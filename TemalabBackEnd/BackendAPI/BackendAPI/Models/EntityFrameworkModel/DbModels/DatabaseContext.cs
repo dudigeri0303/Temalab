@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
 {
     //EntityModel atabázis kontextus
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<User>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
@@ -39,6 +41,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Admin>().ToTable("Admins");
             modelBuilder.Entity<Owner>().ToTable("Owners");
@@ -63,7 +66,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             }
             return null;
         }
-
     }
 }
 

@@ -10,12 +10,12 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [ForeignKey(nameof(Table))]
-        public int TableId { get; set; }
+        public string TableId { get; set; }
         public Table Table { get; set; } //Navigation property
         [ForeignKey(nameof(Reserver))]
-        public int ReserverId { get; set; }
+        public string ReserverId { get; set; }
         public User Reserver { get; set; } //Navigation property
         [Column]
         public DateTime StartDate { get; set; }
