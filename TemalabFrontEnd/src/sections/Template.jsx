@@ -1,24 +1,60 @@
 import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Reviews from "../components/Reviews";
+import { Button } from "react-bootstrap";
 
 export default function Template() {
   useEffect(() => {
     document.title = "Template | DineTab";
   }, []);
 
-
-  const [currentImage, setCurrentImage] = useState('/heart-empty.svg');
+  const [currentImage, setCurrentImage] = useState("/heart-empty.svg");
 
   const toggleImage = () => {
-      setCurrentImage(currentImage === '/heart-empty.svg' ? '/heart-full.svg' : '/heart-empty.svg');
+    setCurrentImage(
+      currentImage === "/heart-empty.svg"
+        ? "/heart-full.svg"
+        : "/heart-empty.svg"
+    );
   };
+
+  const [showModal, setShowModal] = useState(false);
 
   //Nem responzív, de ez csak egy minta.
 
   return (
     <>
       <Navbar></Navbar>
+      <div>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+          Értékelések
+        </button>
+        <Reviews showModal={showModal} setShowModal={setShowModal}>
+          <Button className="avgbtn">+ Új vélemény</Button>
+        </Reviews>
+      </div>
+
+      <label>Vélemények</label>
+      <section id="main" className="container py-2">
+        <div className="row div-card">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-6 text-center">
+                <label className="card-text">Felhasználónév</label>
+              </div>
+              <div className="col-sm-6 text-center">
+                <label className="card-text">★★★★★</label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-12 text-center">
+                <label className="card-text">Vélemény</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <label>Foglalások Customer</label>
       <section id="main" className="container py-2">
@@ -44,7 +80,7 @@ export default function Template() {
         </div>
       </section>
 
-<label>DeleteUser dmin</label>
+      <label>DeleteUser dmin</label>
       <section id="main" className="container py-2">
         <div className="row div-card">
           <div className="container">
@@ -144,7 +180,9 @@ export default function Template() {
                 <label className="card-Altext">Étterem stílusa</label>
               </div>
               <div className="col d-flex justify-content-end">
-                <a className="ms-5" href="#" onClick={toggleImage}><img src={currentImage} className="heartstyle"></img></a>
+                <a className="ms-5" href="#" onClick={toggleImage}>
+                  <img src={currentImage} className="heartstyle"></img>
+                </a>
               </div>
             </div>
             <div className="row">
