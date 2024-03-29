@@ -15,41 +15,6 @@ namespace TemalabBackEnd.Controllers
         {
 
         }
-
-        #region CrudOperations
-
-        /*
-        [HttpPut("updateEntityPropertiesByID/{id, updatedEntity}")]
-        public override async Task<ActionResult<User>> UpdateUserPropertiesByID(int id, User updatedEntity) 
-        {
-            User newUser = updatedEntity;
-            User? user = await this._dbContext.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound("User not found!");
-            }
-            if (newUser.UserName != "string" && newUser.UserName.Trim() != "")
-            {
-                user.UserName = newUser.UserName;
-            }
-            if (newUser.Password != "string" && newUser.Password.Trim() != "")
-            {
-                user.UserName = newUser.Password;
-            }
-            if (newUser.Email != "string" && newUser.Email.Trim() != "")
-            {
-                user.Email = newUser.Email;
-            }
-            if (newUser.PhoneNumber != "string" && newUser.PhoneNumber.Trim() != "")
-            {
-                user.PhoneNumber = newUser.PhoneNumber;
-            }
-            this._dbContext.SaveChanges();
-            return Ok(user);
-        }*/
-
-        #endregion
-
         #region UniqueOperations
 
         [HttpGet("serachByName/{name}")]

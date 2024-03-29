@@ -9,20 +9,18 @@ namespace BackendAPI
     {
         private static void CreateDbIfNotExists(IHost host)
         {
-            using (var scope = host.Services.CreateScope())
+            var services = host.Services;
+            try
             {
-                var services = scope.ServiceProvider;
-                try
-                { 
-                    var context = services.GetRequiredService<DatabaseContext>();
-                    var userManager = services.GetRequiredService<UserManager<User>>();
-                    DbInit.Init(context, userManager);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
-                }
+                var scope = services.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                DbInit.Init(context, userManager);
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred creating the DB.");
             }
         }
 

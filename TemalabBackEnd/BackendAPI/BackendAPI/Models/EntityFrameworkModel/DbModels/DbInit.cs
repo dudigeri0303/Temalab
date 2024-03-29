@@ -24,21 +24,47 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //USERS
             var users = new User[] 
             {
-                new User("Jozsi","asd","jozsi@gmail.com","111","customer"),
-                new User("Anna","asd","anna@gmail.com","222","customer"),
-                new User("admin","asd","admin@gmail.com","333","admin"),
-                new User("boss","asd","boss@gmail.com","444","owner")      
-            };
+                new User 
+                { 
+                    UserName = "Jozsi",
+                    Email = "jozsi@gmail.com",
+                    PhoneNumber = "1234567890",
+                    UserRole = "user"
+                },
+                new User
+                {
+                    UserName = "Anna",
+                    Email = "anna@gmail.com",
+                    PhoneNumber = "1234523444",
+                    UserRole = "user"
+                },
+                new User
+                {
+                    UserName = "admin",
+                    Email = "admin@gmail.com",
+                    PhoneNumber = "5783267890",
+                    UserRole = "admin"
+                },
+                new User
+                {
+                    UserName = "boss",
+                    Email = "hugo.boss@gmail.com",
+                    PhoneNumber = "3238927890",
+                    UserRole = "owner"
+                }
+            }; 
+            
             foreach(var user in users) 
             {
-                await userManager.CreateAsync(user, "asd");
+                await userManager.CreateAsync(user, "A2dq3s00?34");
             }
-            foreach (User user in users) 
+            
+            /*foreach (User user in users) 
             {
                 databaseContext.Users.Add(user);
-            }
+            }*/
          
-            databaseContext.SaveChanges();
+            //databaseContext.SaveChanges();
         
             //ADMINS
             var admins = new Admin[]
