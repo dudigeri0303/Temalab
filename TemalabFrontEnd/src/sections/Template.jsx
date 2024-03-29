@@ -27,7 +27,7 @@ export default function Template() {
     <>
       <Navbar></Navbar>
       <div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+        <button className="cardbtn" onClick={() => setShowModal(true)}>
           Értékelések
         </button>
         <Reviews showModal={showModal} setShowModal={setShowModal}>
