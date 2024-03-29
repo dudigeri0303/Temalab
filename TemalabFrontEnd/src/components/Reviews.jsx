@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import CardReview from "../components/CardReview";
 
 export default function Reviews({ showModal, setShowModal, children }) {
   const handleClose = () => {
@@ -13,7 +14,7 @@ export default function Reviews({ showModal, setShowModal, children }) {
       </Modal.Header>
       <Modal.Body>
       <div>
-      <label>Ide jönnek a kártyák</label>
+        <CardReview></CardReview>
       </div>  
       </Modal.Body>
       <Modal.Footer>
