@@ -15,10 +15,11 @@ export default function Table({ showModal, setShowModal, children }) {
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header className="section-bg" closeButton>
+        <div className="section-bg">
+        <Modal.Header closeButton>
           <Modal.Title>Asztal hozzáadása</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="section-bg">
+        <Modal.Body>
           <section id="main" className="container py-3">
             <form method="post">
               <div className="row justify-content-center">
@@ -57,7 +58,7 @@ export default function Table({ showModal, setShowModal, children }) {
           </section>
           {children}
         </Modal.Body>
-        <Modal.Footer className="section-bg d-flex justify-content-center">
+        <Modal.Footer className="d-flex justify-content-center">
                 <button
                   type="button"
                   className="avgbtn"
@@ -75,6 +76,7 @@ export default function Table({ showModal, setShowModal, children }) {
                   Mégse
                 </button>
         </Modal.Footer>
+        </div>
       </Modal>
     </>
   );

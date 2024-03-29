@@ -292,6 +292,7 @@ footer a:hover {
 
 .section-bg {
   background-color: #c0d6df;
+  border: 10px solid #001d3d;
 }
 
 .label-modal {
