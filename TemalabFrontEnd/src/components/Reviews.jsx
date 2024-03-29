@@ -10,15 +10,15 @@ export default function Reviews({ showModal, setShowModal, children }) {
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header className="section-bg" closeButton>
           <Modal.Title>Vélemények</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="section-bg">
           <div>
             <CardReview></CardReview>
           </div>
         </Modal.Body>
-        <Modal.Footer>{children}</Modal.Footer>
+        <Modal.Footer className="section-bg d-flex justify-content-center">{children}</Modal.Footer>
       </Modal>
     </>
   );

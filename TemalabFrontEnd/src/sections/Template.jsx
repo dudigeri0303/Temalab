@@ -31,7 +31,7 @@ export default function Template() {
           Értékelések
         </button>
         <Reviews showModal={showModal} setShowModal={setShowModal}>
-          <Button className="avgbtn">+ Új vélemény</Button>
+          <button className="avgbtn">+ Új vélemény</button>
         </Reviews>
       </div>
 
