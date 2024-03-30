@@ -10,7 +10,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
 
         public User() : base() 
         {
-        
+            this.UserRole = "user";
         }
         
     }
