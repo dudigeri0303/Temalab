@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -7,6 +9,7 @@ namespace BackendAPI
 {
     public class Program
     {
+        //Adatbázis létrehozása
         private static void CreateDbIfNotExists(IHost host)
         {
             var services = host.Services;
@@ -29,19 +32,36 @@ namespace BackendAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            //Controllerek hozzáadása
             builder.Services.AddControllers();
+            //DbContext hozzáadása
             builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
             builder.Services.AddAuthorization();
-            builder.Services.AddIdentityApiEndpoints<User>().AddEntityFrameworkStores<DatabaseContext>();
+            //Identity api hívások
+            builder.Services.AddIdentityApiEndpoints<User>()
+                .AddEntityFrameworkStores<DatabaseContext>();
 
+            //Elvileg ezzel mûködnie kéne annak, hogy bizonyos api hívásokat csak
+            //Belépve lehet megcsinálni. ez viszont nem mûködik.
+            builder.Services.AddSwaggerGen(options =>
+                {
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey
+                    });
+                    options.OperationFilter<SecurityRequirementsOperationFilter>();
+                });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             
-        
-
             var app = builder.Build();
+            app.MapControllers();
+            app.MapIdentityApi<User>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -50,12 +70,7 @@ namespace BackendAPI
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
-            app.MapControllers();
-            app.MapIdentityApi<User>();
 
             //Adatbázis létrehozása
             CreateDbIfNotExists(app);

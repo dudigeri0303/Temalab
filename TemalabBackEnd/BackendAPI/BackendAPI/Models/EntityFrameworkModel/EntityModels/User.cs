@@ -7,11 +7,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     public class User : IdentityUser
     {
         public string? UserRole { get; set; }
-
         public User() : base() 
         {
             this.UserRole = "user";
         }
-        
     }
 }

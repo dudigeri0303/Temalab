@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
 using Isopoh.Cryptography.Argon2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -18,6 +19,7 @@ namespace BackendAPI.Controllers
 
         #region GenericCrudOperations
 
+        [Authorize]
         [HttpGet("getAllRows/")]
         public async Task<ActionResult<List<EntityClass>>> GetAllRows()
         {
