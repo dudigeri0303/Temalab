@@ -153,6 +153,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             var likedrestaurants = new LikedRestaurant[]
             {
                 new LikedRestaurant(users[0],restaurants[0]),
+                new LikedRestaurant(users[0],restaurants[1]),
                 new LikedRestaurant(users[1],restaurants[0]),
                 new LikedRestaurant(users[2],restaurants[0])
             };

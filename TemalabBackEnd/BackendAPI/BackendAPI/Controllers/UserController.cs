@@ -35,6 +35,7 @@ namespace TemalabBackEnd.Controllers
                 PhoneNumber = registerModel.PhoneNumber,
                 UserRole = registerModel.UserRole
             };
+
             if(registerModel.Password.Equals(registerModel.PasswordAgain)) 
             {
                 await this.userManager.CreateAsync(newUser, registerModel.Password);
