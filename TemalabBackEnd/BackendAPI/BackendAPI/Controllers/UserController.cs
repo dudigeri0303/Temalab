@@ -1,8 +1,10 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.ModelsForApiCalls;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -21,13 +23,14 @@ namespace TemalabBackEnd.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
-        
+
         #region UniqueOperations
         //Regisztrációs api hívás. Az identity biztosít egy alapot, de ott nem lehet 
         //Felülírni a mezőket.
         [HttpPost("register/")]
         public async Task<ActionResult<User>> Register(RegisterModel registerModel) 
         {
+            Console.WriteLine("REGUSTRÁÁCIÓÓÓÓ");
             User newUser = new User()
             {
                 UserName = registerModel.UserName,
@@ -56,7 +59,6 @@ namespace TemalabBackEnd.Controllers
                     isPersistent: false,
                     lockoutOnFailure: false
                 );
-
                 if (logInResult.Succeeded)
                 {
                     return Ok(loginModel);

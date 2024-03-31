@@ -13,8 +13,36 @@ const RegisterForm = () => {
   const [fieldsRequired, setFieldsRequired] = useState(true);
 
   // Regisztrációs gomb eseménykezelő fv
-  const handleRegister = () => {
-
+  const handleRegister = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+      "userName": userName,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "password": password,
+      "passwordAgain": passwordAgain,
+      "userRole": "customer"
+    });
+    
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+    
+    try {
+      const response = await fetch("https://localhost:7114/api/User/register/", requestOptions);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.text();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Mégse gomb eseménykezelő fv

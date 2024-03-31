@@ -30,7 +30,11 @@ namespace BackendAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddCors();
+            /*builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin());
+            });*/
             // Add services to the container.
             //Controllerek hozzáadása
             builder.Services.AddControllers();
@@ -42,10 +46,7 @@ namespace BackendAPI
             builder.Services.AddIdentityApiEndpoints<User>()
                 .AddEntityFrameworkStores<DatabaseContext>();
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin());
-            });
+            
 
             //Elvileg ezzel mûködnie kéne annak, hogy bizonyos api hívásokat csak
             //Belépve lehet megcsinálni. ez viszont nem mûködik.
@@ -65,7 +66,9 @@ namespace BackendAPI
             builder.Services.AddSwaggerGen();
             
             var app = builder.Build();
+            // app.UseCors("AllowAllOrigins");
 
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
             app.UseDeveloperExceptionPage();
             app.UseRouting();
 
@@ -80,7 +83,7 @@ namespace BackendAPI
             }
             //app.UseHttpsRedirection();
 
-            app.UseCors("AllowAllOrigins");
+            
 
             app.UseAuthorization();
 

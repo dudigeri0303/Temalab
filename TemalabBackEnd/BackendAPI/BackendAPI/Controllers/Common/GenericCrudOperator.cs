@@ -3,6 +3,7 @@ using Isopoh.Cryptography.Argon2;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -43,6 +44,15 @@ namespace BackendAPI.Controllers.Common
             DbSet<T> dbSet = GetDbsetForGeneric<T>();
             T? entity = await dbSet.FindAsync(id);
             return entity;
+        }
+        public async Task<List<T>> GetMultipleRowsByForeignId<T>(string id, string propertyName)
+            where T : class
+        {
+            DbSet<T> dbSet = GetDbsetForGeneric<T>();
+            List<T> entities = await dbSet
+                .Where(entity => EF.Property<string>(entity, propertyName) == id)
+                .ToListAsync();
+            return entities;
         }
         public async Task DeleteUserById<T>(string id)
             where T : class
