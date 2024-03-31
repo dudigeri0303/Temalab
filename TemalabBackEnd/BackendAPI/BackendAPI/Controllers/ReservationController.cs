@@ -1,4 +1,5 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.EntityFrameworkModel.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReservationController : BaseEntityController<Reservation>
+    public class ReservationController : BaseEntityController
     {
         public ReservationController(DatabaseContext dbContext) : base(dbContext)
         {
@@ -24,7 +25,7 @@ namespace BackendAPI.Controllers
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
-                List<Reservation> reservations = await this._dbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
+                List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
                 return Ok(reservations);
             }
             return NotFound("User not found");

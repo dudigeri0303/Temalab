@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BackendAPI.Controllers.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -9,7 +10,7 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantController : BaseEntityController<Restaurant>
+    public class RestaurantController : BaseEntityController
     {
         private readonly UserManager<User> userManager;
 
@@ -19,6 +20,19 @@ namespace BackendAPI.Controllers
         }
         #region UniqueOperations
 
+        [HttpGet("listAllRestaurants/")]
+        public async Task<ActionResult<List<Restaurant>>> ListAllRestaurants() 
+        {
+            List<Restaurant> restaurants = await this.crudOperator.GetAllRows<Restaurant>();
+            return Ok(restaurants);
+        }
+
+        /*[HttpGet("listRestaurantsByOwner/"), Authorize]
+        public async Task<ActionResult<List<Restaurant>>> ListRestaurantsByOwner() 
+        {
+            
+        }*/
+
         [HttpPost("createNewRestaurantWithOwner/"), Authorize]
         public async Task<ActionResult> CreateRestaurantWithOwner(Restaurant restaurant) 
         {
@@ -26,8 +40,8 @@ namespace BackendAPI.Controllers
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 User? user = await this.userManager.FindByIdAsync(userId);
-                this.InsertNewRow(restaurant);
-                this._dbContext.Owners.Add(new Owner(user, restaurant));
+                await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
+                await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));
                 return Ok("Restaurant added to database and owner created");
             }
             catch (Exception ex) 

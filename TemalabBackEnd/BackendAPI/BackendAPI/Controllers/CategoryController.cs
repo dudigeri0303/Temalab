@@ -1,11 +1,9 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
-using Microsoft.AspNetCore.Mvc;
+﻿using BackendAPI.Controllers.Common;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
-using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI.Controllers
 {
-    public class CategoryController : BaseEntityController<Category>
+    public class CategoryController : BaseEntityController
     {
         public CategoryController(DatabaseContext dbContext) : base(dbContext)
         {

@@ -1,4 +1,4 @@
-﻿using BackendAPI.Controllers;
+﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.ModelsForApiCalls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +11,7 @@ namespace TemalabBackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : BaseEntityController<User>
+    public class UserController : BaseEntityController
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BackendAPI.Controllers.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -8,7 +9,7 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LikedRestaurantController : BaseEntityController<LikedRestaurant>
+    public class LikedRestaurantController : BaseEntityController
     {
         public LikedRestaurantController(DatabaseContext dbContext) : base(dbContext)
         {
@@ -21,11 +22,11 @@ namespace BackendAPI.Controllers
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
-                List<LikedRestaurant> likedRestaurants = this._dbContext.LikedRestaurants.Where(lr => lr.UserId == userId).ToList();
+                List<LikedRestaurant> likedRestaurants = this.crudOperator.DbContext.LikedRestaurants.Where(lr => lr.UserId == userId).ToList();
                 List<Restaurant> actualRestaurants = new List<Restaurant>();
                 foreach(var lr in likedRestaurants)
                 {
-                    actualRestaurants.Add(this._dbContext.Restaurants.Where(r => r.Id == lr.RestaurantId).FirstOrDefault());
+                    actualRestaurants.Add(this.crudOperator.DbContext.Restaurants.Where(r => r.Id == lr.RestaurantId).FirstOrDefault());
                 }
                 return Ok(actualRestaurants);
             }

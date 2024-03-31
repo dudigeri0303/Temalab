@@ -54,18 +54,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Food>().ToTable("Foods");
         }
-
-        public DbSet<T> GetDbSet<T>() where T : class
-        {
-            foreach (var kvp in this.EntityTables)
-            {
-                if (typeof(DbSet<T>).IsAssignableFrom(kvp.Value.GetType()))
-                {
-                    return (DbSet<T>)kvp.Value;
-                }
-            }
-            return null;
-        }
     }
 }
 
