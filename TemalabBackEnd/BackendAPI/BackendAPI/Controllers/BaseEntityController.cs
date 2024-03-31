@@ -19,7 +19,6 @@ namespace BackendAPI.Controllers
 
         #region GenericCrudOperations
 
-        [Authorize]
         [HttpGet("getAllRows/")]
         public async Task<ActionResult<List<EntityClass>>> GetAllRows()
         {

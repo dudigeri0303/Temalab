@@ -42,6 +42,11 @@ namespace BackendAPI
             builder.Services.AddIdentityApiEndpoints<User>()
                 .AddEntityFrameworkStores<DatabaseContext>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin());
+            });
+
             //Elvileg ezzel mûködnie kéne annak, hogy bizonyos api hívásokat csak
             //Belépve lehet megcsinálni. ez viszont nem mûködik.
             builder.Services.AddSwaggerGen(options =>
@@ -60,6 +65,10 @@ namespace BackendAPI
             builder.Services.AddSwaggerGen();
             
             var app = builder.Build();
+
+            app.UseDeveloperExceptionPage();
+            app.UseRouting();
+
             app.MapControllers();
             app.MapIdentityApi<User>();
 
@@ -69,7 +78,10 @@ namespace BackendAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+
+            app.UseCors("AllowAllOrigins");
+
             app.UseAuthorization();
 
             //Adatbázis létrehozása
