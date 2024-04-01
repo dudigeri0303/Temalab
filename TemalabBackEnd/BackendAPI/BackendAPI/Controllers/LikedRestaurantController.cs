@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -11,7 +12,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class LikedRestaurantController : BaseEntityController
     {
-        public LikedRestaurantController(DatabaseContext dbContext) : base(dbContext)
+        public LikedRestaurantController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 
@@ -29,6 +30,17 @@ namespace BackendAPI.Controllers
                     actualRestaurants.Add(this.crudOperator.DbContext.Restaurants.Where(r => r.Id == lr.RestaurantId).FirstOrDefault());
                 }
                 return Ok(actualRestaurants);
+            }
+            return NotFound("User not found");
+        }
+
+        [HttpPost("likeRestaurantForLoggedInUser"), Authorize]
+        public async Task<ActionResult<LikedRestaurant>> LikeRestaurantForLoggedInUser(string restaurantId) 
+        {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != null) 
+            {
+                LikedRestaurant likedRestaurant = new LikedRestaurant();
             }
             return NotFound("User not found");
         }

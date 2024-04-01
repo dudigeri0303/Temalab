@@ -15,12 +15,10 @@ namespace TemalabBackEnd.Controllers
     [ApiController]
     public class UserController : BaseEntityController
     {
-        private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
-        public UserController(DatabaseContext context, UserManager<User> userManager, SignInManager<User> signInManager) : base(context) 
+        public UserController(DatabaseContext dbContext, UserManager<User> userManager, SignInManager<User> signInManager) : base(dbContext, userManager) 
         {
-            this.userManager = userManager;
             this.signInManager = signInManager;
         }
 
@@ -30,7 +28,7 @@ namespace TemalabBackEnd.Controllers
         [HttpPost("register/")]
         public async Task<ActionResult<User>> Register(RegisterModel registerModel) 
         {
-            Console.WriteLine("REGUSTRÁÁCIÓÓÓÓ");
+            //Console.WriteLine("REGUSTRÁÁCIÓÓÓÓ");
             User newUser = new User()
             {
                 UserName = registerModel.UserName,
@@ -69,7 +67,7 @@ namespace TemalabBackEnd.Controllers
         }
 
         //A bejelentkezett user user page-nek megfelelő adataival tér vissza egy UserDataModelként
-        [HttpGet("getLoggedInUserData/"), Authorize]
+        [HttpGet("getLoggedInUserData/"),Authorize]
         public async Task<ActionResult<UserDataModel>> GetUserByName()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

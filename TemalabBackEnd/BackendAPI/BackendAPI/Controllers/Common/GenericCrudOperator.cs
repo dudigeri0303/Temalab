@@ -1,10 +1,9 @@
 ﻿using BackendAPI.Models.EntityFrameworkModel.Common;
-using Isopoh.Cryptography.Argon2;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
+using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -13,10 +12,11 @@ namespace BackendAPI.Controllers.Common
     public class GenericCrudOperator
     {
         private readonly DatabaseContext _dbContext;
+
         public DatabaseContext DbContext => _dbContext;
         public GenericCrudOperator(DatabaseContext dbContext)
         {
-            _dbContext = dbContext;
+            this._dbContext = dbContext;
         }
         private DbSet<T> GetDbsetForGeneric<T>()
             where T : class

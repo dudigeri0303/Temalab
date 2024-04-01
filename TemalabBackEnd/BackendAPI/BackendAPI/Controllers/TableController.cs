@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -11,7 +12,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class TableController : BaseEntityController
     {
-        public TableController(DatabaseContext dbContext) : base(dbContext)
+        public TableController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 

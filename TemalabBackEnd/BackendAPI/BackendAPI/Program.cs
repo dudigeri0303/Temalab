@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -31,6 +35,7 @@ namespace BackendAPI
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddCors();
+            //builder.Services.AddAuthorization();
             /*builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin());
@@ -40,7 +45,33 @@ namespace BackendAPI
             builder.Services.AddControllers();
             //DbContext hozzáadása
             builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            
+
+            /*builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.IncludeErrorDetails = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
+                        ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Jwt:SecretKey").Value))
+                    };
+                });*/
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+                options => builder.Configuration.Bind("JwtSettings", options))
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                options => builder.Configuration.Bind("CookieSettings", options));
+            //builder.Services.AddAuthentication();
+
             builder.Services.AddAuthorization();
             //Identity api hívások
             builder.Services.AddIdentityApiEndpoints<User>()
@@ -68,7 +99,15 @@ namespace BackendAPI
             var app = builder.Build();
             // app.UseCors("AllowAllOrigins");
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"));
+            //Local host portját lehet hogy át kell írni, ha nem ott fut a kliens
+            app.UseCors(x => x
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins("http://localhost:5173")
+                .WithHeaders("Authorization", "Content-Type", "access-control-allow-origin")
+                .AllowCredentials()
+                .WithExposedHeaders("Authorization"));
+            
             app.UseDeveloperExceptionPage();
             app.UseRouting();
 
@@ -83,8 +122,8 @@ namespace BackendAPI
             }
             //app.UseHttpsRedirection();
 
-            
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             //Adatbázis létrehozása

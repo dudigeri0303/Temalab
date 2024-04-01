@@ -32,10 +32,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         [Column]
         public string OpeningHours { get; set; }
         public Restaurant() { }
-        public Restaurant(Menu menu, string name, string description, string label, string city, string street, int houseNumber, int postCode, string phoneNumber, string openingHours)
+        public Restaurant(string name, string description, string label, string city, string street, int houseNumber, int postCode, string phoneNumber, string openingHours)
         {
-            Menu = menu;
-            MenuId = menu.Id;
+            Menu = new Menu();
+            MenuId = Menu.Id;
             Name = name;
             Description = description;
             Label = label;

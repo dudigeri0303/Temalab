@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -10,7 +11,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class OwnerController : BaseEntityController
     {
-        public OwnerController(DatabaseContext context) : base(context)
+        public OwnerController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
 
         }

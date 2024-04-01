@@ -1,5 +1,4 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.EntityFrameworkModel.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +13,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class ReservationController : BaseEntityController
     {
-        public ReservationController(DatabaseContext dbContext) : base(dbContext)
+        public ReservationController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 
@@ -30,6 +29,8 @@ namespace BackendAPI.Controllers
             }
             return NotFound("User not found");
         }
+
+        //TODO: foglalás leadása api endpoint
 
         #endregion
     }

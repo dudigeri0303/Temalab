@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -11,7 +12,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class ReviewController : BaseEntityController
     {
-        public ReviewController(DatabaseContext dbContext) : base(dbContext)
+        public ReviewController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 

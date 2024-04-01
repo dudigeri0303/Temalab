@@ -78,7 +78,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             databaseContext.SaveChanges();
 
             //MENUS
-            var menus = new Menu[]
+           /* var menus = new Menu[]
             {
                 new Menu()
             };
@@ -110,13 +110,13 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 databaseContext.Foods.Add(food);
             }
-            databaseContext.SaveChanges();
+            databaseContext.SaveChanges();*/
 
             //REASTAURANTS
             var restaurants = new Restaurant[]
             {
-                new Restaurant(menus[0],"Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
-                new Restaurant(menus[0],"Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
+                new Restaurant("Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
+                new Restaurant("Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
             };
             foreach (Restaurant restaurant in restaurants)
             {
