@@ -9,7 +9,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
     //EntityModel atabázis kontextus
     public class DatabaseContext : IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
@@ -26,7 +25,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         {
             EntityTables = new Dictionary<Type, object>() 
             {
-                { typeof(User), Users},
                 { typeof(Admin), Admins},
                 { typeof(Owner), Owners},
                 { typeof(Restaurant), Restaurants},
@@ -42,7 +40,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Admin>().ToTable("Admins");
             modelBuilder.Entity<Owner>().ToTable("Owners");
             modelBuilder.Entity<Restaurant>().ToTable("Restaurants");

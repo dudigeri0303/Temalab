@@ -12,7 +12,7 @@ using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 namespace BackendAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240402122713_DbMigration")]
+    [Migration("20240402131805_DbMigration")]
     partial class DbMigration
     {
         /// <inheritdoc />
@@ -483,7 +483,7 @@ namespace BackendAPI.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

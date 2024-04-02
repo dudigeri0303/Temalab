@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
+
 
 namespace BackendAPI
 {
@@ -30,33 +32,38 @@ namespace BackendAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
+             builder.Services.AddAuthentication(options =>
+             {
+                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                 options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+             }).AddBearerToken().AddCookie("Identity.Bearer");
+             builder.Services.AddAuthorization();
+             builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+             builder.Services.AddIdentityCore<User>()
+                 .AddEntityFrameworkStores<DatabaseContext>()
+                 .AddApiEndpoints();
+
             builder.Services.AddCors();
-            builder.Services.AddAuthorization();
 
             builder.Services.AddControllers();
-            //DbContext hozzáadása
-            builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            //Identity api hívások
-            builder.Services.AddIdentityApiEndpoints<User>()
-                .AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
-                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                    {
-                        In = ParameterLocation.Header,
-                        Name = "Authorization",
-                        Type = SecuritySchemeType.ApiKey
-                    });
-                    options.OperationFilter<SecurityRequirementsOperationFilter>();
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
                 });
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
              
             var app = builder.Build();
+            app.MapIdentityApi<User>();
 
             //Local host portját lehet hogy át kell írni, ha nem ott fut a kliens
             app.UseCors(x => x
@@ -66,9 +73,6 @@ namespace BackendAPI
             
             app.UseDeveloperExceptionPage();
             app.UseRouting();
-
-            app.MapControllers();
-            app.MapIdentityApi<User>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -80,6 +84,9 @@ namespace BackendAPI
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapControllers();
+            
 
             //Adatbázis létrehozása
             CreateDbIfNotExists(app);
