@@ -12,8 +12,8 @@ using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 namespace BackendAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240401222422_IdentityMigration2")]
-    partial class IdentityMigration2
+    [Migration("20240402122713_DbMigration")]
+    partial class DbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

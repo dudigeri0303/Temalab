@@ -70,8 +70,9 @@ namespace TemalabBackEnd.Controllers
         [HttpGet("getLoggedInUserData/"),Authorize]
         public async Task<ActionResult<UserDataModel>> GetUserByName()
         {
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user =  await this.userManager.FindByIdAsync(userId);
+            //string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await this.userManager.GetUserAsync(User);
+            //User? user =  await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
                 UserDataModel dataModel = new UserDataModel()
