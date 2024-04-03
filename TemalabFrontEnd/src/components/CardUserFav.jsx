@@ -20,7 +20,7 @@ export default function CardUserFav({ data }) {
             </div>
             <div className="row">
               <div className="col d-flex align-items-end">
-                <label className="card-Altext">Étterem</label>
+                <label className="card-Altext">GyorsÉtterem</label>
               </div>
               <div className="col">
                 <button

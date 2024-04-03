@@ -1,6 +1,7 @@
 import "../App.css";
+import PropTypes from 'prop-types'; 
 
-export default function CardCustomerReservation() {
+export default function CardCustomerReservation({ data }) {
   return (
     <>
       <section id="main" className="container py-2">
@@ -8,13 +9,13 @@ export default function CardCustomerReservation() {
           <div className="container">
             <div className="row">
               <div className="col-sm d-flex align-items-center">
-                <label className="card-text">Étterem neve</label>
+                <label className="card-text">{data.restaurantName}</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label className="card-text">AsztalID</label>
+                <label className="card-text">{data.tableId}</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label className="card-text">2024-03-12</label>
+                <label className="card-text">{data.date}</label>
               </div>
               <div className="col-sm">
                 <button type="button" className="cardbtn float-end">
@@ -28,3 +29,11 @@ export default function CardCustomerReservation() {
     </>
   );
 }
+
+CardCustomerReservation.propTypes = {
+  data: PropTypes.shape({
+  restaurantName: PropTypes.string.isRequired,
+  tableId: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  }).isRequired,
+};

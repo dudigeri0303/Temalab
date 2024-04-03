@@ -1,3 +1,4 @@
+import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import CardUserFav from "../components/CardUserFav";
@@ -23,7 +24,7 @@ export default function CustomerFavorites() {
 
     try {
       const response = await fetch("https://localhost:7114/api/LikedRestaurant/getLikedRestaurantForLoggedInUser", requestOptions);
-      const data = await response.json(); // Parse JSON directly
+      const data = await response.json();
       setRestaurants(data); 
       console.log(data);
       

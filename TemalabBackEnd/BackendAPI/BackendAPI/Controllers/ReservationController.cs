@@ -1,4 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.ModelsForApiCalls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,30 @@ namespace BackendAPI.Controllers
 
         #region UniqueApiCalls
         [HttpGet("getReservationsForLoggedInUser/"), Authorize]
-        public async Task<ActionResult<List<Reservation>>> GetReservationsByLoggedInUser() 
+        public async Task<ActionResult<List<ReservationModel>>> GetReservationsByLoggedInUser() 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
+                List<ReservationModel> reservationModels = new List<ReservationModel>();
                 List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
-                return Ok(reservations);
+                Console.WriteLine(reservations.Count);
+                foreach(var reservation in reservations)
+                {
+                    Table? table = await this.crudOperator.GetRowById<Table>(reservation.TableId);
+                    if (table != null)
+                    {
+                        Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(table.RestaurantId);
+                        reservationModels.Add(new ReservationModel
+                        {
+                            RestaurantName = restaurant.Name,
+                            TableId = table.Id,
+                            EndDate = reservation.EndDate.ToString()
+                        });
+                    }
+                    else { Console.WriteLine("Table not found"); }
+                }
+                return Ok(reservationModels);
             }
             return NotFound("User not found");
         }
