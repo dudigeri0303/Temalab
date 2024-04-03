@@ -295,9 +295,6 @@ namespace BackendAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("TableId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

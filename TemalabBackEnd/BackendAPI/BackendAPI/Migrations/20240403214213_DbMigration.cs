@@ -357,7 +357,6 @@ namespace BackendAPI.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TableId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReserverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

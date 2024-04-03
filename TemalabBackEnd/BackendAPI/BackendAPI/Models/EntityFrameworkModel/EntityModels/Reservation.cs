@@ -18,30 +18,22 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public string ReserverId { get; set; }
         public User Reserver { get; set; } //Navigation property
         [Column]
-        public DateTime StartDate { get; set; }
-        [Column]
         public DateTime EndDate { get; set; }
         public Reservation() { }
         
-        public Reservation(User reserver, Table table) 
+        public Reservation(User reserver, Table table, DateTime date) 
         {
             Reserver = reserver;
             ReserverId = reserver.Id;
             Table = table;
             TableId = table.Id;
+            EndDate = date;
         }
 
         public void updateEntity(Reservation entity)
         {
             var newStartDate = DateTime.Now;
-            if (DateTime.TryParse(entity.StartDate.ToString(), out newStartDate))
-            {
-                this.StartDate = newStartDate;
-            }
-            else 
-            {
-                Debug.WriteLine("Invalid start date");
-            }
+            Debug.WriteLine("Invalid start date");
             var newEndDate = DateTime.Now;
             if (DateTime.TryParse(entity.EndDate.ToString(), out newEndDate))
             {

@@ -54,7 +54,7 @@ namespace BackendAPI.Controllers.Common
                 .ToListAsync();
             return entities;
         }
-        public async Task DeleteUserById<T>(string id)
+        public async Task DeleteRowById<T>(string id)
             where T : class
         {
             DbSet<T> dbSet = GetDbsetForGeneric<T>();

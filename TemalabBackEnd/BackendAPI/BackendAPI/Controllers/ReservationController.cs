@@ -19,7 +19,8 @@ namespace BackendAPI.Controllers
         }
 
         #region UniqueApiCalls
-        [HttpGet("getReservationsForLoggedInUser/"), Authorize]
+        [Authorize]
+        [HttpGet("getReservationsForLoggedInUser/")]
         public async Task<ActionResult<List<ReservationModel>>> GetReservationsByLoggedInUser() 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -36,16 +37,30 @@ namespace BackendAPI.Controllers
                         Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(table.RestaurantId);
                         reservationModels.Add(new ReservationModel
                         {
+                            Id = reservation.Id,
                             RestaurantName = restaurant.Name,
                             TableId = table.Id,
                             EndDate = reservation.EndDate.ToString()
                         });
+                        await Console.Out.WriteLineAsync(reservation.EndDate.ToString());
                     }
                     else { Console.WriteLine("Table not found"); }
                 }
                 return Ok(reservationModels);
             }
             return NotFound("User not found");
+        }
+
+        [Authorize]
+        [HttpDelete("deleteReservationForLoggedUser/")]
+        public async Task<ActionResult> DeleteReservationByIdForLoggedUser(string reservationId) 
+        {
+            try 
+            {
+                await this.crudOperator.DeleteRowById<Reservation>(reservationId);
+                return Ok("Reservation deleted");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         //TODO: foglalás leadása api endpoint
