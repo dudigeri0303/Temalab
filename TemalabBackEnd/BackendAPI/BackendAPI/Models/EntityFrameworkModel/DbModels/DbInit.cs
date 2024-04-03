@@ -21,6 +21,13 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
                 databaseContext.SaveChanges();
             }
 
+            //Meglévő userek törlése a AspNetUsers táblábol
+            var existingusers = userManager.Users.ToList();
+            foreach (var user in existingusers)
+            {
+                await userManager.DeleteAsync(user);
+            }
+
             //USERS
             var users = new User[] 
             {

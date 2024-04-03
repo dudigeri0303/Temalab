@@ -31,6 +31,8 @@ const RegisterForm = () => {
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
       body: raw,
       redirect: "follow"
     };

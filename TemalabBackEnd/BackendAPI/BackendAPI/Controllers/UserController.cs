@@ -58,7 +58,7 @@ namespace TemalabBackEnd.Controllers
                 );
                 if (logInResult.Succeeded)
                 {
-                    return Ok(loginModel);
+                    return Ok(logInResult);
                 }
                 return Unauthorized("Login failed");
             }
@@ -74,8 +74,7 @@ namespace TemalabBackEnd.Controllers
         }
 
         //A bejelentkezett user user page-nek megfelelő adataival tér vissza egy UserDataModelként
-        [HttpGet("getLoggedInUserData/"),Authorize]
-        [AllowAnonymous]
+        [HttpGet("getLoggedInUserData/"), Authorize]
         public async Task<ActionResult<UserDataModel>> GetLoggedInUsersData()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
