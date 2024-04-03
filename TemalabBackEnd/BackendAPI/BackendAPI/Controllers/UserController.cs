@@ -34,7 +34,6 @@ namespace TemalabBackEnd.Controllers
                 UserName = registerModel.UserName,
                 Email = registerModel.Email,
                 PhoneNumber = registerModel.PhoneNumber,
-                UserRole = registerModel.UserRole
             };
 
             if(registerModel.Password.Equals(registerModel.PasswordAgain)) 
@@ -66,13 +65,21 @@ namespace TemalabBackEnd.Controllers
             return BadRequest("Fill in the fields!");
         }
 
+        [Authorize]
+        [HttpPost("logOut/")]
+        public async Task<ActionResult> LogOut() 
+        {
+            await this.signInManager.SignOutAsync();
+            return Ok("LoggedOut");
+        }
+
         //A bejelentkezett user user page-nek megfelelő adataival tér vissza egy UserDataModelként
         [HttpGet("getLoggedInUserData/"),Authorize]
-        public async Task<ActionResult<UserDataModel>> GetUserByName()
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDataModel>> GetLoggedInUsersData()
         {
-            //string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await this.userManager.GetUserAsync(User);
-            //User? user =  await this.userManager.FindByIdAsync(userId);
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User? user =  await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
                 UserDataModel dataModel = new UserDataModel()

@@ -12,7 +12,7 @@ using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 namespace BackendAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240402131805_DbMigration")]
+    [Migration("20240402215202_DbMigration")]
     partial class DbMigration
     {
         /// <inheritdoc />
@@ -469,9 +469,6 @@ namespace BackendAPI.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("UserRole")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

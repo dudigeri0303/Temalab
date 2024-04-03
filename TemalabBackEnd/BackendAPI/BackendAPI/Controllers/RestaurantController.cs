@@ -17,7 +17,6 @@ namespace BackendAPI.Controllers
         }
         #region UniqueOperations
 
-        [Authorize]
         [HttpGet("listAllRestaurants/")]
         public async Task<ActionResult<List<Restaurant>>> ListAllRestaurants() 
         {

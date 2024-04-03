@@ -7,7 +7,5 @@
         public string? PhoneNumber { get; set; }
         public string? Password { get; set; }
         public string? PasswordAgain { get; set; }
-        public string? UserRole { get; set; }
-
     }
 }

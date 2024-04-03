@@ -28,29 +28,25 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
                 { 
                     UserName = "Jozsi",
                     Email = "jozsi@gmail.com",
-                    PhoneNumber = "1234567890",
-                    UserRole = "user"
+                    PhoneNumber = "1234567890"
                 },
                 new User
                 {
                     UserName = "Anna",
                     Email = "anna@gmail.com",
-                    PhoneNumber = "1234523444",
-                    UserRole = "user"
+                    PhoneNumber = "1234523444"
                 },
                 new User
                 {
                     UserName = "admin",
                     Email = "admin@gmail.com",
-                    PhoneNumber = "5783267890",
-                    UserRole = "admin"
+                    PhoneNumber = "5783267890"
                 },
                 new User
                 {
                     UserName = "boss",
                     Email = "hugo.boss@gmail.com",
-                    PhoneNumber = "3238927890",
-                    UserRole = "owner"
+                    PhoneNumber = "3238927890"
                 }
             }; 
             

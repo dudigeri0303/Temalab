@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
-
 
 namespace BackendAPI
 {
@@ -33,20 +33,8 @@ namespace BackendAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-             builder.Services.AddAuthentication(options =>
-             {
-                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-                 options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-             }).AddBearerToken().AddCookie("Identity.Bearer");
-             builder.Services.AddAuthorization();
-             builder.Services.AddDbContext<DatabaseContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-             builder.Services.AddIdentityCore<User>()
-                 .AddEntityFrameworkStores<DatabaseContext>()
-                 .AddApiEndpoints();
-
-            builder.Services.AddCors();
-
             builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -59,34 +47,53 @@ namespace BackendAPI
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-             
+            builder.Services.AddDbContext<DatabaseContext>(option => 
+                option.UseSqlServer(builder.Configuration
+                .GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddAuthorization();
+
+            builder.Services.AddIdentityApiEndpoints<User>()
+                .AddEntityFrameworkStores<DatabaseContext>();
+
+            builder.Services.AddCors();
+
+            /*builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = ".AspNetCore.Identity.Application";
+                options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Ensure Secure policy
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.MaxAge = TimeSpan.FromDays(30); // Example expiration time
+                options.SlidingExpiration = true;
+                options.LoginPath = "/api/User/login"; // Example login path
+                options.LogoutPath = "/api/User/logOut"; // Example logout path
+                //options.AccessDeniedPath = "/Account/AccessDenied"; // Example access denied path
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnValidatePrincipal = SecurityStampValidator.ValidatePrincipalAsync
+                };
+            });*/
+
             var app = builder.Build();
-            app.MapIdentityApi<User>();
 
-            //Local host portját lehet hogy át kell írni, ha nem ott fut a kliens
-            app.UseCors(x => x
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .WithOrigins("http://localhost:5173"));
-            
-            app.UseDeveloperExceptionPage();
-            app.UseRouting();
-
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
+            app.UseRouting();
 
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173").AllowCredentials());
+
+            app.MapIdentityApi<User>();
+            
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapControllers();
-            
 
             //Adatbázis létrehozása
             CreateDbIfNotExists(app);
