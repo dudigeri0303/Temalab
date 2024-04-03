@@ -14,7 +14,7 @@ const RegisterForm = () => {
 
   // Regisztrációs gomb eseménykezelő fv
   const handleRegister = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

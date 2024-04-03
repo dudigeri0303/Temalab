@@ -16,7 +16,8 @@ export default function CardCustomerReservation({ data }) {
     try {
       const response = await fetch("https://localhost:7114/api/Reservation/deleteReservationForLoggedUser?reservationId=" + reservationId, requestOptions);
       const result = await response.text();
-      console.log(result)
+      console.log(result);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

@@ -1,4 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.ModelsForApiCalls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +19,34 @@ namespace BackendAPI.Controllers
 
         #region UniqueApiCalls
         [HttpGet("getLikedRestaurantForLoggedInUser/"), Authorize]
-        public async Task<ActionResult<List<Restaurant>>> GetLikedRestaurantByLoggedInUser()
+        public async Task<ActionResult<List<LikedRestaurantModel>>> GetLikedRestaurantByLoggedInUser()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
                 List<LikedRestaurant> likedRestaurants = this.crudOperator.DbContext.LikedRestaurants.Where(lr => lr.UserId == userId).ToList();
-                List<Restaurant> actualRestaurants = new List<Restaurant>();
+                List<LikedRestaurantModel> likedRestaurantModels = new List<LikedRestaurantModel>();
                 foreach(var lr in likedRestaurants)
                 {
-                    actualRestaurants.Add(this.crudOperator.DbContext.Restaurants.Where(r => r.Id == lr.RestaurantId).FirstOrDefault());
+                    Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(lr.RestaurantId);
+                    if (restaurant != null) 
+                    {
+                        likedRestaurantModels.Add(new LikedRestaurantModel
+                        {
+                            Id = lr.Id,
+                            Name = restaurant.Name,
+                            Label = restaurant.Label,
+                            Description = restaurant.Description,
+                            Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber.ToString()}" 
+                        }) ; 
+                    }
                 }
-                return Ok(actualRestaurants);
+                return Ok(likedRestaurantModels);
             }
             return NotFound("User not found");
         }
 
+        //TODO: befejezni
         [HttpPost("likeRestaurantForLoggedInUser"), Authorize]
         public async Task<ActionResult<LikedRestaurant>> LikeRestaurantForLoggedInUser(string restaurantId) 
         {
@@ -43,6 +56,18 @@ namespace BackendAPI.Controllers
                 LikedRestaurant likedRestaurant = new LikedRestaurant();
             }
             return NotFound("User not found");
+        }
+
+        [Authorize]
+        [HttpDelete("deleteLikedRestaurantForLoggedUser/")]
+        public async Task<ActionResult> DeleteLikedRestaurantByIdForLoggedUser(string likedRestaurantId)
+        {
+            try
+            {
+                await this.crudOperator.DeleteRowById<LikedRestaurant>(likedRestaurantId);
+                return Ok("Liked restaurant deleted");
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
         #endregion
     }

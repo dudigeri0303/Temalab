@@ -183,6 +183,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             var reservations = new Reservation[]
             {
                 new Reservation(users[0],tables[0], DateTime.Now),
+                new Reservation(users[0],tables[2], DateTime.Now),
                 new Reservation(users[1],tables[1], DateTime.Now),
                 new Reservation(users[2],tables[2], DateTime.Now)
             };

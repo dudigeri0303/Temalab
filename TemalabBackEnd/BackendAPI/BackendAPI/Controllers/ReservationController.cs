@@ -57,6 +57,14 @@ namespace BackendAPI.Controllers
         {
             try 
             {
+                //Nem biztos hogy jó. Elvileg a foglalás törlésekor a foglalt asztal IsReserved property-jét false ra állítja.
+                Reservation? reservation = await this.crudOperator.GetRowById<Reservation>(reservationId);
+                Table? table = await this.crudOperator.GetRowById<Table>(reservation.TableId);
+                if (table != null) 
+                {
+                    table.IsReserved = false;
+                }
+
                 await this.crudOperator.DeleteRowById<Reservation>(reservationId);
                 return Ok("Reservation deleted");
             }
