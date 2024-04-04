@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -16,6 +17,7 @@ namespace BackendAPI.Controllers
         {
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPut("reserveTable/")]
         public async Task<ActionResult> ReserveTable(string id) 
         {
@@ -28,6 +30,7 @@ namespace BackendAPI.Controllers
             return NotFound("Table not found");
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPut("despairReservation/")]
         public async Task<ActionResult> DespairTableReservation(string id) 
         {

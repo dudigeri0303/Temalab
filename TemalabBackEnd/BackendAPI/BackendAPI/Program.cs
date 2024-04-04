@@ -19,7 +19,8 @@ namespace BackendAPI
                 var scope = services.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                DbInit.Init(context, userManager);
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                DbInit.Init(context, userManager, roleManager);
             }
             catch (Exception ex)
             {
@@ -55,10 +56,10 @@ namespace BackendAPI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization();            
 
-            builder.Services.AddIdentityApiEndpoints<User>()
-                .AddEntityFrameworkStores<DatabaseContext>();
+
+            builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
@@ -81,7 +82,7 @@ namespace BackendAPI
             //Ha neked nem ezen a porton fut a kliens akkor írd át
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173"));
 
-            app.MapIdentityApi<User>();
+            
             
             app.UseAuthentication();
             //app.UseHttpsRedirection();

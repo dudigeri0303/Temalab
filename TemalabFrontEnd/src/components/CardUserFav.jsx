@@ -20,7 +20,7 @@ export default function CardUserFav({ data }) {
       const response = await fetch("https://localhost:7114/api/LikedRestaurant/deleteLikedRestaurantForLoggedUser?likedRestaurantId=" + likedRestaurantId, requestOptions);
       const result = await response.text();
       console.log(result);
-      window.location.reload();
+      //window.location.reload();
     } catch (error) {
       console.error(error);
     }
