@@ -28,7 +28,6 @@ namespace TemalabBackEnd.Controllers
         [HttpPost("register/")]
         public async Task<ActionResult<User>> Register(RegisterModel registerModel) 
         {
-            //Console.WriteLine("REGUSTRÁÁCIÓÓÓÓ");
             User newUser = new User()
             {
                 UserName = registerModel.UserName,
@@ -62,7 +61,18 @@ namespace TemalabBackEnd.Controllers
                 );
                 if (logInResult.Succeeded)
                 {
-                    return Ok(logInResult);
+                    //A kapott információk alapján beállít egy user role-t.
+                    //A loginModel-t visszaküldi, és ez alapján navigál a kliens
+                    //Lehet hogy szar megoldás, és ki kéne találni valami jobbat
+                    User? user = await this.userManager.FindByNameAsync(loginModel.UserName);
+                    var userRoles = await this.userManager.GetRolesAsync(user);
+                    if (userRoles.Contains("Owner"))
+                    {
+                        loginModel.UserRole = "owner";
+                    }
+                    else { loginModel.UserRole = "customer"; }
+                    
+                    return Ok(loginModel);
                 }
                 return Unauthorized("Login failed");
             }
