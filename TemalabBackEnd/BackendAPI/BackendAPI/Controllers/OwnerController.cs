@@ -1,4 +1,6 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -7,22 +9,22 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OwnerController : BaseEntityController<Owner>
+    public class OwnerController : BaseEntityController
     {
-        public OwnerController(DatabaseContext context) : base(context)
+        public OwnerController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
 
         }
         #region UniqueOperations
 
         [HttpGet("getRestaurantsByOwnerID/{id}")]
-        public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByOwner(int id)
+        public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByOwner(string id)
         {
-            List<Owner> restaurantOwnedById = this._dbContext.Owners.Where(o => o.UserId == id).ToList();
+            List<Owner> restaurantOwnedById = this.crudOperator.DbContext.Owners.Where(o => o.UserId == id).ToList();
             List<Restaurant> restaurants = new List<Restaurant>();
             foreach (var owner in restaurantOwnedById)
             {
-                foreach (var restaurant in this._dbContext.Restaurants)
+                foreach (var restaurant in this.crudOperator.DbContext.Restaurants)
                 {
                     if (owner.RestaurantId == restaurant.Id)
                     {

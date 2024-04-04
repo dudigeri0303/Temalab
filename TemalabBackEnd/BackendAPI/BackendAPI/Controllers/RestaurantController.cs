@@ -1,6 +1,9 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.ModelsForApiCalls;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -8,58 +11,94 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantController : BaseEntityController<Restaurant>
+    public class RestaurantController : BaseEntityController
     {
-
-        public RestaurantController(DatabaseContext context) : base(context)
+        public RestaurantController(DatabaseContext context, UserManager<User> userManager) : base(context, userManager)
         {
         }
         #region UniqueOperations
 
-        [HttpGet("getOwnerByRestaurantID/{id}")]
-        public async Task<ActionResult<Owner>> GetOwnerByRestaurantId(int id)
+        [Authorize]
+        [HttpGet("listAllRestaurants/")]
+        public async Task<ActionResult<List<RestaurantModel>>> ListAllRestaurants() 
         {
-            Owner? owner = await this._dbContext.Owners.Where(o => o.RestaurantId == id).FirstOrDefaultAsync();
-            if (owner == null)
+            try 
             {
-                NotFound("Restaurant not found");
+                List<Restaurant> restaurants = await this.crudOperator.GetAllRows<Restaurant>();
+                List<RestaurantModel> restaurantModels = new List<RestaurantModel>();
+                foreach (var restaurant in restaurants) 
+                {
+                    restaurantModels.Add(new RestaurantModel 
+                    {
+                        Id = restaurant.Id,
+                        Name = restaurant.Name,
+                        Label = restaurant.Label,
+                        Description = restaurant.Description,
+                        Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
+                    });
+                }
+                return Ok(restaurantModels);
             }
-            return Ok(owner);
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
-
-        [HttpGet("getRestaurantByOwnerName/{name}")]
-        public async Task<ActionResult<List<Restaurant>>> GetRestaurantByOwnerName(string name)
+        [HttpGet("listRestaurantsByOwner/"), Authorize]
+        public async Task<ActionResult<List<Restaurant>>> ListRestaurantsByOwner() 
         {
-            List<int> ownerIds = this._dbContext.Users.Where(u => u.UserName == name).Select(u => u.Id).ToList();
-            List<Owner> owners = new List<Owner>();
-            foreach (int id in ownerIds)
-            {
-                foreach (var owner in this._dbContext.Owners)
-                {
-                    if (id == owner.UserId)
-                    {
-                        owners.Add(owner);
-                    }
-                }
-            }
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<Owner> ownerConnections = await this.crudOperator.GetMultipleRowsByForeignId<Owner>(userId, "UserId");
             List<Restaurant> restaurants = new List<Restaurant>();
-            foreach (var owner in owners)
+            foreach(Owner owner in ownerConnections) 
             {
-                foreach (var restaurant in this._dbContext.Restaurants)
-                {
-                    if (owner.RestaurantId == restaurant.Id)
-                    {
-                        restaurants.Add(restaurant);
-                    }
-                }
-            }
-            if (restaurants == null)
-            {
-                NotFound("");
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
+                restaurants.Add(restaurant);
             }
             return Ok(restaurants);
         }
+        [HttpPost("createNewRestaurantWithOwner/"), Authorize]
+        public async Task<ActionResult> CreateRestaurantWithOwner(Restaurant restaurant) 
+        {
+            try 
+            {
+                string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                User? user = await this.userManager.FindByIdAsync(userId);
+                await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
+                await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));
+                return Ok("Restaurant added to database and owner created");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest("Something went wrong" + "\n" + ex.Message);
+            }
+        }
 
+        //2 kontroller a menü kezeléséhez.KAtegória hozzáadása a menühoz étterem id alapján
+        //és kaja hozzáadása a kategóriához kategória id alapján
+        [HttpPost("addCategoryToMenu/"), Authorize]
+        public async Task<ActionResult<Category>> AddCategoryToMenu(string restaurantID, string categoryName) 
+        {
+            Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantID);
+            Menu? menu = await this.crudOperator.GetRowById<Menu>(restaurant.MenuId);
+            if(menu != null) 
+            {
+                Category category = new Category(menu, categoryName);
+                await this.crudOperator.InsertNewRow<Category>(category);
+                return Ok(category);
+            }
+            return BadRequest("Something went wrong");
+        }
+
+        [HttpPost("addFoodToCategory"), Authorize]
+        public async Task<ActionResult<Food>> AddFoodToCategory(string categoryId, string name, string description, int price) 
+        {
+            Category? category = await this.crudOperator.GetRowById<Category>(categoryId);
+            if(category != null) 
+            {
+                Food food = new Food(category, name, description, price);
+                await this.crudOperator.InsertNewRow<Food>(food);
+                return Ok(food);
+            }
+            return BadRequest("Something went wrong");
+        }
         #endregion
     }
 }

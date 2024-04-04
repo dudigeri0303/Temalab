@@ -9,9 +9,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [ForeignKey(nameof(Restaurant))]
-        public int RestaurantId { get; set; }
+        public string RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; } //Navigation property
         [Column]
         public int NumOfSeats { get; set; }

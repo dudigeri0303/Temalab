@@ -13,8 +13,37 @@ const RegisterForm = () => {
   const [fieldsRequired, setFieldsRequired] = useState(true);
 
   // Regisztrációs gomb eseménykezelő fv
-  const handleRegister = () => {
-
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+      "userName": userName,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "password": password,
+      "passwordAgain": passwordAgain,
+      "userRole": "user"
+    });
+    
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+      body: raw,
+      redirect: "follow"
+    };
+    
+    try {
+      const response = await fetch("https://localhost:7114/api/User/register/", requestOptions);
+      const result = await response.text();
+      console.log(result)
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Mégse gomb eseménykezelő fv
@@ -114,8 +143,8 @@ const RegisterForm = () => {
         </div>
 
         <div>
-          <button className='btnstyle m-3 py-2' type="submit" onClick={handleRegister} >Register</button>
-          <button className='btnstyle m-3 py-2' type="submit" onClick={handleCancel} >Mégse</button>
+          <button className='btnstyle m-3 py-2' type="button" onClick={handleRegister} >Register</button>
+          <button className='btnstyle m-3 py-2' type="button" onClick={handleCancel} >Mégse</button>
         </div>
 
       </form>
