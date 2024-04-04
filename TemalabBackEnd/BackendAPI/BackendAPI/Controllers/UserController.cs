@@ -39,6 +39,10 @@ namespace TemalabBackEnd.Controllers
             if(registerModel.Password.Equals(registerModel.PasswordAgain)) 
             {
                 await this.userManager.CreateAsync(newUser, registerModel.Password);
+                
+                if (registerModel.UserRole == "customer") { await this.userManager.AddToRoleAsync(newUser, "Customer"); }
+                else if (registerModel.UserRole == "owner") { await this.userManager.AddToRoleAsync(newUser, "Owner"); }
+                
                 return Ok(newUser);
             }
             return BadRequest("Something went wrong");

@@ -9,6 +9,7 @@ const RegisterForm = () => {
   const [passwordAgain, setPasswordAgain] = useState('');
   const [customer, setCustomer] = useState(true);
   const [owner, setOwner] = useState(false);
+
   // Legyenek kötelező mezők
   const [fieldsRequired, setFieldsRequired] = useState(true);
 
@@ -18,6 +19,10 @@ const RegisterForm = () => {
     
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+
+    let role = "";
+    if(owner){ role = "owner";}
+    else if(customer) {role = "customer"}
     
     const raw = JSON.stringify({
       "userName": userName,
@@ -25,7 +30,7 @@ const RegisterForm = () => {
       "phoneNumber": phoneNumber,
       "password": password,
       "passwordAgain": passwordAgain,
-      "userRole": "user"
+      "userRole": role
     });
     
     const requestOptions = {
@@ -134,7 +139,7 @@ const RegisterForm = () => {
               onChange={(e) => {
                 if (e.target.checked != false) {
                   setOwner(e.target.checked);
-                  setCustomer(false); // Ha az "Owner" checkbox ki van választva, a "Customer" checkbox legyen kikapcsolva
+                  setCustomer(false);// Ha az "Owner" checkbox ki van választva, a "Customer" checkbox legyen kikapcsolva
                 }
               }}
             />
