@@ -59,7 +59,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             
             foreach(var user in users) 
             {
-                await userManager.CreateAsync(user, "A2dq3s00?34");
+                await userManager.CreateAsync(user, "Asdfgh123?");
             }
             
             /*foreach (User user in users) 

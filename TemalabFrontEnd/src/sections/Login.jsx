@@ -15,7 +15,7 @@ const LoginForm = () =>{
         myHeaders.append("Content-Type", "application/json");
         const raw = JSON.stringify({
             "userName": "Anna",
-            "password": "A2dq3s00?34"
+            "password": "Asdfgh123?"
         });
         const requestOptions = {
             method: "POST",
