@@ -1,4 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.ModelsForApiCalls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,28 @@ namespace BackendAPI.Controllers
         }
         #region UniqueOperations
 
+        [Authorize]
         [HttpGet("listAllRestaurants/")]
-        public async Task<ActionResult<List<Restaurant>>> ListAllRestaurants() 
+        public async Task<ActionResult<List<RestaurantModel>>> ListAllRestaurants() 
         {
-            List<Restaurant> restaurants = await this.crudOperator.GetAllRows<Restaurant>();
-            return Ok(restaurants);
+            try 
+            {
+                List<Restaurant> restaurants = await this.crudOperator.GetAllRows<Restaurant>();
+                List<RestaurantModel> restaurantModels = new List<RestaurantModel>();
+                foreach (var restaurant in restaurants) 
+                {
+                    restaurantModels.Add(new RestaurantModel 
+                    {
+                        Id = restaurant.Id,
+                        Name = restaurant.Name,
+                        Label = restaurant.Label,
+                        Description = restaurant.Description,
+                        Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
+                    });
+                }
+                return Ok(restaurantModels);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
         [HttpGet("listRestaurantsByOwner/"), Authorize]
         public async Task<ActionResult<List<Restaurant>>> ListRestaurantsByOwner() 

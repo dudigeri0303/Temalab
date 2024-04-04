@@ -46,14 +46,24 @@ namespace BackendAPI.Controllers
             return NotFound("User not found");
         }
 
-        //TODO: befejezni
         [HttpPost("likeRestaurantForLoggedInUser"), Authorize]
         public async Task<ActionResult<LikedRestaurant>> LikeRestaurantForLoggedInUser(string restaurantId) 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId != null) 
+            User? user = await this.userManager.FindByIdAsync(userId);
+            LikedRestaurant? alreadyLiked = this.crudOperator.DbContext.LikedRestaurants
+                .Where(lr => lr.UserId == userId && lr.RestaurantId == restaurantId)
+                .FirstOrDefault();
+            if (user != null) 
             {
-                LikedRestaurant likedRestaurant = new LikedRestaurant();
+                if(alreadyLiked == null) 
+                {
+                    Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+                    LikedRestaurant likedRestaurant = new LikedRestaurant(user, restaurant);
+                    await this.crudOperator.InsertNewRow<LikedRestaurant>(likedRestaurant);
+                    return Ok("Restaurant liked");
+                }
+                return BadRequest("User already liked the restaurant");
             }
             return NotFound("User not found");
         }

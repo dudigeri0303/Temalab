@@ -14,7 +14,7 @@ const LoginForm = () =>{
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         const raw = JSON.stringify({
-            "userName": "Jozsi",
+            "userName": "Anna",
             "password": "A2dq3s00?34"
         });
         const requestOptions = {
