@@ -18,7 +18,8 @@ namespace BackendAPI.Controllers
         }
 
         #region UniqueApiCalls
-        [HttpGet("getLikedRestaurantForLoggedInUser/"), Authorize]
+        [Authorize(Roles = "Customer")]
+        [HttpGet("getLikedRestaurantForLoggedInUser/")]
         public async Task<ActionResult<List<LikedRestaurantModel>>> GetLikedRestaurantByLoggedInUser()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -45,8 +46,8 @@ namespace BackendAPI.Controllers
             }
             return NotFound("User not found");
         }
-
-        [HttpPost("likeRestaurantForLoggedInUser"), Authorize]
+        [Authorize(Roles = "Customer")]
+        [HttpPost("likeRestaurantForLoggedInUser")]
         public async Task<ActionResult<LikedRestaurant>> LikeRestaurantForLoggedInUser(string restaurantId) 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -68,7 +69,7 @@ namespace BackendAPI.Controllers
             return NotFound("User not found");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         [HttpDelete("deleteLikedRestaurantForLoggedUser/")]
         public async Task<ActionResult> DeleteLikedRestaurantByIdForLoggedUser(string likedRestaurantId)
         {

@@ -19,7 +19,7 @@ namespace BackendAPI.Controllers
         }
 
         #region UniqueApiCalls
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         [HttpGet("getReservationsForLoggedInUser/")]
         public async Task<ActionResult<List<ReservationModel>>> GetReservationsByLoggedInUser() 
         {
@@ -51,7 +51,7 @@ namespace BackendAPI.Controllers
             return NotFound("User not found");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         [HttpDelete("deleteReservationForLoggedUser/")]
         public async Task<ActionResult> DeleteReservationByIdForLoggedUser(string reservationId) 
         {

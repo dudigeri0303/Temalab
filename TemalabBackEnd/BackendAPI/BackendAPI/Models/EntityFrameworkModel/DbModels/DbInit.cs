@@ -6,7 +6,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
     //Adatbázist statikus inicializáló metódust tartalmazó osztály
     public class DbInit
     {
-        public static async void Init(DatabaseContext databaseContext, UserManager<User> userManager) 
+        public static async void Init(DatabaseContext databaseContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager) 
         {
             databaseContext.Database.EnsureCreated();
 
@@ -27,6 +27,14 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 await userManager.DeleteAsync(user);
             }
+
+            var customerRole = new IdentityRole("Customer");
+            var ownerRole = new IdentityRole("Owner");
+            var adminRole = new IdentityRole("Admin");            
+            await roleManager.CreateAsync(customerRole);
+            await roleManager.CreateAsync(ownerRole);
+            await roleManager.CreateAsync(adminRole);
+
 
             //USERS
             var users = new User[] 
@@ -61,6 +69,12 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 await userManager.CreateAsync(user, "Asdfgh123?");
             }
+
+            await userManager.AddToRoleAsync(users[0], "Customer");
+            await userManager.AddToRoleAsync(users[1], "Customer");
+            await userManager.AddToRoleAsync(users[2], "Admin");
+            await userManager.AddToRoleAsync(users[3], "Owner");
+            await userManager.AddToRoleAsync(users[3], "Customer");
             
             /*foreach (User user in users) 
             {

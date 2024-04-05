@@ -28,7 +28,6 @@ namespace TemalabBackEnd.Controllers
         [HttpPost("register/")]
         public async Task<ActionResult<User>> Register(RegisterModel registerModel) 
         {
-            //Console.WriteLine("REGUSTRÁÁCIÓÓÓÓ");
             User newUser = new User()
             {
                 UserName = registerModel.UserName,
@@ -39,6 +38,10 @@ namespace TemalabBackEnd.Controllers
             if(registerModel.Password.Equals(registerModel.PasswordAgain)) 
             {
                 await this.userManager.CreateAsync(newUser, registerModel.Password);
+                
+                if (registerModel.UserRole == "customer") { await this.userManager.AddToRoleAsync(newUser, "Customer"); }
+                else if (registerModel.UserRole == "owner") { await this.userManager.AddToRoleAsync(newUser, "Owner"); }
+                
                 return Ok(newUser);
             }
             return BadRequest("Something went wrong");
@@ -58,7 +61,21 @@ namespace TemalabBackEnd.Controllers
                 );
                 if (logInResult.Succeeded)
                 {
-                    return Ok(logInResult);
+                    //A kapott információk alapján beállít egy user role-t.
+                    //A loginModel-t visszaküldi, és ez alapján navigál a kliens
+                    //Lehet hogy szar megoldás, és ki kéne találni valami jobbat
+                    User? user = await this.userManager.FindByNameAsync(loginModel.UserName);
+                    var userRoles = await this.userManager.GetRolesAsync(user);
+                    if (userRoles.Contains("Owner"))
+                    {
+                        loginModel.UserRole = "owner";
+                    }
+                    else { loginModel.UserRole = "customer"; }
+
+                    //loginmodel paswordjének átírása üres stringre. Igy legalább nem küldi vissza a frontendre, bár elég gagyi megoldás
+                    loginModel.Password = "";
+
+                    return Ok(loginModel);
                 }
                 return Unauthorized("Login failed");
             }

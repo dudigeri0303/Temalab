@@ -1,8 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.EntityFrameworkModel.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
