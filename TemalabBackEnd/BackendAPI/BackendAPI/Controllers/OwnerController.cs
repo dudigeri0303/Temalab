@@ -1,8 +1,9 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.EntityFrameworkModel.Common;
+using BackendAPI.Models.ModelsForApiCalls;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -35,15 +36,25 @@ namespace BackendAPI.Controllers
 
         [Authorize(Roles = "Owner")]
         [HttpPost("createNewRestaurantWithOwner/")]
-        public async Task<ActionResult> CreateRestaurantWithOwner(Restaurant restaurant)
+        public async Task<ActionResult<Restaurant>> CreateRestaurantWithOwner(CreateRestaurantModel restaurantModel)
         {
             try
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 User? user = await this.userManager.FindByIdAsync(userId);
+                Restaurant restaurant = new Restaurant(
+                    restaurantModel.Name,
+                    restaurantModel.Description, 
+                    restaurantModel.Label, 
+                    restaurantModel.City, 
+                    restaurantModel.Street,
+                    Int32.Parse(restaurantModel.HouseNumber),
+                    Int32.Parse(restaurantModel.PostCode),
+                    restaurantModel.PhoneNumber, 
+                    "00-24");
                 await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
                 await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));
-                return Ok("Restaurant added to database and owner created");
+                return Ok(restaurant);
             }
             catch (Exception ex)
             {

@@ -71,7 +71,10 @@ namespace TemalabBackEnd.Controllers
                         loginModel.UserRole = "owner";
                     }
                     else { loginModel.UserRole = "customer"; }
-                    
+
+                    //loginmodel paswordjének átírása üres stringre. Igy legalább nem küldi vissza a frontendre, bár elég gagyi megoldás
+                    loginModel.Password = "";
+
                     return Ok(loginModel);
                 }
                 return Unauthorized("Login failed");
