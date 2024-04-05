@@ -21,17 +21,24 @@ namespace BackendAPI.Controllers
         #region UniqueOperations
         [Authorize(Roles = "Owner")]
         [HttpGet("listRestaurantsByOwner/")]
-        public async Task<ActionResult<List<Restaurant>>> ListRestaurantsByOwner()
+        public async Task<ActionResult<List<RestaurantModel>>> ListRestaurantsByOwner()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             List<Owner> ownerConnections = await this.crudOperator.GetMultipleRowsByForeignId<Owner>(userId, "UserId");
-            List<Restaurant> restaurants = new List<Restaurant>();
+            List<RestaurantModel> restaurantModels = new List<RestaurantModel>();
             foreach (Owner owner in ownerConnections)
             {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
-                restaurants.Add(restaurant);
+                restaurantModels.Add(new RestaurantModel 
+                {
+                    Id = restaurant.Id,
+                    Name = restaurant.Name,
+                    Label = restaurant.Label,
+                    Description = restaurant.Description,
+                    Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
+                });
             }
-            return Ok(restaurants);
+            return Ok(restaurantModels);
         }
 
         [Authorize(Roles = "Owner")]
