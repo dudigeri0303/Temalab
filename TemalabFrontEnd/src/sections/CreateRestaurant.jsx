@@ -10,13 +10,49 @@ export default function CreateRestaurant() {
     document.title = "Étterem hozzáadás | DineTab";
   }, []);
 
+  const [name, setName] = useState('');
+  const [postCode, setPostCode] = useState('');
+  const [city, setCity] = useState('');
+  const [street, setStreet] = useState('');
+  const [houseNumber, setHouseNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [description, setDescription] = useState('');
+  const [label, setLabel] = useState('kajálda haha');
+
   const backToRestaurantOwner = () => {
     window.open("/mainPageOwner", "_self");
   };
 
-  const addRestaurantToList = () => {
-    {
-      /*új étterem listához adása a DB-ben, validálást a mezők végezzék*/
+  const addRestaurantToList = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      "name": name,
+      "postCode": postCode,
+      "city": city,
+      "street": street,
+      "houseNumber": houseNumber,
+      "phoneNumber": phoneNumber,
+      "description": description,
+      "label": label
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+      body: raw,
+      redirect: "follow"
+    };
+
+    try {
+      const response = await fetch("https://localhost:7114/api/Owner/createNewRestaurantWithOwner", requestOptions);
+      const result = await response.text();
+      console.log(result)
+    } catch (error) {
+      console.error(error);
     }
     alert("Étterem hozzáadva");
     window.open("/mainPageOwner", "_self");
@@ -101,6 +137,8 @@ export default function CreateRestaurant() {
               id="nameForRestaurant"
               name="nameForRestaurant"
               placeholder="Étterem név"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -188,6 +226,8 @@ export default function CreateRestaurant() {
                   id="postalCodeForRestaurant"
                   name="postalCodeForRestaurant"
                   placeholder="Irányítószám"
+                  value={postCode}
+                  onChange={(e) => setPostCode(e.target.value)}
                   required
                 />
               </div>
@@ -203,6 +243,8 @@ export default function CreateRestaurant() {
                   id="cityNameForRestaurant"
                   name="cityNameForRestaurant"
                   placeholder="Város"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   required
                 />
               </div>
@@ -218,6 +260,8 @@ export default function CreateRestaurant() {
                   id="streetNameForRestaurant"
                   name="streetNameForRestaurant"
                   placeholder="Utca"
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
                   required
                 />
               </div>
@@ -233,6 +277,8 @@ export default function CreateRestaurant() {
                   id="houseNumber"
                   name="houseNumber"
                   placeholder="Házszám"
+                  value={houseNumber}
+                  onChange={(e) => setHouseNumber(e.target.value)}
                   required
                 />
               </div>
@@ -249,6 +295,8 @@ export default function CreateRestaurant() {
               id="phoneNumberForRestaurant"
               name="phoneNumberForRestaurant"
               placeholder="Telefonszám"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>
 
@@ -262,6 +310,8 @@ export default function CreateRestaurant() {
               id="descriptionForRestaurant"
               name="descriptionForRestaurant"
               placeholder="Leírás"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 

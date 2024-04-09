@@ -1,11 +1,12 @@
-﻿using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
+﻿using Microsoft.AspNetCore.Identity;
+using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
 {
     //Adatbázist statikus inicializáló metódust tartalmazó osztály
     public class DbInit
     {
-        public static void Init(DatabaseContext databaseContext) 
+        public static async void Init(DatabaseContext databaseContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager) 
         {
             databaseContext.Database.EnsureCreated();
 
@@ -14,26 +15,73 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             foreach (var kvp in databaseContext.EntityTables)
             {
                 Type entityType = kvp.Key;
-                dynamic dbSet = kvp.Value;
+                var dbSet = (IQueryable<object>)kvp.Value;
                 var existingEntities = dbSet.ToList();
-                dbSet.RemoveRange(existingEntities);
+                databaseContext.RemoveRange(existingEntities);
                 databaseContext.SaveChanges();
             }
+
+            //Meglévő userek törlése a AspNetUsers táblábol
+            var existingusers = userManager.Users.ToList();
+            foreach (var user in existingusers)
+            {
+                await userManager.DeleteAsync(user);
+            }
+
+            var customerRole = new IdentityRole("Customer");
+            var ownerRole = new IdentityRole("Owner");
+            var adminRole = new IdentityRole("Admin");            
+            await roleManager.CreateAsync(customerRole);
+            await roleManager.CreateAsync(ownerRole);
+            await roleManager.CreateAsync(adminRole);
+
 
             //USERS
             var users = new User[] 
             {
-                new User("Jozsi","asd","jozsi@gmail.com","111","customer"),
-                new User("Anna","asd","anna@gmail.com","222","customer"),
-                new User("admin","asd","admin@gmail.com","333","admin"),
-                new User("boss","asd","boss@gmail.com","444","owner")                
-            };            
-            foreach (User user in users) 
+                new User 
+                { 
+                    UserName = "Jozsi",
+                    Email = "jozsi@gmail.com",
+                    PhoneNumber = "1234567890"
+                },
+                new User
+                {
+                    UserName = "Anna",
+                    Email = "anna@gmail.com",
+                    PhoneNumber = "1234523444"
+                },
+                new User
+                {
+                    UserName = "admin",
+                    Email = "admin@gmail.com",
+                    PhoneNumber = "5783267890"
+                },
+                new User
+                {
+                    UserName = "boss",
+                    Email = "hugo.boss@gmail.com",
+                    PhoneNumber = "3238927890"
+                }
+            }; 
+            
+            foreach(var user in users) 
+            {
+                await userManager.CreateAsync(user, "Asdfgh123?");
+            }
+
+            await userManager.AddToRoleAsync(users[0], "Customer");
+            await userManager.AddToRoleAsync(users[1], "Customer");
+            await userManager.AddToRoleAsync(users[2], "Admin");
+            await userManager.AddToRoleAsync(users[3], "Owner");
+            await userManager.AddToRoleAsync(users[3], "Customer");
+            
+            /*foreach (User user in users) 
             {
                 databaseContext.Users.Add(user);
-            }
+            }*/
          
-            databaseContext.SaveChanges();
+            //databaseContext.SaveChanges();
         
             //ADMINS
             var admins = new Admin[]
@@ -47,7 +95,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             databaseContext.SaveChanges();
 
             //MENUS
-            var menus = new Menu[]
+           /* var menus = new Menu[]
             {
                 new Menu()
             };
@@ -79,13 +127,13 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 databaseContext.Foods.Add(food);
             }
-            databaseContext.SaveChanges();
+            databaseContext.SaveChanges();*/
 
             //REASTAURANTS
             var restaurants = new Restaurant[]
             {
-                new Restaurant(menus[0],"Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
-                new Restaurant(menus[0],"Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
+                new Restaurant("Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
+                new Restaurant("Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
             };
             foreach (Restaurant restaurant in restaurants)
             {
@@ -122,6 +170,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             var likedrestaurants = new LikedRestaurant[]
             {
                 new LikedRestaurant(users[0],restaurants[0]),
+                new LikedRestaurant(users[0],restaurants[1]),
                 new LikedRestaurant(users[1],restaurants[0]),
                 new LikedRestaurant(users[2],restaurants[0])
             };
@@ -147,9 +196,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //RESERVATIONS
             var reservations = new Reservation[]
             {
-                new Reservation(users[0],tables[0]),
-                new Reservation(users[1],tables[1]),
-                new Reservation(users[2],tables[2])
+                new Reservation(users[0],tables[0], DateTime.Now),
+                new Reservation(users[0],tables[2], DateTime.Now),
+                new Reservation(users[1],tables[1], DateTime.Now),
+                new Reservation(users[2],tables[2], DateTime.Now)
             };
             foreach (Reservation reservation in reservations)
             {

@@ -1,6 +1,9 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.ModelsForApiCalls;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -8,58 +11,51 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantController : BaseEntityController<Restaurant>
+    public class RestaurantController : BaseEntityController
     {
-
-        public RestaurantController(DatabaseContext context) : base(context)
+        public RestaurantController(DatabaseContext context, UserManager<User> userManager) : base(context, userManager)
         {
         }
         #region UniqueOperations
 
-        [HttpGet("getOwnerByRestaurantID/{id}")]
-        public async Task<ActionResult<Owner>> GetOwnerByRestaurantId(int id)
+        [Authorize(Roles = "Customer")]
+        [HttpGet("listAllRestaurants/")]
+        public async Task<ActionResult<List<RestaurantModel>>> ListAllRestaurants() 
         {
-            Owner? owner = await this._dbContext.Owners.Where(o => o.RestaurantId == id).FirstOrDefaultAsync();
-            if (owner == null)
+            try 
             {
-                NotFound("Restaurant not found");
+                List<Restaurant> restaurants = await this.crudOperator.GetAllRows<Restaurant>();
+                List<RestaurantModel> restaurantModels = new List<RestaurantModel>();
+                foreach (var restaurant in restaurants) 
+                {
+                    restaurantModels.Add(new RestaurantModel 
+                    {
+                        Id = restaurant.Id,
+                        Name = restaurant.Name,
+                        Label = restaurant.Label,
+                        Description = restaurant.Description,
+                        Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
+                    });
+                }
+                return Ok(restaurantModels);
             }
-            return Ok(owner);
+            catch (Exception ex) { return BadRequest(ex.Message); }
         }
-
-        [HttpGet("getRestaurantByOwnerName/{name}")]
-        public async Task<ActionResult<List<Restaurant>>> GetRestaurantByOwnerName(string name)
+        [Authorize(Roles = "Customer")]
+        [HttpGet("listRestaurantsByOwner/")]
+        public async Task<ActionResult<List<Restaurant>>> ListRestaurantsByOwner() 
         {
-            List<int> ownerIds = this._dbContext.Users.Where(u => u.UserName == name).Select(u => u.Id).ToList();
-            List<Owner> owners = new List<Owner>();
-            foreach (int id in ownerIds)
-            {
-                foreach (var owner in this._dbContext.Owners)
-                {
-                    if (id == owner.UserId)
-                    {
-                        owners.Add(owner);
-                    }
-                }
-            }
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<Owner> ownerConnections = await this.crudOperator.GetMultipleRowsByForeignId<Owner>(userId, "UserId");
             List<Restaurant> restaurants = new List<Restaurant>();
-            foreach (var owner in owners)
+            foreach(Owner owner in ownerConnections) 
             {
-                foreach (var restaurant in this._dbContext.Restaurants)
-                {
-                    if (owner.RestaurantId == restaurant.Id)
-                    {
-                        restaurants.Add(restaurant);
-                    }
-                }
-            }
-            if (restaurants == null)
-            {
-                NotFound("");
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
+                restaurants.Add(restaurant);
             }
             return Ok(restaurants);
         }
-
+        
         #endregion
     }
 }

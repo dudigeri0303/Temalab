@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
 {
     //EntityModel atabázis kontextus
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
@@ -24,7 +25,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         {
             EntityTables = new Dictionary<Type, object>() 
             {
-                { typeof(User), Users},
                 { typeof(Admin), Admins},
                 { typeof(Owner), Owners},
                 { typeof(Restaurant), Restaurants},
@@ -39,7 +39,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("Users");
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Admin>().ToTable("Admins");
             modelBuilder.Entity<Owner>().ToTable("Owners");
             modelBuilder.Entity<Restaurant>().ToTable("Restaurants");
@@ -51,19 +51,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Food>().ToTable("Foods");
         }
-
-        public DbSet<T> GetDbSet<T>() where T : class
-        {
-            foreach (var kvp in this.EntityTables)
-            {
-                if (typeof(DbSet<T>).IsAssignableFrom(kvp.Value.GetType()))
-                {
-                    return (DbSet<T>)kvp.Value;
-                }
-            }
-            return null;
-        }
-
     }
 }
 

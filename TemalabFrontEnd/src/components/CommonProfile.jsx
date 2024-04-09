@@ -1,3 +1,4 @@
+import { json } from "react-router-dom";
 import "../App.css";
 import React, { useEffect, useState } from "react";
 
@@ -6,9 +7,37 @@ export default function Profile() {
     document.title = "Profile | DineTab";
   }, []);
 
-  {
-    /*Adatok betöltése adatbázisból metódus*/
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+
+  const getUserData = async () => {
+    const myHeaders = new Headers();
+
+
+    const requestOptions = {
+      method: "GET",
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+      headers: myHeaders,
+      redirect: "follow"
+    };
+
+    try {
+      const response = await fetch("https://localhost:7114/api/User/getLoggedInUserData", requestOptions);
+      let result = await response.text();
+      result = JSON.parse(result);
+      setUserName(result.name);
+      setEmail(result.email);
+      setPhoneNumber(result.phoneNumber);
+      setPassword(result.password);
+      console.log(result)
+    } catch (error) {
+      console.error(error);
+    }
   }
+  getUserData();
 
   const deleteProfile = () => {
     const IsProfileDeleted = window.confirm("Biztos törlöd a profilod?");
@@ -76,8 +105,8 @@ export default function Profile() {
                   className="form-control"
                   id="nameForProfile"
                   name="nameForProfile"
-                  placeholder="Név"
-                  disabled={!modifiable}
+                  placeholder= {userName}
+                  //disabled={!modifiable}
                   required
                 />
               </div>
@@ -97,8 +126,8 @@ export default function Profile() {
                   className="form-control"
                   id="telForProfile"
                   name="telForProfile"
-                  placeholder="Telefonszám"
-                  disabled={!modifiable}
+                  placeholder= {phoneNumber}
+                  //disabled={!modifiable}
                   required
                 />
               </div>
@@ -118,8 +147,8 @@ export default function Profile() {
                   className="form-control"
                   id="emailForProfile"
                   name="emailForProfile"
-                  placeholder="Email"
-                  disabled={!modifiable}
+                  placeholder={email}
+                  //disabled={!modifiable}
                   required
                 />
               </div>
@@ -139,8 +168,8 @@ export default function Profile() {
                   className="form-control"
                   id="passwordForProfile"
                   name="passwordForProfile"
-                  placeholder="Jelszó"
-                  disabled={!modifiable}
+                  placeholder={password}
+                  //disabled={!modifiable}
                   required
                 />
               </div>

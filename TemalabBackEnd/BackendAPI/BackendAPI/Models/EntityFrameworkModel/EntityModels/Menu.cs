@@ -8,7 +8,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public Menu() { }
 

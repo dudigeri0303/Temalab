@@ -1,5 +1,9 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
+﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.EntityFrameworkModel.Common;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -7,10 +11,36 @@ namespace BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TableController : BaseEntityController<Table>
+    public class TableController : BaseEntityController
     {
-        public TableController(DatabaseContext dbContext) : base(dbContext)
+        public TableController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
+        }
+
+        [Authorize(Roles = "Customer")]
+        [HttpPut("reserveTable/")]
+        public async Task<ActionResult> ReserveTable(string id) 
+        {
+            Table? table = await this.crudOperator.GetRowById<Table>(id);
+            if(table != null)
+            {
+                table.IsReserved = true;
+                return Ok(table);
+            }
+            return NotFound("Table not found");
+        }
+
+        [Authorize(Roles = "Customer")]
+        [HttpPut("despairReservation/")]
+        public async Task<ActionResult> DespairTableReservation(string id) 
+        {
+            Table? table = await this.crudOperator.GetRowById<Table>(id);
+            if (table != null)
+            {
+                table.IsReserved = false;
+                return Ok(table);
+            }
+            return NotFound("Table not found");
         }
     }
 }

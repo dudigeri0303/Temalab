@@ -10,12 +10,12 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [ForeignKey(nameof(User))]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; } //Navigation preoperty
         [ForeignKey(nameof(Restaurant))]
-        public int RestaurantId { get; set; }
+        public string RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; } //Navigation preoperty
         [Column]
         public int Rating { get; set; }
