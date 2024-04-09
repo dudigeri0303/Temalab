@@ -1,6 +1,6 @@
 import "../App.css";
 import React, { useEffect } from "react";
-import Navbar from "../components/Navbar";
+import AdminNavbar from "../components/AdminNavbar";
 
 export default function AdminDeleteUser() {
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function AdminDeleteUser() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <AdminNavbar></AdminNavbar>
       <label className="placeholerLabel">
         Még nincsenek törlendő felhasználók
       </label>

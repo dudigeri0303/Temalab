@@ -104,6 +104,12 @@ body {
   border-radius: 15px;
 }
 
+@media (max-width: 572px) {
+  .cardbtn {
+    font-size: 16px;  
+  }
+}
+
 .redbtn {
   background-color: #ff000d;
   border-radius: 5px;
@@ -191,9 +197,21 @@ footer a:hover {
   color: white;
 }
 
+@media (max-width: 572px) {
+  .card-text {
+    font-size: 16px;  
+  }
+}
+
 .card-Altext {
   font-size: 26px;
   color: white;
+}
+
+@media (max-width: 572px) {
+  .card-text {
+    font-size: 8px;  
+  }
 }
 
 
@@ -203,7 +221,13 @@ footer a:hover {
   background-color: #607a8e;
   text-align: center;
   display: block;
-  padding: 100px 100px;
+  padding: 100px 0;
+}
+
+@media (max-width: 572px) {
+  .placeholerLabel {
+    font-size: 16px;  
+  }
 }
 
 .a-links {
@@ -215,6 +239,14 @@ footer a:hover {
 .a-links:hover {
   color: black;
 }
+
+@media (max-width: 572px) {
+  .a-links {
+    font-size: 16px;  
+    padding: 20px;
+  }
+}
+
 
 .label-time {
   display: block;
@@ -231,12 +263,6 @@ footer a:hover {
   font-size: 28px;
 }
 
-.ul-days {
-  display: flex;
-  grid-gap: 10px;
-  list-style: none;
-}
-
 .hr-menu{
   color: white;
   border-width: 4px;
@@ -247,15 +273,21 @@ footer a:hover {
   right: 20px;
 }
 
-li-oph {
-  border: 1px solid black;
-  padding: 5px;
+.ul-days {
+  display: flex;
+  grid-gap: 10px;
+  list-style: none;
 }
 
 @media (max-width: 1000px) {
   .ul-days {
     display: grid;
   }
+}
+
+.li-oph {
+  border: 1px solid black;
+  padding: 5px;
 }
 
 .section-bg {
@@ -267,6 +299,3 @@ li-oph {
   font-size: 26px;
   padding: 20px 20px;
 }
-
-
-
