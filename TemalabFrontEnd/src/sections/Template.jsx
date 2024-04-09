@@ -2,6 +2,7 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Reviews from "../components/Reviews";
+import AddReview from "../components/AddReview";
 import { Button } from "react-bootstrap";
 
 export default function Template() {
@@ -20,6 +21,7 @@ export default function Template() {
   };
 
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
 
   //Nem responzív, de ez csak egy minta.
 
@@ -31,7 +33,22 @@ export default function Template() {
           Értékelések
         </button>
         <Reviews showModal={showModal} setShowModal={setShowModal}>
-          <button className="avgbtn">+ Új vélemény</button>
+          <button className="avgbtn" onClick={() => setShowModal2(true)}>
+            + Új vélemény
+          </button>
+
+          <AddReview showModal2={showModal2} setShowModal2={setShowModal2}>
+            <div className="text-center">
+              <button className="avgbtn" onClick={() => setShowModal2(false)}>
+                Közzétesz
+              </button>
+            </div>
+            <div className="text-center">
+              <button className="avgbtn" onClick={() => setShowModal2(false)}>
+                Mégse
+              </button>
+            </div>
+          </AddReview>
         </Reviews>
       </div>
 
