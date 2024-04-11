@@ -9,6 +9,10 @@ export default function CustomerReservations() {
     getReservations();
   }, []);
 
+  const goToMainPageCustomer = () => {
+    window.open("/mainPageCustomer", "_self");
+  };
+
   const [reservations, setReservations] = useState([]);
 
   const getReservations = async () => {
@@ -19,13 +23,13 @@ export default function CustomerReservations() {
       headers: myHeaders,
       redirect: "follow",
       credentials: 'include',
-      xhrFields: { withCredentials: true}
+      xhrFields: { withCredentials: true }
     };
 
     try {
       const response = await fetch("https://localhost:7114/api/Reservation/getReservationsForLoggedInUser", requestOptions);
       const data = await response.json();
-      setReservations(data); 
+      setReservations(data);
       console.log(data);
     } catch (error) {
       console.error(error);
@@ -38,29 +42,32 @@ export default function CustomerReservations() {
     /*foglalások betöltése adatbázisból, ha nincs, akkor a lenti label és link jelenik meg, mint placeholder*/
   }
 
-return (
-  <>
-    <Navbar />
-    {reservations.length === 0 ? (
-      <>
-        <label className="placeholerLabel">Még nincsenek foglalások</label>
-      <div className="col-sm d-flex justify-content-center">
-        <a className="a-links" href="/mainPageCustomer">
-          Éttermek megtekintése
-        </a>
-      </div>
-      </>
-    ) : (
-      <section id="main" className="container py-2">
-        <div className="row div-card">
-          {reservations.map((reservation) => (
-            <div className="col-md-4 mb-3" key={reservation.id}>
-              <CardCustomerReservation data={reservation} />
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-  </>
-);
+  return (
+    <div className="min-vh-100">
+      <Navbar />
+      {reservations.length === 0 ? (
+        <>
+          <label className="placeholerLabel">Még nincsenek foglalások</label>
+          <div className="col-sm d-flex justify-content-center p-5">
+            <button onClick={goToMainPageCustomer}
+              type="button"
+              className="avgbtn"
+            >
+              Éttermek megtekintése
+            </button>
+          </div>
+        </>
+      ) : (
+        <section id="main" className="container py-2">
+          <div className="row div-card">
+            {reservations.map((reservation) => (
+              <div className="col-md-4 mb-3" key={reservation.id}>
+                <CardCustomerReservation data={reservation} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
 }

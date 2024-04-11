@@ -66,6 +66,7 @@ export default function Profile() {
   };
 
   const saveChanges = () => {
+    setModifiable(false);
     {/*elmenti adatbázisba az adatokat, ha változtak, a mezők validáljanak + esetleg egy üzenet sikeres mentés esetén*/}
     alert("Változtatások mentve");
   }
@@ -106,7 +107,7 @@ export default function Profile() {
                   id="nameForProfile"
                   name="nameForProfile"
                   placeholder= {userName}
-                  //disabled={!modifiable}
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -127,7 +128,7 @@ export default function Profile() {
                   id="telForProfile"
                   name="telForProfile"
                   placeholder= {phoneNumber}
-                  //disabled={!modifiable}
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -148,7 +149,7 @@ export default function Profile() {
                   id="emailForProfile"
                   name="emailForProfile"
                   placeholder={email}
-                  //disabled={!modifiable}
+                  disabled={!modifiable}
                   required
                 />
               </div>
@@ -169,7 +170,7 @@ export default function Profile() {
                   id="passwordForProfile"
                   name="passwordForProfile"
                   placeholder={password}
-                  //disabled={!modifiable}
+                  disabled={!modifiable}
                   required
                 />
               </div>
