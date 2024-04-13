@@ -32,15 +32,10 @@ export default function CustomerFavorites() {
     }
   };
 
-
-  {
-    /*éttermek betöltése adatbázisból*/
-  }
-
   return (
     <>
     <Navbar></Navbar>
-    <SearchByName></SearchByName>
+    <SearchByName/>
     {restaurants.length === 0 ? (
       <>
         <label className="placeholerLabel">Éttermek</label>
