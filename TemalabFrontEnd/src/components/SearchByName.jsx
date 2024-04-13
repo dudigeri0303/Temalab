@@ -1,23 +1,54 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import React, { useEffect, useState } from "react";
+import CardCustomerMain from "../components/CardCustomerMain";
+
+
 
 export default function SearchByName() {
-  const matches = [];
-  const searchedName = document.getElementById("searchedName");
-  //const list = JSON.parse(lista.JSON) <- majd a paraméter list nem kell, hiszen itt példányosítom
-  //ha lehet, érdemes lenne megoldani, hogy a list az oldaltól függően változzon,
-  //akkor minden kártyához meglehet hívni ezt a keresést
 
-  const search = (list) => {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].name.toLowerCase().includes(searchedName.toLowerCase())) {
-        matches.push(list[i]);
-      }
+  const [restaurants, setRestaurants] = useState([]);
+  //találatok lista
+  const [matches, setMatches] = useState([]);
+  //hogy ne írja ki, hogy nincs találat alapból
+  const [searchClicked, setSearchClicked] = useState(false);
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+  
+  //lehet ki kéne szervezni
+  const getRestaurants = async () => {
+    const myHeaders = new Headers();
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+      redirect: "follow"
+    };
+    
+    try {
+      const response = await fetch("https://localhost:7114/api/Restaurant/listAllRestaurants", requestOptions);
+      const data = await response.json();
+      setRestaurants(data); 
+      console.log(data)
+    } catch (error) {
+      console.error(error);
     }
-    return matches;
   };
 
-  // hívunk egy render-t a search-re, vagy nem kell return és akkor a matches-re
-  // hogy kirajzolja a találatokat, ugyanazt a fv-t, amit minden kártya oldal elején kell
+  const search = () => {
+    setSearchClicked(true);
+    const foundMatches = [];
+    const searchedName = document.getElementById("searchedName").value.toLowerCase();
+    for (let i = 0; i < restaurants.length; i++) {
+      if (restaurants[i].name.toLowerCase().includes(searchedName)) {
+        foundMatches.push(restaurants[i]);
+      }
+    }
+    setMatches(foundMatches);
+  };
+
 
   return (
     <>
@@ -42,6 +73,24 @@ export default function SearchByName() {
           </div>
         </div>
       </div>
+
+      <section id="main" className="container py-2">
+  <div className="row div-card">
+    {matches.length ? (
+      matches.map((match) => (
+        <div className="col-md-4 mb-3" key={match.id}>
+          <h1> Találatok: </h1>
+          <CardCustomerMain data={match} />
+        </div>
+      ))
+    ) : searchClicked ? (
+      <div className="col-12 text-center">
+        <h1> Nincs ilyen nevű étterem </h1>
+      </div>
+    ) : null}
+  </div>
+</section>
+     
     </>
   );
 }
