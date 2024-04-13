@@ -105,6 +105,11 @@ export default function SearchByName() {
           </button>
         )}
       </div>
+      <div>
+      {searchClicked && (
+                  <h1 className="d-flex justify-content-center p-4">  További éttermek: </h1>
+        )}
+      </div>
     </>
   );
 }
