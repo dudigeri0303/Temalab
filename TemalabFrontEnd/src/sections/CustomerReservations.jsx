@@ -52,9 +52,9 @@ return (
       </>
     ) : (
       <section id="main" className="container py-2">
-        <div className="row div-card">
+        <div className="row">
           {reservations.map((reservation) => (
-            <div className="col-md-4 mb-3" key={reservation.id}>
+            <div className="col-12 mb-3" key={reservation.id}>
               <CardCustomerReservation data={reservation} />
             </div>
           ))}

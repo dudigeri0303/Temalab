@@ -32,24 +32,21 @@ export default function CustomerFavorites() {
     }
   };
 
-
-  {
-    /*éttermek betöltése adatbázisból*/
-  }
+  console.log(restaurants)
 
   return (
     <>
-    <Navbar></Navbar>
-    <SearchByName></SearchByName>
+    <Navbar />
+    <SearchByName allrest={restaurants}/>
     {restaurants.length === 0 ? (
       <>
         <label className="placeholerLabel">Éttermek</label>
       </>
     ) : (
       <section id="main" className="container py-2">
-        <div className="row div-card">
+        <div className="row">
           {restaurants.map((restaurant) => (
-            <div className="col-md-4 mb-3" key={restaurant.id}>
+            <div className="col-12 mb-3" key={restaurant.id}>
               <CardCustomerMain data={restaurant} />
             </div>
           ))}

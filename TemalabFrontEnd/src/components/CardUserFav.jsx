@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import "../App.css";
 //import React from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes
 
-
 //Kicsit szétbarmoltam a kártyát, de az adatkötés működik a json response alapján
 export default function CardUserFav({ data }) {
+
   const deleteFavouriteRestaurant = async (likedRestaurantId) => {
     const myHeaders = new Headers();
 
@@ -24,40 +25,40 @@ export default function CardUserFav({ data }) {
     } catch (error) {
       console.error(error);
     }
+
+    window.location.reload()
   };
 
   return (
     <>
-      <section id="main" className="container py-2">
-        <div className="row div-card">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-3">
+      <section id="main" className="container py-2 div-card">
+        <div className="d-flex justify-content-between">
+          <a href={"/restaurant/" + data.id}>
+            <div>
+              <div>
                 <label className="card-text">{data.name}</label>
               </div>
-              <div className="col-md-4">
+              <div>
                 <label className="card-text">{data.label}</label>
               </div>
-            </div>
-            <div className="row">
-              <div className="col d-flex align-items-end">
+              <div>
                 <label className="card-Altext">{data.description}</label>
               </div>
-              <div className="col">
-                <button
-                  type="button"
-                  onClick={() => deleteFavouriteRestaurant(data.id) }
-                  className="cardbtn float-end"
-                  style={{ margin: "0" }}
-                >
-                  Törlés
-                </button>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
+              <div>
                 <label className="card-Altext">{data.location}</label>
               </div>
+            </div>
+          </a>
+          <div className="d-flex align-items-center">
+            <div className="col">
+              <button
+                type="button"
+                onClick={() => deleteFavouriteRestaurant(data.id) }
+                className="cardbtn float-end"
+                style={{ margin: "0" }}
+              >
+                Törlés
+              </button>
             </div>
           </div>
         </div>
