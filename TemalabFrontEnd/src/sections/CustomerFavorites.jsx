@@ -9,6 +9,10 @@ export default function CustomerFavorites() {
     getFavouriteRestaurants();
   }, []);
 
+  const goToMainPageCustomer = () => {
+    window.open("/mainPageCustomer", "_self");
+  };
+
   const [restaurants, setRestaurants] = useState([]);
 
   const getFavouriteRestaurants = async () =>{
@@ -34,15 +38,18 @@ export default function CustomerFavorites() {
   };
 
   return (
-    <>
+    <div className="min-vh-100">
       <Navbar />
       {restaurants.length === 0 ? (
         <>
           <label className="placeholerLabel">Még nincsenek kedvenc éttermeid</label>
-          <div className="col-sm d-flex justify-content-center">
-            <a className="a-links" href="/mainPageCustomer">
+          <div className="col-sm d-flex justify-content-center p-5">
+            <button onClick={goToMainPageCustomer}
+              type="button"
+              className="avgbtn"
+            >
               Éttermek megtekintése
-            </a>
+            </button>
           </div>
         </>
       ) : (
@@ -56,6 +63,6 @@ export default function CustomerFavorites() {
           </div>
         </section>
       )}
-    </>
+    </div>
   );
 }

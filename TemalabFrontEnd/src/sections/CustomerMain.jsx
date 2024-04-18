@@ -33,7 +33,7 @@ export default function CustomerFavorites() {
   };
 
   return (
-    <>
+    <div className="min-vh-100">
     <Navbar></Navbar>
     <SearchByName/>
     {restaurants.length === 0 ? (
@@ -51,7 +51,7 @@ export default function CustomerFavorites() {
         </div>
       </section>
     )}
-  </>
+  </div>
   );
 }
 
