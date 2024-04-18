@@ -32,12 +32,10 @@ export default function CustomerFavorites() {
     }
   };
 
-  console.log(restaurants)
-
   return (
     <>
-    <Navbar />
-    <SearchByName allrest={restaurants}/>
+    <Navbar></Navbar>
+    <SearchByName/>
     {restaurants.length === 0 ? (
       <>
         <label className="placeholerLabel">Éttermek</label>
