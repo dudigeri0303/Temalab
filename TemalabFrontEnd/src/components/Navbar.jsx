@@ -7,6 +7,7 @@ export default function NavbarAll(){
     const navigate = useNavigate(); 
 
     const logOut = async () => {
+        localStorage.setItem('loggedIn',false)
         const requestOptions = {
             method: "POST",
             redirect: "follow",

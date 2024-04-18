@@ -55,7 +55,29 @@ namespace BackendAPI.Controllers
             }
             return Ok(restaurants);
         }
-        
+
+        [HttpGet("GetRestaurantById")]
+        public async Task<ActionResult<RestaurantModel>> GetRestaurantById(string id)
+        {
+            try
+            {
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
+                RestaurantModel restaurantModel = new RestaurantModel
+                {
+                    Id = restaurant.Id,
+                    Name = restaurant.Name,
+                    Label = restaurant.Label,
+                    Description = restaurant.Description,
+                    Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
+                };
+                return Ok(restaurantModel);
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest("Couldnt find the restaurnat");
+            }
+        }
+            
         #endregion
     }
 }

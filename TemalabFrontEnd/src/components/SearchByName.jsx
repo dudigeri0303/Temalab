@@ -57,7 +57,7 @@ export default function SearchByName() {
 
   return (
     <>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center my-2">
         <div className="col-md-4">
           <div className="input-group rounded">
             <input
