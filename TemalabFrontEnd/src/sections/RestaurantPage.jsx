@@ -1,10 +1,17 @@
 import Navbar from "../components/Navbar";
 import GoogleMap from "../components/GoogleMap";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Reviews from "../components/Reviews";
 import AddReview from "../components/AddReview";
+import { useParams } from 'react-router-dom';
 
 export default function RestaurantPage() {
+
+  useEffect(() => {
+    document.title = "Étterem | DineTab";
+    getFavouriteRestaurants();
+  }, []);
+
   const [currentImage, setCurrentImage] = useState("/heart-empty.svg");
 
   const toggleImage = () => {
@@ -15,8 +22,35 @@ export default function RestaurantPage() {
     );
   };
 
+  const id = useParams();
+  console.log(id)
+
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+
+  const [restaurant, setRestaurant] = useState([]);
+
+  const getFavouriteRestaurants = async () =>{
+    const myHeaders = new Headers();
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+    };
+
+    try {
+      const response = await fetch("https://localhost:7114/api/Restaurant/GetRestaurantById?id=" + id.id, requestOptions);
+      const data = await response.json();
+      setRestaurant(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   return (
     <>
@@ -86,14 +120,14 @@ export default function RestaurantPage() {
         <div className="row">
           <div className="col-12 col-lg-6 contactus d-flex align-items-center my-2 py-2">
             <div className="mx-auto">
-              <h6 className="contactustext">Elérhetőségeink:</h6>
-              <h6 className="contactustext">Teszt Étterem név</h6>
+              <h6 className="contactustext">{restaurant.name} elérhetőségei:</h6>
+              <h6 className="contactustext">{restaurant.location}</h6>
               <h6 className="contactustext">tesztetterem@gmail.com</h6>
               <h6 className="contactustext">+36 30 123 1452</h6>
             </div>
           </div>
           <div className="col-12 col-lg-6">
-            <GoogleMap />
+            <GoogleMap location={restaurant.location}/>
           </div>
         </div>
       </div>

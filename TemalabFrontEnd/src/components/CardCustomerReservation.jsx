@@ -25,7 +25,7 @@ export default function CardCustomerReservation({ data }) {
 
   return (
     <>
-      <section id="main" className="container py-2">
+      <section id="main" className="container py-2 div-card">
         <div className="row div-card">
           <div className="container">
             <div className="row">
@@ -38,7 +38,7 @@ export default function CardCustomerReservation({ data }) {
               <div className="col-sm d-flex align-items-center">
                 <label className="card-text">{data.endDate}</label>
               </div>
-              <div className="col-sm">
+              <div className="col-sm d-flex align-items-center">
                 <button type="button" className="cardbtn float-end" onClick={() => deleteReservation(data.id)}>
                   Lemond
                 </button>

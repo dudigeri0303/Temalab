@@ -3,6 +3,11 @@ input {
   color: black;
 }
 
+.likebtn {
+  background-color: transparent;
+  border: none;
+}
+
 .contactus {
   background-color: #607a8e;
   border-radius: 5px;

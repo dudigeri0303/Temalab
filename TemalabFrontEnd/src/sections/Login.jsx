@@ -31,6 +31,10 @@ const LoginForm = () =>{
             const result = await response.text();
             console.log(result)
             const parsedResult = JSON.parse(result);
+
+            if(response.ok){
+                localStorage.setItem('loggedIn', true)
+            }
             
             //navigációs utvonal beállítása a user role alaőján
             let path = `/customerProfile`; 

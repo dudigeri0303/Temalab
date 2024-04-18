@@ -43,6 +43,7 @@ function App() {
               <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
               <Route path="/createmenu" element={<MenuCreator/>}/>
               <Route path="/ownerProfile" element={<OwnerProfile/>}/>
+              <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}
