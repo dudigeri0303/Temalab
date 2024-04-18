@@ -54,9 +54,9 @@ export default function CustomerFavorites() {
         </>
       ) : (
         <section id="main" className="container py-2">
-          <div className="row div-card">
+          <div className="row">
             {restaurants.map((restaurant) => (
-              <div className="col-md-4 mb-3" key={restaurant.id}>
+              <div className="col-12 mb-3" key={restaurant.id}>
                 <CardUserFav data={restaurant} />
               </div>
             ))}
