@@ -20,6 +20,7 @@ import MenuCreator from './sections/MenuCreator';
 import Menu from './sections/Menu';
 import OwnerProfile from './sections/OwnerProfile';
 import CustomerMakeReservations from './sections/CustomerMakeReservation';
+import CustomerMakeReservationsForm from './sections/CustomerMakeReservationsForm';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               <Route path="/ownerProfile" element={<OwnerProfile/>}/>
               <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
               <Route path='/customerMakeReservation' element={<CustomerMakeReservations/>}/>
+              <Route path='/customerMakeReservationForm' element={<CustomerMakeReservationsForm/>}/>
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}

@@ -32,6 +32,10 @@ export default function CustomerMakeReservations() {
     setTimeValue(event.target.value);
   };
 
+  const checkReservation = () => {
+    window.open("/customerMakeReservationForm", "_self");
+  }
+
 
 
   return (
@@ -99,7 +103,7 @@ export default function CustomerMakeReservations() {
           </select>
         </div>
         <div className="d-flex justify-content-center">
-          <button className="avgbtn">Elérhetőség ellenőrzése</button>
+          <button className="avgbtn" onClick={checkReservation}>Elérhetőség ellenőrzése</button>
         </div>
       </div>
     </>
