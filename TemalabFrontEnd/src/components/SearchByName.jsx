@@ -83,19 +83,14 @@ export default function SearchByName() {
         <div className="d-flex justify-content-center">
           {searchClicked && <h1>Találatok:</h1>}
         </div>
-
-        <div className="row div-card">
-          {matches.length ? (
-            matches.map((match) => (
-              <div className="col-md-4 mb-3" key={match.id}>
+        <div className="container py-2">
+          <div className="row">
+            {matches.map((match) => (
+              <div className="col-12 mb-3" key={match.id}>
                 <CardCustomerMain data={match} />
               </div>
-            ))
-          ) : searchClicked ? (
-            <div className="col-12 text-center">
-              <h1> Nincs ilyen nevű étterem </h1>
-            </div>
-          ) : null}
+            ))}
+          </div>
         </div>
       </section>
       <div className="d-flex justify-content-center p-4">
