@@ -2,6 +2,7 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/OwnerNavbar";
 import CardOwnerMain from "../components/CardOwnerMain";
+import SearchByName from "../components/SearchByName";
 
 export default function OwnerMain() {
   useEffect(() => {
@@ -43,15 +44,16 @@ export default function OwnerMain() {
   return (
     <>
     <Navbar></Navbar>
+    <SearchByName/>
     {restaurants.length === 0 ? (
       <>
         <label className="placeholerLabel">Még nincsenek éttermek</label>
       </>
     ) : (
       <section id="main" className="container py-2">
-        <div className="row div-card">
+        <div className="row">
           {restaurants.map((restaurant) => (
-            <div className="col-md-4 mb-3" key={restaurant.id}>
+            <div className="col-12 mb-3" key={restaurant.id}>
               <CardOwnerMain data={restaurant} />
             </div>
           ))}
