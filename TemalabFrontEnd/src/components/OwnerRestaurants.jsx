@@ -2,14 +2,14 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-export default function AllRestaurants({ children }) {
+export default function OwnerRestaurants({ children }) {
   useEffect(() => {
-    getRestaurants();
+    listOwnerRestaurants();
   }, []);
 
   const [restaurants, setRestaurants] = useState([]);
 
-  const getRestaurants = async () => {
+  const listOwnerRestaurants = async () => {
     const myHeaders = new Headers();
     const requestOptions = {
       method: "GET",
@@ -21,7 +21,7 @@ export default function AllRestaurants({ children }) {
 
     try {
       const response = await fetch(
-        "https://localhost:7114/api/Restaurant/listAllRestaurants",
+        "https://localhost:7114/api/Owner/listRestaurantsByOwner",
         requestOptions
       );
       const data = await response.json();
