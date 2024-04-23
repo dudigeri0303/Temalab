@@ -21,6 +21,7 @@ import Menu from './sections/Menu';
 import OwnerProfile from './sections/OwnerProfile';
 import CustomerMakeReservations from './sections/CustomerMakeReservation';
 import CustomerMakeReservationsForm from './sections/CustomerMakeReservationsForm';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
               <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
               <Route path='/customerMakeReservation' element={<CustomerMakeReservations/>}/>
               <Route path='/customerMakeReservationForm' element={<CustomerMakeReservationsForm/>}/>
+              <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}
