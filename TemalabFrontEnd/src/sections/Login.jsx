@@ -44,7 +44,7 @@ const LoginForm = () =>{
             }
             
             //navigációs utvonal beállítása a user role alaőján
-            let path = `/customerProfile`; 
+            let path = `/mainPageCustomer`; 
             if(parsedResult.userRole == "owner"){
                 path = `/mainPageOwner`
             }
