@@ -19,6 +19,7 @@ import OwnerRestaurantPage from './sections/OwnerRestaurantPage';
 import MenuCreator from './sections/MenuCreator';
 import Menu from './sections/Menu';
 import OwnerProfile from './sections/OwnerProfile';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
               <Route path="/createmenu" element={<MenuCreator/>}/>
               <Route path="/ownerProfile" element={<OwnerProfile/>}/>
               <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
+              <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}
             </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}
