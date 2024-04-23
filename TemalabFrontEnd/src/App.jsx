@@ -19,36 +19,55 @@ import OwnerRestaurantPage from './sections/OwnerRestaurantPage';
 import MenuCreator from './sections/MenuCreator';
 import Menu from './sections/Menu';
 import OwnerProfile from './sections/OwnerProfile';
+import { useEffect, useState } from 'react';
+import CryptoJS from 'crypto-js';
 import CustomerMakeReservations from './sections/CustomerMakeReservation';
 import CustomerMakeReservationsForm from './sections/CustomerMakeReservationsForm';
 import NotFound from './components/NotFound';
 
 function App() {
+
+  const [loggedCheck, setLoggedCheck] = useState(localStorage.getItem('loggedIn'))
+
+  useEffect(() => {
+    setLoggedCheck(CryptoJS.AES.decrypt(localStorage.getItem('loggedIn'),'kulcs').toString(CryptoJS.enc.Utf8))
+    console.log(loggedCheck)
+  },[loggedCheck])
+  
+
   return (
     <>
       <Router>
             <Routes>
               <Route path="/" element={<Login/>} />
-              <Route path="/navowner" element={<OwnerNavbar/>} />
               <Route path="/register" element={<RegisterForm/>} />
-              <Route path="/Menu" element={<Menu/>} />
-              <Route path="/createRestaurant" element={<CreateRestaurant/>} />
-              <Route path="/customerProfile" element={<CustomerProfile/>} />
-              <Route path='/navbartest' element={<Navbar/>} />
               <Route path="/template" element={<Template/>} />
-              <Route path="/customerReservations" element={<CustomerReservations/>} />
+              <Route path='/navbartest' element={<Navbar/>} />
               <Route path="/deleteUser" element={<AdminDeleteUser/>} />
-              <Route path="/favorites" element={<CustomerFavorites/>} />
-              <Route path="/mainPageCustomer" element={<CustomerMain/>} />
-              <Route path="/mainPageOwner" element={<OwnerMain/>} />
-              <Route path="/tablesOwner" element={<OwnerTables/>} />
-              <Route path="/restaurant" element={<RestaurantPage/>}/>
-              <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
-              <Route path="/createmenu" element={<MenuCreator/>}/>
-              <Route path="/ownerProfile" element={<OwnerProfile/>}/>
-              <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
-              <Route path='/customerMakeReservation' element={<CustomerMakeReservations/>}/>
-              <Route path='/customerMakeReservationForm' element={<CustomerMakeReservationsForm/>}/>
+              {loggedCheck === "customer" && (
+                <>
+                  <Route path="/Menu" element={<Menu/>} />
+                  <Route path="/customerProfile" element={<CustomerProfile/>} />
+                  <Route path="/customerReservations" element={<CustomerReservations/>} />
+                  <Route path="/favorites" element={<CustomerFavorites/>} />
+                  <Route path="/mainPageCustomer" element={<CustomerMain/>} />
+                  <Route path="/restaurant" element={<RestaurantPage/>}/>
+                  <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
+                  <Route path='/customerMakeReservation' element={<CustomerMakeReservations/>}/>
+                  <Route path='/customerMakeReservationForm' element={<CustomerMakeReservationsForm/>}/>
+                </>
+              )}
+              {loggedCheck === "owner" && (
+                <>
+                  <Route path="/createRestaurant" element={<CreateRestaurant/>} />
+                  <Route path="/navowner" element={<OwnerNavbar/>} />
+                  <Route path="/mainPageOwner" element={<OwnerMain/>} />
+                  <Route path="/tablesOwner" element={<OwnerTables/>} />
+                  <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
+                  <Route path="/ownerProfile" element={<OwnerProfile/>}/>
+                  <Route path="/createmenu" element={<MenuCreator/>}/>
+                </>
+              )}
               <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}
             </Routes>
       </Router>

@@ -1,7 +1,8 @@
 //import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
+import CryptoJS from 'crypto-js';
 
 const LoginForm = () =>{
     //const history = useHistory();
@@ -33,7 +34,13 @@ const LoginForm = () =>{
             const parsedResult = JSON.parse(result);
 
             if(response.ok){
-                localStorage.setItem('loggedIn', true)
+                if(parsedResult.userRole === 'customer'){
+                    localStorage.setItem('loggedIn', CryptoJS.AES.encrypt('customer','kulcs').toString())
+                }
+
+                if(parsedResult.userRole === 'owner'){
+                    localStorage.setItem('loggedIn', CryptoJS.AES.encrypt('owner','kulcs').toString())
+                }
             }
             
             //navigációs utvonal beállítása a user role alaőján
@@ -53,6 +60,8 @@ const LoginForm = () =>{
         navigate(path);   
     };
 
+    
+    
     return(
         <>
             <div className='loginkulso d-flex align-items-center mx-auto'>

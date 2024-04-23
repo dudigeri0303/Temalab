@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function CardOwnerMain({data}) {
   return (
     <>
-      <section id="main" className="container py-2">
+      <section id="main" className="container py-2 div-card">
         <div className="row div-card">
           <div className="container">
             <div className="row">
@@ -34,7 +34,7 @@ CardOwnerMain.propTypes = {
   data: PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  desctiption: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired
   }).isRequired,
