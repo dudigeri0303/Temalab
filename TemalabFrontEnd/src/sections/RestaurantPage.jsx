@@ -63,7 +63,7 @@ export default function RestaurantPage() {
         </div>
         <div className="row">
           <div className="col-12">
-            <a className="btnstyle restaurantpagebtn my-3 py-3">
+            <a href="/customerMakeReservation" className="btnstyle restaurantpagebtn my-3 py-3">
               Asztal Foglalás
             </a>
           </div>

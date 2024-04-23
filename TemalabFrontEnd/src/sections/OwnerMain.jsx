@@ -2,6 +2,7 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/OwnerNavbar";
 import CardOwnerMain from "../components/CardOwnerMain";
+import SearchByName from "../components/SearchByName";
 
 export default function OwnerMain() {
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function OwnerMain() {
   return (
     <>
     <Navbar></Navbar>
+    <SearchByName/>
     {restaurants.length === 0 ? (
       <>
         <label className="placeholerLabel">Még nincsenek éttermek</label>
