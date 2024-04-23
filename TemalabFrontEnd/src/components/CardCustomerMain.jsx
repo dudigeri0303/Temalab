@@ -38,25 +38,27 @@ export default function CardCustomerMain({data}) {
 
   return (
     <>
-      <section id="main" className="container py-2 div-card">
-          <div className="d-flex justify-content-between">
+      <section id="main" className="container py-2">
+          <div className="position-relative">
             <a href={"/restaurant/" + data.id}>
-              <div>
-                <div>
-                  <label className="card-text">{data.name}</label>
-                </div>
-                <div>
-                  <label className="card-text">{data.desctiption}</label>
-                </div>
-                <div>
-                  <label className="card-Altext">{data.label}</label>
-                </div>
-                <div>
-                  <label className="card-Altext">{data.location}</label>
-                </div>
+              <div className="d-flex justify-content-between div-card">
+                  <div>
+                    <div>
+                      <label className="card-text">{data.name}</label>
+                    </div>
+                    <div>
+                      <label className="card-text">{data.desctiption}</label>
+                    </div>
+                    <div>
+                      <label className="card-Altext">{data.label}</label>
+                    </div>
+                    <div>
+                      <label className="card-Altext">{data.location}</label>
+                    </div>
+                  </div>
               </div>
             </a>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center position-absolute likepos">
               <button className="likebtn" type = "button" onClick={() => likeRestaurant(data.id)}>
                 <img
                   src={currentImage}
@@ -74,7 +76,7 @@ CardCustomerMain.propTypes = {
   data: PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  desctiption: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired
   }).isRequired,

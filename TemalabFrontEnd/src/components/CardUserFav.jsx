@@ -31,22 +31,24 @@ export default function CardUserFav({ data }) {
 
   return (
     <>
-      <section id="main" className="container py-2 div-card">
-        <div className="d-flex justify-content-between">
+      <section id="main" className="container py-2">
+        <div className="position-relative">
           <a href={"/restaurant/" + data.id}>
-            <div>
-              <div>
-                <label className="card-text">{data.name}</label>
-              </div>
-              <div>
-                <label className="card-text">{data.label}</label>
-              </div>
-              <div>
-                <label className="card-Altext">{data.description}</label>
-              </div>
-              <div>
-                <label className="card-Altext">{data.location}</label>
-              </div>
+            <div className="d-flex flex-sm-row  justify-content-between div-card">
+                <div>
+                  <div>
+                    <label className="card-text">{data.name}</label>
+                  </div>
+                  <div>
+                    <label className="card-text">{data.label}</label>
+                  </div>
+                  <div>
+                    <label className="card-Altext">{data.description}</label>
+                  </div>
+                  <div>
+                    <label className="card-Altext">{data.location}</label>
+                  </div>
+                </div>
             </div>
           </a>
           <div className="d-flex align-items-center">
@@ -54,7 +56,7 @@ export default function CardUserFav({ data }) {
               <button
                 type="button"
                 onClick={() => deleteFavouriteRestaurant(data.id) }
-                className="cardbtn float-end"
+                className="cardbtn position-absolute likepos"
                 style={{ margin: "0" }}
               >
                 Törlés
