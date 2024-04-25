@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -127,6 +128,22 @@ namespace TemalabBackEnd.Controllers
                 return Ok("User data updated");
             }
             return BadRequest("Unsuccesfulupdate");
+        }
+
+        //Osszes user lekerdezese
+        [HttpGet("getAllUsers/")]
+        public async Task<ActionResult<List<User>>> GetAllUsers()
+        {
+            var users = await userManager.Users.ToListAsync();
+
+            if (users != null && users.Any())
+            {
+                return Ok(users);
+            }
+            else
+            {
+                return NotFound("No users found");
+            }
         }
         #endregion
     }
