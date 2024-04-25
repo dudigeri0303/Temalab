@@ -13,5 +13,25 @@ namespace BackendAPI.Controllers
         public FoodController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
+
+        #region UniqueOperations
+
+        [HttpGet("GetMenuItems")]
+        public async Task<ActionResult<List<List<Food>>>> GetMenuItems(string restaurantId)
+        {
+            Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+            string? menu = restaurant.MenuId;
+            List<Category> categories = await this.crudOperator.GetMultipleRowsByForeignId<Category>(menu, "MenuId");
+            List<List<Food>> menuItems = new List<List<Food>>();
+            foreach (Category category in categories)
+            {
+                List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(category.Id, "CategoryId");
+                menuItems.Add(foods);
+            }
+
+            return Ok(menuItems);
+        }
+
+        #endregion
     }
 }

@@ -77,6 +77,20 @@ namespace BackendAPI.Controllers
                 return BadRequest("Couldnt find the restaurnat");
             }
         }
+
+        [HttpGet("GetRestaurantMenu")]
+        public async Task<ActionResult<Menu>> GetRestaurantMenu(string id)
+        {
+            try
+            {
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
+
+                return Ok(restaurant.Menu);
+            }catch(Exception ex)
+            {
+                return BadRequest("Couldnt find the menu");
+            }
+        }
             
         #endregion
     }
