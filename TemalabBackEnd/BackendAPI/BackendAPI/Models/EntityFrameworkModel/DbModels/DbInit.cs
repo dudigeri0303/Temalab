@@ -92,42 +92,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 databaseContext.Admins.Add(admin);
             }
-            databaseContext.SaveChanges();
-
-            //MENUS
-           /* var menus = new Menu[]
-            {
-                new Menu()
-            };
-            foreach (Menu menu in menus)
-            {
-                databaseContext.Menus.Add(menu);
-            }
-            databaseContext.SaveChanges();
-
-            //CATEGORIES
-            var categories = new Category[]
-            {
-                new Category(menus[0],"leves-torta")
-            };
-            foreach (Category category in categories)
-            {
-                databaseContext.Categories.Add(category);
-            }
-            databaseContext.SaveChanges();
-
-            //FOODS
-            var foods = new Food[]
-            {
-                new Food(categories[0],"fank","fini es mini",6969),
-                new Food(categories[0],"cica","meow",1244),
-                new Food(categories[0],"kuta","vau",542)
-            };
-            foreach (Food food in foods)
-            {
-                databaseContext.Foods.Add(food);
-            }
-            databaseContext.SaveChanges();*/
+            databaseContext.SaveChanges();            
 
             //REASTAURANTS
             var restaurants = new Restaurant[]
@@ -163,6 +128,38 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             foreach (Table table in tables)
             {
                 databaseContext.Tables.Add(table);
+            }
+            databaseContext.SaveChanges();
+
+            //CATEGORIES
+            var categories = new Category[]
+            {
+                new Category(restaurants[0].Menu,"előétel"),
+                new Category(restaurants[0].Menu,"főétel"),
+                new Category(restaurants[0].Menu,"desszert"),
+                new Category(restaurants[1].Menu,"italok"),
+                new Category(restaurants[1].Menu,"snacks")
+            };
+            foreach (Category category in categories)
+            {
+                databaseContext.Categories.Add(category);
+            }
+            databaseContext.SaveChanges();
+
+            //FOODS
+            var foods = new Food[]
+            {
+                new Food(categories[0],"piritós","roppanós",299),
+                new Food(categories[0],"humus","friss",799),
+                new Food(categories[1],"túrós csusza","kemencés",2990),
+                new Food(categories[2],"tiramisu","krémes",1190),
+                new Food(categories[3],"gin","igazi angol gin",1570),
+                new Food(categories[3],"fanta","cukormentes",850),
+                new Food(categories[4],"földimogyoró","pörkölt, sós",550)
+            };
+            foreach (Food food in foods)
+            {
+                databaseContext.Foods.Add(food);
             }
             databaseContext.SaveChanges();
 
@@ -205,7 +202,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 databaseContext.Reservations.Add(reservation);
             }
-            databaseContext.SaveChanges();
+            databaseContext.SaveChanges();            
         }
     }
 }
