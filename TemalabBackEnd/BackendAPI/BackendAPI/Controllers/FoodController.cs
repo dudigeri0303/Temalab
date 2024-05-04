@@ -29,13 +29,11 @@ namespace BackendAPI.Controllers
                     List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(category.Id, "CategoryId");
                     menuItems.Add(foods);
                 }
-
                 return Ok(menuItems);
             }
             catch (Exception ex) { return BadRequest(ex.Message);}
             
         }
-
         #endregion
     }
 }

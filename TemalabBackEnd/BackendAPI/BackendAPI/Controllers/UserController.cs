@@ -1,11 +1,9 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -27,22 +25,19 @@ namespace TemalabBackEnd.Controllers
         //Regisztrációs api hívás. Az identity biztosít egy alapot, de ott nem lehet 
         //Felülírni a mezőket.
         [HttpPost("register/")]
-        public async Task<ActionResult<User>> Register(RegisterModel registerModel) 
+        public async Task<ActionResult<User>> Register(UserRegisterDto registerDto) 
         {
             User newUser = new User()
             {
-                UserName = registerModel.UserName,
-                Email = registerModel.Email,
-                PhoneNumber = registerModel.PhoneNumber,
+                UserName = registerDto.UserName,
+                Email = registerDto.Email,
+                PhoneNumber = registerDto.PhoneNumber,
             };
-
-            if(registerModel.Password.Equals(registerModel.PasswordAgain)) 
+            if(registerDto.Password.Equals(registerDto.PasswordAgain)) 
             {
-                await this.userManager.CreateAsync(newUser, registerModel.Password);
-                
-                if (registerModel.UserRole == "customer") { await this.userManager.AddToRoleAsync(newUser, "Customer"); }
-                else if (registerModel.UserRole == "owner") { await this.userManager.AddToRoleAsync(newUser, "Owner"); }
-                
+                await this.userManager.CreateAsync(newUser, registerDto.Password);
+                if (registerDto.UserRole == "customer") { await this.userManager.AddToRoleAsync(newUser, "Customer"); }
+                else if (registerDto.UserRole == "owner") { await this.userManager.AddToRoleAsync(newUser, "Owner"); }  
                 return Ok(newUser);
             }
             return BadRequest("Something went wrong");
@@ -50,13 +45,13 @@ namespace TemalabBackEnd.Controllers
 
         //Ugyanúgy custom login api hívás, mint a regisztráció.
         [HttpPost("login/")]
-        public async Task<ActionResult<LoginModel>> Login(LoginModel loginModel)
+        public async Task<ActionResult<UserLoginDto>> Login(UserLoginDto loginDto)
         {
-            if (loginModel.UserName != null && loginModel.Password != null)
+            if (loginDto.UserName != null && loginDto.Password != null)
             {
                 var logInResult = await signInManager.PasswordSignInAsync(
-                    userName: loginModel.UserName,
-                    password: loginModel.Password,
+                    userName: loginDto.UserName,
+                    password: loginDto.Password,
                     isPersistent: false,
                     lockoutOnFailure: false
                 );
@@ -65,18 +60,17 @@ namespace TemalabBackEnd.Controllers
                     //A kapott információk alapján beállít egy user role-t.
                     //A loginModel-t visszaküldi, és ez alapján navigál a kliens
                     //Lehet hogy szar megoldás, és ki kéne találni valami jobbat
-                    User? user = await this.userManager.FindByNameAsync(loginModel.UserName);
+                    User? user = await this.userManager.FindByNameAsync(loginDto.UserName);
                     var userRoles = await this.userManager.GetRolesAsync(user);
                     if (userRoles.Contains("Owner"))
                     {
-                        loginModel.UserRole = "owner";
+                        loginDto.UserRole = "owner";
                     }
-                    else { loginModel.UserRole = "customer"; }
+                    else { loginDto.UserRole = "customer"; }
 
                     //loginmodel paswordjének átírása üres stringre. Igy legalább nem küldi vissza a frontendre, bár elég gagyi megoldás
-                    loginModel.Password = "";
-
-                    return Ok(loginModel);
+                    loginDto.Password = "";
+                    return Ok(loginDto);
                 }
                 return Unauthorized("Login failed");
             }
@@ -93,19 +87,13 @@ namespace TemalabBackEnd.Controllers
 
         //A bejelentkezett user user page-nek megfelelő adataival tér vissza egy UserDataModelként
         [HttpGet("getLoggedInUserData/"), Authorize]
-        public async Task<ActionResult<UserDataModel>> GetLoggedInUsersData()
+        public async Task<ActionResult<UserDatasDto>> GetLoggedInUsersData()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             User? user =  await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                UserDataModel dataModel = new UserDataModel()
-                {
-                    Name = user.UserName,
-                    Email = user.Email,
-                    PhoneNumber = user.PhoneNumber,
-                    Password = "ValamiValami21"
-                };
+                UserDatasDto dataModel = new UserDatasDto(user.UserName, user.PhoneNumber, user.Email);
                 return Ok(dataModel);
             }
             return NotFound("User not found!");
@@ -115,7 +103,7 @@ namespace TemalabBackEnd.Controllers
         //Validáció nincs, úgyhogy az még kell. Will Farell azt mondta, hogy a dbcontext-ben elvileg
         //Van olyan update metódus, amivel ezt meg lehet egyszerűen csinálni.
         [HttpPut("editUserDate/{name}"), Authorize]
-        public async Task<ActionResult> EditUserDataByName(UserDataModel newDataModel) 
+        public async Task<ActionResult> EditUserDataByName(UserDatasDto newDataModel) 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             User? user = await this.userManager.FindByIdAsync(userId);
@@ -140,10 +128,7 @@ namespace TemalabBackEnd.Controllers
             {
                 return Ok(users);
             }
-            else
-            {
-                return NotFound("No users found");
-            }
+            return NotFound("No users found");
         }
         #endregion
     }

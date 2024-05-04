@@ -1,5 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,24 +20,17 @@ namespace BackendAPI.Controllers
 
         [Authorize(Roles = "Customer")]
         [HttpGet("listAllRestaurants/")]
-        public async Task<ActionResult<List<RestaurantModel>>> ListAllRestaurants() 
+        public async Task<ActionResult<List<RestaurantDataDto>>> ListAllRestaurants() 
         {
             try 
             {
                 List<Restaurant> restaurants = await this.crudOperator.GetAllRows<Restaurant>();
-                List<RestaurantModel> restaurantModels = new List<RestaurantModel>();
+                List<RestaurantDataDto> restaurantDtos = new List<RestaurantDataDto>();
                 foreach (var restaurant in restaurants) 
                 {
-                    restaurantModels.Add(new RestaurantModel 
-                    {
-                        Id = restaurant.Id,
-                        Name = restaurant.Name,
-                        Label = restaurant.Label,
-                        Description = restaurant.Description,
-                        Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
-                    });
+                    restaurantDtos.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"));
                 }
-                return Ok(restaurantModels);
+                return Ok(restaurantDtos);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
@@ -57,20 +50,13 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("GetRestaurantById")]
-        public async Task<ActionResult<RestaurantModel>> GetRestaurantById(string id)
+        public async Task<ActionResult<RestaurantDataDto>> GetRestaurantById(string id)
         {
             try
             {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
-                RestaurantModel restaurantModel = new RestaurantModel
-                {
-                    Id = restaurant.Id,
-                    Name = restaurant.Name,
-                    Label = restaurant.Label,
-                    Description = restaurant.Description,
-                    Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
-                };
-                return Ok(restaurantModel);
+                RestaurantDataDto restaurantDto = new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}");
+                return Ok(restaurantDto);
             }
             catch (Exception ex) 
             {
@@ -78,20 +64,21 @@ namespace BackendAPI.Controllers
             }
         }
 
+        //Így működik a menu lekérése, viszont navigation property alapján nem, pedig kéne.
         [HttpGet("GetRestaurantMenu")]
         public async Task<ActionResult<Menu>> GetRestaurantMenu(string id)
         {
-            try
+            Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
+            if (restaurant != null) 
             {
-                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
-
-                return Ok(restaurant.Menu);
-            }catch(Exception ex)
-            {
-                return BadRequest("Couldnt find the menu");
+                Menu? menu = await this.crudOperator.GetRowById<Menu>(restaurant.MenuId);
+                if (menu != null)
+                {
+                    return Ok(menu);
+                }
             }
+            return BadRequest("Couldnt find the menu");
         }
-            
         #endregion
     }
 }

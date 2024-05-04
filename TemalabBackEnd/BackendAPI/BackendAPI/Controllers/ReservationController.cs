@@ -1,5 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +21,12 @@ namespace BackendAPI.Controllers
         #region UniqueApiCalls
         [Authorize(Roles = "Customer")]
         [HttpGet("getReservationsForLoggedInUser/")]
-        public async Task<ActionResult<List<ReservationModel>>> GetReservationsByLoggedInUser() 
+        public async Task<ActionResult<List<ReservationDto>>> GetReservationsByLoggedInUser() 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
-                List<ReservationModel> reservationModels = new List<ReservationModel>();
+                List<ReservationDto> reservationModels = new List<ReservationDto>();
                 List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
                 Console.WriteLine(reservations.Count);
                 foreach(var reservation in reservations)
@@ -35,13 +35,7 @@ namespace BackendAPI.Controllers
                     if (table != null)
                     {
                         Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(table.RestaurantId);
-                        reservationModels.Add(new ReservationModel
-                        {
-                            Id = reservation.Id,
-                            RestaurantName = restaurant.Name,
-                            TableId = table.Id,
-                            EndDate = reservation.EndDate.ToString()
-                        });
+                        reservationModels.Add(new ReservationDto(reservation.Id, restaurant.Name, table.Id, reservation.EndDate.ToString()));
                         await Console.Out.WriteLineAsync(reservation.EndDate.ToString());
                     }
                     else { Console.WriteLine("Table not found"); }

@@ -1,5 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -16,14 +16,14 @@ namespace BackendAPI.Controllers
         #region UniqueOperations
 
         [HttpPost("AddCategory")]
-        public async Task<ActionResult<Category>> AddCategory(string restaurantId, CreateCategoryModel createCategoryModel)
+        public async Task<ActionResult<Category>> AddCategory(string restaurantId, CreateCategoryDto createCategoryDto)
         {
             try
             {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
                 Category category = new Category
                 {
-                    Name = createCategoryModel.Name,
+                    Name = createCategoryDto.Name,
                     MenuId = restaurant.MenuId
                 };
                 await this.crudOperator.InsertNewRow<Category>(category);
@@ -34,9 +34,7 @@ namespace BackendAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }          
-
         }
-
         #endregion
     }
 }
