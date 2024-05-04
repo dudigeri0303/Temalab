@@ -1,5 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,27 +21,20 @@ namespace BackendAPI.Controllers
         #region UniqueApiCalls
         [Authorize(Roles = "Customer")]
         [HttpGet("getReservationsForLoggedInUser/")]
-        public async Task<ActionResult<List<ReservationModel>>> GetReservationsByLoggedInUser() 
+        public async Task<ActionResult<List<ReservationDto>>> GetReservationsByLoggedInUser() 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
-                List<ReservationModel> reservationModels = new List<ReservationModel>();
+                List<ReservationDto> reservationModels = new List<ReservationDto>();
                 List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
-                Console.WriteLine(reservations.Count);
                 foreach(var reservation in reservations)
                 {
                     Table? table = await this.crudOperator.GetRowById<Table>(reservation.TableId);
                     if (table != null)
                     {
                         Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(table.RestaurantId);
-                        reservationModels.Add(new ReservationModel
-                        {
-                            Id = reservation.Id,
-                            RestaurantName = restaurant.Name,
-                            TableId = table.Id,
-                            EndDate = reservation.EndDate.ToString()
-                        });
+                        reservationModels.Add(new ReservationDto(reservation.Id, restaurant.Name, table.Id, reservation.EndDate.ToString()));
                         await Console.Out.WriteLineAsync(reservation.EndDate.ToString());
                     }
                     else { Console.WriteLine("Table not found"); }
@@ -63,16 +56,38 @@ namespace BackendAPI.Controllers
                 if (table != null) 
                 {
                     table.IsReserved = false;
+                    await this.crudOperator.DeleteRowById<Reservation>(reservationId);
+                    return Ok("Reservation deleted");
                 }
-
-                await this.crudOperator.DeleteRowById<Reservation>(reservationId);
-                return Ok("Reservation deleted");
+                return BadRequest("Could not found the table for the reservation:(");
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         //TODO: foglalás leadása api endpoint
 
+        [HttpPost("reserveTableForLoggedUser")]
+        public async Task<ActionResult<Reservation>> ReserveTableForLoggedUser(string tableId) 
+        {
+            try
+            {
+                string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                User? user = await this.userManager.FindByIdAsync(userId);
+                Table? table = await this.crudOperator.GetRowById<Table>(tableId);
+                if(table != null && user != null)
+                {
+                    table.IsReserved = true;
+                    Reservation reservation = new Reservation(user, table, DateTime.Now);
+                    await this.crudOperator.InsertNewRow<Reservation>(reservation);
+                    return Ok(reservation);
+                }
+                return BadRequest("Table or User was null!");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);  
+            }
+        }
         #endregion
     }
 }

@@ -1,5 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,26 +20,19 @@ namespace BackendAPI.Controllers
         #region UniqueApiCalls
         [Authorize(Roles = "Customer")]
         [HttpGet("getLikedRestaurantForLoggedInUser/")]
-        public async Task<ActionResult<List<LikedRestaurantModel>>> GetLikedRestaurantByLoggedInUser()
+        public async Task<ActionResult<List<LikedRestaurantDto>>> GetLikedRestaurantByLoggedInUser()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
                 List<LikedRestaurant> likedRestaurants = this.crudOperator.DbContext.LikedRestaurants.Where(lr => lr.UserId == userId).ToList();
-                List<LikedRestaurantModel> likedRestaurantModels = new List<LikedRestaurantModel>();
+                List<LikedRestaurantDto> likedRestaurantModels = new List<LikedRestaurantDto>();
                 foreach(var lr in likedRestaurants)
                 {
                     Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(lr.RestaurantId);
                     if (restaurant != null) 
                     {
-                        likedRestaurantModels.Add(new LikedRestaurantModel
-                        {
-                            Id = lr.Id,
-                            Name = restaurant.Name,
-                            Label = restaurant.Label,
-                            Description = restaurant.Description,
-                            Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber.ToString()}" 
-                        }) ; 
+                        likedRestaurantModels.Add(new LikedRestaurantDto(lr.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber.ToString()}")); 
                     }
                 }
                 return Ok(likedRestaurantModels);

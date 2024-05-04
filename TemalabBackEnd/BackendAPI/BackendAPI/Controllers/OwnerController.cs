@@ -1,9 +1,8 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.ModelsForApiCalls;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Numerics;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -21,47 +20,40 @@ namespace BackendAPI.Controllers
         #region UniqueOperations
         [Authorize(Roles = "Owner")]
         [HttpGet("listRestaurantsByOwner/")]
-        public async Task<ActionResult<List<RestaurantModel>>> ListRestaurantsByOwner()
+        public async Task<ActionResult<List<RestaurantDataDto>>> ListRestaurantsByOwner()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             List<Owner> ownerConnections = await this.crudOperator.GetMultipleRowsByForeignId<Owner>(userId, "UserId");
-            List<RestaurantModel> restaurantModels = new List<RestaurantModel>();
+            List<RestaurantDataDto> restaurantModels = new List<RestaurantDataDto>();
             foreach (Owner owner in ownerConnections)
             {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
-                restaurantModels.Add(new RestaurantModel 
-                {
-                    Id = restaurant.Id,
-                    Name = restaurant.Name,
-                    Label = restaurant.Label,
-                    Description = restaurant.Description,
-                    Location = $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"
-                });
+                restaurantModels.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"));
             }
             return Ok(restaurantModels);
         }
 
         [Authorize(Roles = "Owner")]
         [HttpPost("createNewRestaurantWithOwner/")]
-        public async Task<ActionResult<Restaurant>> CreateRestaurantWithOwner(CreateRestaurantModel restaurantModel)
+        public async Task<ActionResult<Restaurant>> CreateRestaurantWithOwner(CreateRestaurantDto restaurantDto)
         {
             try
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 User? user = await this.userManager.FindByIdAsync(userId);
-                Restaurant restaurant = new Restaurant(
-                    restaurantModel.Name,
-                    restaurantModel.Description, 
-                    restaurantModel.Label, 
-                    restaurantModel.City, 
-                    restaurantModel.Street,
-                    Int32.Parse(restaurantModel.HouseNumber),
-                    Int32.Parse(restaurantModel.PostCode),
-                    restaurantModel.PhoneNumber, 
-                    "00-24");
-                await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
-                await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));
-                return Ok(restaurant);
+                //Ezt a ronda if statement-et valahogy ki kéne küszöbölni.
+                if (restaurantDto.Name != null && restaurantDto.Description != null && restaurantDto.Label != null &&
+                    restaurantDto.City != null && restaurantDto.Street != null && restaurantDto.HouseNumber != null &&
+                    restaurantDto.PostCode != null && restaurantDto.PhoneNumber != null && user != null)
+                {
+                    Restaurant restaurant = new Restaurant(restaurantDto.Name, restaurantDto.Description, restaurantDto.Label,
+                      restaurantDto.City, restaurantDto.Street, Int32.Parse(restaurantDto.HouseNumber), Int32.Parse(restaurantDto.PostCode),
+                      restaurantDto.PhoneNumber, "00-24");
+                    await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
+                    await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));
+                    return Ok(restaurant);
+                }
+                return BadRequest("Something went wrong");
             }
             catch (Exception ex)
             {

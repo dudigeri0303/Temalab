@@ -1,9 +1,7 @@
 ﻿using BackendAPI.Controllers.Common;
-using BackendAPI.Models.EntityFrameworkModel.Common;
-using Microsoft.AspNetCore.Authorization;
+using BackendAPI.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -17,30 +15,59 @@ namespace BackendAPI.Controllers
         {
         }
 
-        [Authorize(Roles = "Customer")]
-        [HttpPut("reserveTable/")]
-        public async Task<ActionResult> ReserveTable(string id) 
+        [HttpGet("listTablesByRestaurantId/")]
+        public async Task<ActionResult<TableDto>> ListTablesByRestaurantId(string restaurantId) 
         {
-            Table? table = await this.crudOperator.GetRowById<Table>(id);
-            if(table != null)
+            try 
             {
-                table.IsReserved = true;
-                return Ok(table);
+                List<Table> tables = await this.crudOperator.GetMultipleRowsByForeignId<Table>(restaurantId, "RestaurantId");
+                if (tables.Any())
+                {
+                    List<TableDto> tableDtos = new List<TableDto>();
+                    tables.ForEach(t => tableDtos.Add(new TableDto(t.Id, t.NumOfSeats, t.IsReserved)));
+                    return Ok(tableDtos);
+                }
+                return BadRequest("Resturant does not have any tables regostered");
             }
-            return NotFound("Table not found");
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [Authorize(Roles = "Customer")]
-        [HttpPut("despairReservation/")]
-        public async Task<ActionResult> DespairTableReservation(string id) 
+        [HttpDelete("deleteTableById/")]
+        public async Task<ActionResult> DeleteTableById(string tableId) 
         {
-            Table? table = await this.crudOperator.GetRowById<Table>(id);
-            if (table != null)
+            try 
             {
-                table.IsReserved = false;
-                return Ok(table);
+                await this.crudOperator.DeleteRowById<Table>(tableId);
+                return Ok("Table delete succesfully");
             }
-            return NotFound("Table not found");
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("addTableToRestaurant")]
+        public async Task<ActionResult<Table>> AddTableToRestaurant(string restaurantId, CreateTableDto tableDto) 
+        {
+            try 
+            {
+
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+                if (restaurant != null)
+                {
+                    Table table = new Table(restaurant, tableDto.NumOfSeats);
+                    await this.crudOperator.InsertNewRow<Table>(table);
+                    return Ok(table);
+                }
+                return NotFound("Restaurant not found!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -29,7 +29,6 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             Description = description;
             Price = price;
         }
-
         public void updateEntity(Food entity)
         {
             throw new NotImplementedException();
