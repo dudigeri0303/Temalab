@@ -88,26 +88,6 @@ namespace BackendAPI.Controllers
                 return BadRequest(ex.Message);  
             }
         }
-
-        [HttpPut("despairReservation/")]
-        public async Task<ActionResult> DespairTableReservation(string id)
-
         #endregion
-
-        /*
-        [Authorize(Roles = "Customer")]
-        [HttpPut("despairReservation/")]
-        public async Task<ActionResult> DespairTableReservation(string id) 
-        {
-            Table? table = await this.crudOperator.GetRowById<Table>(id);
-            if (table != null)
-            {
-                table.IsReserved = false;
-                return Ok(table);
-            }
-            return NotFound("Table not found");
-        }  
-         */
-
     }
 }
