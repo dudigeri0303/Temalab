@@ -39,7 +39,7 @@ namespace BackendAPI.Controllers
             }          
         }
 
-       [HttpPost("listCategoriesByRestaurantId/")]
+       [HttpGet("listCategoriesByRestaurantId/")]
         public async Task<ActionResult<List<CategoryDto>>> ListCategoriesByRestaurantId(string restaurantId) 
         {
             Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
