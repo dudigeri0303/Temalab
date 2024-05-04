@@ -21,20 +21,39 @@ namespace BackendAPI.Controllers
             try
             {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
-                Category category = new Category
+                if (restaurant != null)
                 {
-                    Name = createCategoryDto.Name,
-                    MenuId = restaurant.MenuId
-                };
-                await this.crudOperator.InsertNewRow<Category>(category);
-
-                return Ok(category);
+                    Category category = new Category
+                    {
+                        Name = createCategoryDto.Name,
+                        MenuId = restaurant.MenuId
+                    };
+                    await this.crudOperator.InsertNewRow<Category>(category);
+                    return Ok(category);
+                }
+                return NotFound("Restaurant not found:(");
             }
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }          
         }
+
+       [HttpPost("listCategoriesByRestaurantId/")]
+        public async Task<ActionResult<List<CategoryDto>>> ListCategoriesByRestaurantId(string restaurantId) 
+        {
+            Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+            if (restaurant != null)
+            {
+                string menuId = restaurant.MenuId;
+                List<Category> categoriesForMenu = await this.crudOperator.GetMultipleRowsByForeignId<Category>(menuId, "MenuId");
+                List<CategoryDto> categorieDtos = new List<CategoryDto>();
+                categoriesForMenu.ForEach(c => categorieDtos.Add(new CategoryDto(c.Id, c.Name)));
+                return Ok(categorieDtos);
+            }
+            return NotFound("Could not found the restaurant by the id");
+        }
+
         #endregion
     }
 }

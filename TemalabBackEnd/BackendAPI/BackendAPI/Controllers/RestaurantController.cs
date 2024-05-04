@@ -64,7 +64,7 @@ namespace BackendAPI.Controllers
             }
         }
 
-        //Így működik a menu lekérése, viszont navigation property alapján nem, pedig kéne.
+        //Így működik a menu lekérése, viszont navigation property alapján nem, pedig kéne.(szerintem feleselges, mert a menu csak egy id)
         [HttpGet("GetRestaurantMenu")]
         public async Task<ActionResult<Menu>> GetRestaurantMenu(string id)
         {

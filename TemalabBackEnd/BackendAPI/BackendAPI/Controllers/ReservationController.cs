@@ -28,7 +28,6 @@ namespace BackendAPI.Controllers
             {
                 List<ReservationDto> reservationModels = new List<ReservationDto>();
                 List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
-                Console.WriteLine(reservations.Count);
                 foreach(var reservation in reservations)
                 {
                     Table? table = await this.crudOperator.GetRowById<Table>(reservation.TableId);
@@ -57,16 +56,58 @@ namespace BackendAPI.Controllers
                 if (table != null) 
                 {
                     table.IsReserved = false;
+                    await this.crudOperator.DeleteRowById<Reservation>(reservationId);
+                    return Ok("Reservation deleted");
                 }
-
-                await this.crudOperator.DeleteRowById<Reservation>(reservationId);
-                return Ok("Reservation deleted");
+                return BadRequest("Could not found the table for the reservation:(");
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
 
         //TODO: foglalás leadása api endpoint
 
+        [HttpPost("reserveTableForLoggedUser")]
+        public async Task<ActionResult<Reservation>> ReserveTableForLoggedUser(string tableId) 
+        {
+            try
+            {
+                string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                User? user = await this.userManager.FindByIdAsync(userId);
+                Table? table = await this.crudOperator.GetRowById<Table>(tableId);
+                if(table != null && user != null)
+                {
+                    table.IsReserved = true;
+                    Reservation reservation = new Reservation(user, table, DateTime.Now);
+                    await this.crudOperator.InsertNewRow<Reservation>(reservation);
+                    return Ok(reservation);
+                }
+                return BadRequest("Table or User was null!");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);  
+            }
+        }
+
+        [HttpPut("despairReservation/")]
+        public async Task<ActionResult> DespairTableReservation(string id)
+
         #endregion
+
+        /*
+        [Authorize(Roles = "Customer")]
+        [HttpPut("despairReservation/")]
+        public async Task<ActionResult> DespairTableReservation(string id) 
+        {
+            Table? table = await this.crudOperator.GetRowById<Table>(id);
+            if (table != null)
+            {
+                table.IsReserved = false;
+                return Ok(table);
+            }
+            return NotFound("Table not found");
+        }  
+         */
+
     }
 }
