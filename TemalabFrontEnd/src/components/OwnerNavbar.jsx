@@ -26,7 +26,7 @@ export default function OwnerNavbar(){
     return (
         <Navbar expand="lg" className="navbarcss p-0" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/mainPageOwner">
                     <img src='/dinetab-logo.png' className='navbarlogo p-0 m-0'/>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>

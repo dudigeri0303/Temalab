@@ -65,6 +65,7 @@ const RegisterForm = () => {
   // Mégse gomb eseménykezelő fv
   const handleCancel = () => {
     setFieldsRequired(false);  // Kötelező mezőket "kikapcsolja" => nem kell kitölteni ha a mégse gombra kattintunk
+    window.open("/", "_self");
   };
 
   return (
