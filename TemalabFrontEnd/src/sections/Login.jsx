@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import CryptoJS from 'crypto-js';
 
 const LoginForm = () =>{
+    useEffect(() => {
+        document.title = " Bejelentkezés | DineTab";
+      }, []);
     //const history = useHistory();
     const navigate = useNavigate(); 
     const [userName, setUserName] = useState('');
@@ -44,7 +47,7 @@ const LoginForm = () =>{
             }
             
             //navigációs utvonal beállítása a user role alaőján
-            let path = `/customerProfile`; 
+            let path = `/mainPageCustomer`; 
             if(parsedResult.userRole == "owner"){
                 path = `/mainPageOwner`
             }

@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  useEffect(() => {
+    document.title = " Regisztráció | DineTab";
+  }, []);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -62,6 +65,7 @@ const RegisterForm = () => {
   // Mégse gomb eseménykezelő fv
   const handleCancel = () => {
     setFieldsRequired(false);  // Kötelező mezőket "kikapcsolja" => nem kell kitölteni ha a mégse gombra kattintunk
+    window.open("/", "_self");
   };
 
   return (

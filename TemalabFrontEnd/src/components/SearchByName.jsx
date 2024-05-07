@@ -2,7 +2,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import React, { useEffect, useState } from "react";
 import CardCustomerMain from "../components/CardCustomerMain";
 
-export default function SearchByName() {
+//dependency injection restaurantsList
+// eslint-disable-next-line react/prop-types
+export default function SearchByName({ restaurantList }) {
+  
   const [restaurants, setRestaurants] = useState([]);
   //találatok lista
   const [matches, setMatches] = useState([]);
@@ -10,32 +13,10 @@ export default function SearchByName() {
   const [searchClicked, setSearchClicked] = useState(false);
 
   useEffect(() => {
-    getRestaurants();
-  }, []);
+    setRestaurants(restaurantList);
+  }, [restaurantList]);
+  
 
-  //lehet ki kéne szervezni
-  const getRestaurants = async () => {
-    const myHeaders = new Headers();
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      credentials: "include",
-      xhrFields: { withCredentials: true },
-      redirect: "follow",
-    };
-
-    try {
-      const response = await fetch(
-        "https://localhost:7114/api/Restaurant/listAllRestaurants",
-        requestOptions
-      );
-      const data = await response.json();
-      setRestaurants(data);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const search = () => {
     setSearchClicked(true);

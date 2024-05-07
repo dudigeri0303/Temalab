@@ -1,60 +1,44 @@
 import "../App.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import SearchByName from "../components/SearchByName";
 import CardCustomerMain from "../components/CardCustomerMain";
+import AllRestaurants from "../components/AllRestaurants";
 
-export default function CustomerFavorites() {
+export default function CustomerMain() {
   useEffect(() => {
     document.title = " Főoldal | DineTab";
-    getRestaurants();
   }, []);
-
-  const [restaurants, setRestaurants] = useState([]);
-
-  const getRestaurants = async () => {
-    const myHeaders = new Headers();
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      credentials: 'include',
-      xhrFields: { withCredentials: true},
-      redirect: "follow"
-    };
-    
-    try {
-      const response = await fetch("https://localhost:7114/api/Restaurant/listAllRestaurants", requestOptions);
-      const data = await response.json();
-      setRestaurants(data); 
-      console.log(data)
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div className="min-vh-100">
-    <Navbar></Navbar>
-    <SearchByName/>
-    {restaurants.length === 0 ? (
-      <>
-        <label className="placeholerLabel">Éttermek</label>
-      </>
-    ) : (
-      <section id="main" className="container py-2">
-        <div className="row">
-          {restaurants.map((restaurant) => (
-            <div className="col-12 mb-3" key={restaurant.id}>
-              <CardCustomerMain data={restaurant} />
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-  </div>
+      <Navbar />
+
+      <AllRestaurants>
+        {/* itt a lényeg annyi, mint a modalnal is children és akkor így látja a listát, mert olyan, mintha 
+        belepakolnád az AllRestaurants belsejébe */}
+        {/* dependecy injection itt kapja meg az éttermek listát */}
+        {(restaurants) => (
+          <>
+            <SearchByName restaurantList={restaurants} />
+            {restaurants.length === 0 ? (
+              <>
+                <label className="placeholerLabel">Éttermek</label>
+              </>
+            ) : (
+              <section id="main" className="container py-2">
+                <div className="row">
+                  {restaurants.map((restaurant) => (
+                    <div className="col-12 mb-3" key={restaurant.id}>
+                      <CardCustomerMain data={restaurant} />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
+        )}
+      </AllRestaurants>
+    </div>
   );
 }
-
-
- 
- 
