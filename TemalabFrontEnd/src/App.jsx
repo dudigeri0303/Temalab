@@ -27,6 +27,10 @@ import NotFound from './components/NotFound';
 
 function App() {
 
+  if(localStorage.getItem('loggedIn') === null){
+    localStorage.setItem('loggedIn','false')
+  }
+
   const [loggedCheck, setLoggedCheck] = useState(localStorage.getItem('loggedIn'))
 
   useEffect(() => {
@@ -63,9 +67,9 @@ function App() {
                   <Route path="/navowner" element={<OwnerNavbar/>} />
                   <Route path="/mainPageOwner" element={<OwnerMain/>} />
                   <Route path="/tablesOwner" element={<OwnerTables/>} />
-                  <Route path="/restaurantowner" element={<OwnerRestaurantPage/>}/>
+                  <Route path="/restaurantowner/:id" element={<OwnerRestaurantPage/>}/>
                   <Route path="/ownerProfile" element={<OwnerProfile/>}/>
-                  <Route path="/createmenu" element={<MenuCreator/>}/>
+                  <Route path="/createmenu/:id" element={<MenuCreator/>}/>
                 </>
               )}
               <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}

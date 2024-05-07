@@ -65,6 +65,7 @@ input {
 
 body {
   background-color: #c0d6df;
+  overflow-x: hidden;
 }
 
 .loginkulso {
@@ -112,6 +113,27 @@ body {
 .likepos{
   right: 5%;
   top: 35%;
+}
+
+.likeposowner{
+  right: 1%;
+  top: 20%;
+}
+
+@media (max-width: 800px){
+  .likepos{
+    right: 25%;
+    top: 75%;
+  }
+
+  .likeposowner{
+    top: 60%;
+    right: 25%;
+  }
+
+  .maincardmargin{
+    margin-bottom: 100px;
+  }
 }
 
 .redbtn {
