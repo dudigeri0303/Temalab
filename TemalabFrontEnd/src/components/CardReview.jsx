@@ -1,6 +1,6 @@
 import "../App.css";
 
-export default function CardReview({ rating, description }) {
+export default function CardReview({id, rating, description }) {
   return (
     <>
       <section id="main" className="container py-2">
@@ -8,7 +8,7 @@ export default function CardReview({ rating, description }) {
           <div className="container">
             <div className="row">
               <div className="col-sm-6 text-center">
-                <label className="card-Altext">Felhasználónév</label>
+                <label className="card-Altext">Felhasználónév: {id} </label>
               </div>
               <div className="col-sm-6 text-center">
                 <label className="card-Altext">Értékelés: {rating}</label>
