@@ -120,6 +120,7 @@ namespace TemalabBackEnd.Controllers
 
         //Osszes user lekerdezese
         [HttpGet("getAllUsers/")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
             var users = await userManager.Users.ToListAsync();
@@ -129,6 +130,26 @@ namespace TemalabBackEnd.Controllers
                 return Ok(users);
             }
             return NotFound("No users found");
+        }
+
+
+        //Szerintem a user role-ok közül is törölni kell a user role-jait
+        //Ahogy nézem törli a user rolet is, need double check
+        [HttpDelete("deleteUserById/")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteUserById(string userId) 
+        {
+            try 
+            {
+                User? user = await this.userManager.FindByIdAsync(userId);
+                await this.userManager.DeleteAsync(user);
+                return Ok("User deleted succesfully");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
         #endregion
     }
