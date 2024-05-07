@@ -5,7 +5,7 @@ import SearchByName from "../components/SearchByName";
 import CardCustomerMain from "../components/CardCustomerMain";
 import AllRestaurants from "../components/AllRestaurants";
 
-export default function CustomerFavorites() {
+export default function CustomerMain() {
   useEffect(() => {
     document.title = " Főoldal | DineTab";
   }, []);

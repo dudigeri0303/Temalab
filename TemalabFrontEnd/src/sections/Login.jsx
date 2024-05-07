@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import CryptoJS from 'crypto-js';
 
 const LoginForm = () =>{
+    useEffect(() => {
+        document.title = " Bejelentkezés | DineTab";
+      }, []);
     //const history = useHistory();
     const navigate = useNavigate(); 
     const [userName, setUserName] = useState('');

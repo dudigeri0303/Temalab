@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  useEffect(() => {
+    document.title = " Regisztráció | DineTab";
+  }, []);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
