@@ -7,7 +7,7 @@ export default function CardReview({id, rating, description }) {
         <div className="row div-card">
           <div className="container">
             <div className="row">
-              <div className="col-sm-6 text-center">
+              <div className="col-sm-12 text-center">
                 <label className="card-Altext">Felhasználónév: {id} </label>
               </div>
               <div className="col-sm-6 text-center">

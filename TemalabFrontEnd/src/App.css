@@ -224,8 +224,14 @@ footer a:hover {
 }
 
 .card-Altext {
-  font-size: 26px;
+  font-size: 20px;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .card-Altext {
+    font-size: 20px; /* Adjust as needed for smaller screens */
+  }
 }
 
 
