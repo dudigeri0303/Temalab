@@ -10,7 +10,7 @@ export default function AdminNavbar(){
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link href='#' className='logoutbtn fs-4 px-4 py-2'>Kijelentkezés</Nav.Link>
+                        <Nav.Link href='/' className='logoutbtn fs-4 px-4 py-2'>Kijelentkezés</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
