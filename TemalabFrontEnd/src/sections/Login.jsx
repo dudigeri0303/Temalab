@@ -77,9 +77,9 @@ const LoginForm = () =>{
                             <Form.Label>Jelszó</Form.Label>
                             <Form.Control type="password" placeholder="Password" onChange = {(e) => setPassword(e.target.value)}/>
                         </Form.Group>
-                        <div className='d-flex justify-content-between'>
-                            <button className='btnstyle px-1 py-2 text-center loginbtn' href='#' type="button" onClick={handleLogin}>Bejelentkezés</button>
-                            <a className='btnstyle px-1 py-2 text-center loginbtn' href='#' type='button' onClick={redirectToRegisttrationPage}>Regisztráció</a> 
+                        <div className='d-flex flex-wrap justify-content-between'>
+                            <button className='btnstyle px-1 py-2 text-center loginbtn m-auto mt-3' href='#' type="button" onClick={handleLogin}>Bejelentkezés</button>
+                            <a className='btnstyle px-1 py-2 text-center loginbtn m-auto mt-3' href='#' type='button' onClick={redirectToRegisttrationPage}>Regisztráció</a> 
                         </div>
                     </Form>
                 </div>

@@ -34,8 +34,8 @@ export default function CardUserFav({ data }) {
       <section id="main" className="container py-2">
         <div className="position-relative">
           <a href={"/restaurant/" + data.id}>
-            <div className="d-flex flex-sm-row  justify-content-between div-card">
-                <div>
+            <div className="d-flex flex-sm-row justify-content-between div-card">
+                <div className="maincardmargin">
                   <div>
                     <label className="card-text">{data.name}</label>
                   </div>

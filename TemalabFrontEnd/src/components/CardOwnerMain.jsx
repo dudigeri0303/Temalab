@@ -4,26 +4,26 @@ import PropTypes from 'prop-types';
 export default function CardOwnerMain({data}) {
   return (
     <>
-      <section id="main" className="container py-2 div-card">
-        <div className="row div-card">
-          <div className="container">
-            <div className="row">
-              <div className="col-sm d-flex align-items-center">
+      <section id="main" className="container py-2 div-card position-relative">
+        <a href={"/restaurantowner/" + data.id}>
+          <div className="row div-card maincardmargin">
+            <div className="container">
+              <div className="row">
                 <label className="card-text">{data.name}</label>
               </div>
-              <div className="col-sm d-flex align-items-center">
+              <div className="row">
                 <label className="card-text">{data.label}</label>
               </div>
-              <div className="col-sm d-flex align-items-center">
+              <div className="row">
                 <label className="card-Altext">{data.location}</label>
-              </div>
-              <div className="col-sm">
-                <button type="button" className="cardbtn float-end">
-                  Szerkesztés
-                </button>
               </div>
             </div>
           </div>
+        </a>
+        <div className="position-absolute likeposowner">
+          <button type="button" className="cardbtn float-end">
+            Szerkesztés
+          </button>
         </div>
       </section>
     </>
