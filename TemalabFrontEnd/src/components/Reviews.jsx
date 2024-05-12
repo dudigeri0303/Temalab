@@ -22,7 +22,7 @@ export default function Reviews({ showModal, setShowModal, children }) {
 
     try {
       const response = await fetch(
-        "https://localhost:7114/api/Review/getReviewsForRestaurantById?restaurantId=89950e70-73ee-4ac4-9554-42905bd6eec1",
+        "https://localhost:7114/api/Review/getReviewsForRestaurantById?restaurantId=5f237da9-11f8-4cb8-bdfb-0c80c73900df",
         requestOptions
       );
       const data = await response.json();
