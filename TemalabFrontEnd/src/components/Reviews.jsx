@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import CardReview from "../components/CardReview";
+import { useParams } from 'react-router-dom';
 
 export default function Reviews({ showModal, setShowModal, children }) {
-  const handleClose = () => {
+  const handleClose = async () => {
+    await getReviews();
     setShowModal(false);
-    getReviews();
   };
+
+  const id = useParams();
+  console.log(id)
 
   const [reviews, setReviews] = useState([]);
 
@@ -22,8 +26,7 @@ export default function Reviews({ showModal, setShowModal, children }) {
 
     try {
       const response = await fetch(
-        "https://localhost:7114/api/Review/getReviewsForRestaurantById?restaurantId=5f237da9-11f8-4cb8-bdfb-0c80c73900df",
-        requestOptions
+        "https://localhost:7114/api/Review/getReviewsForRestaurantById?restaurantId="+ id.id, requestOptions
       );
       const data = await response.json();
       setReviews(data);
