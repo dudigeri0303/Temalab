@@ -6,18 +6,18 @@ import { useParams } from "react-router-dom";
 export default function AddReview({ showModal2, setShowModal2, children }) {
   const handleClose = () => {
     setShowModal2(false);
+    //location.reload();
   };
 
   const id = useParams();
   console.log(id);
 
-
   const [reviews, setReviews] = useState([]);
   const [idReview, setIdReview] = useState("");
-  const [rate, setRate] = useState(1);
+  const [rate, setRate] = useState();
   const [review, setReview] = useState("");
 
-  const handleSubmitReview = async () => {
+  const postReview = async () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -61,7 +61,8 @@ export default function AddReview({ showModal2, setShowModal2, children }) {
                 setRate={setRate}
                 review={review}
                 setReview={setReview}
-                onSubmit={handleSubmitReview}
+                postSubmit={postReview}
+                handleClose={handleClose}
               />
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">

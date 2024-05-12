@@ -91,14 +91,6 @@ export default function RestaurantPage() {
                       className="avgbtn"
                       onClick={() => setShowModal2(false)}
                     >
-                      Közzétesz
-                    </button>
-                  </div>
-                  <div className="text-center">
-                    <button
-                      className="avgbtn"
-                      onClick={() => setShowModal2(false)}
-                    >
                       Mégse
                     </button>
                   </div>
