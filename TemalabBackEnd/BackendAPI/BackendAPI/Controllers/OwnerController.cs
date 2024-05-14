@@ -90,30 +90,6 @@ namespace BackendAPI.Controllers
             }
             return BadRequest("Something went wrong");
         }
-
-        /* TODO: Get owner by restaurant
-        [HttpGet("getRestaurantsByOwnerID/{id}")]
-        public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByOwner(int id)
-        {
-            List<Owner> restaurantOwnedById = this._context.Owners.Where(o => o.UserId == id).ToList();
-            List<Restaurant> restaurants = new List<Restaurant>();
-            foreach (var owner in restaurantOwnedById)
-            {
-                foreach (var restaurant in this._context.Restaurants)
-                {
-                    if (owner.RestaurantId == restaurant.Id)
-                    {
-                        restaurants.Add(restaurant);
-                    }
-                }
-            }
-            if (restaurantOwnedById.Count < 1)
-            {
-                return NotFound("Owner not found");
-            }
-            return Ok(restaurants);
-        }*/
-
         #endregion
     }
 }

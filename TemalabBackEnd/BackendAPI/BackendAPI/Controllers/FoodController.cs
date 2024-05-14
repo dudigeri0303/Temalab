@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -51,6 +52,7 @@ namespace BackendAPI.Controllers
         }
         
         [HttpDelete("deleteFoodByID/")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> DeleteFoodByID(string foodId) 
         {
             try
@@ -65,6 +67,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("addNewFoodToCategory/")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<Food>> AddNewFoodToCategory(string categoryId, CreateFoodDto foodDto) 
         {
             try 
@@ -79,6 +82,22 @@ namespace BackendAPI.Controllers
                 return NotFound("Category was not found by the id");
             }
             catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("addImageToFood/")]
+        [Authorize(Roles ="Owner")]
+        public async Task<ActionResult> AddImageToFood(string foodId, ImageDto imageDto) 
+        {
+            try 
+            {
+                byte[] imageBytes = await ImageToByteArrayConverter.FileToByteArray(imageDto.imageFile);
+                Food? food = await this.crudOperator.GetRowById<Food>(foodId);
+                food!.Image = imageBytes;
+                return Ok(food);
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }

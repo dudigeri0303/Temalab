@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BackendAPI.Controllers.Common;
+using Microsoft.AspNetCore.Identity;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
@@ -149,13 +150,13 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //FOODS
             var foods = new Food[]
             {
-                new Food(categories[0],"piritós","roppanós",299),
-                new Food(categories[0],"humus","friss",799),
-                new Food(categories[1],"túrós csusza","kemencés",2990),
-                new Food(categories[2],"tiramisu","krémes",1190),
-                new Food(categories[3],"gin","igazi angol gin",1570),
-                new Food(categories[3],"fanta","cukormentes",850),
-                new Food(categories[4],"földimogyoró","pörkölt, sós",550)
+                new Food(categories[0],"piritós","roppanós",299, ImageToByteArrayConverter.PathToByteArray("bread-toast").Result),
+                new Food(categories[0],"humus","friss",799, ImageToByteArrayConverter.PathToByteArray("humus-nahut").Result),
+                new Food(categories[1],"túrós csusza","kemencés",2990, ImageToByteArrayConverter.PathToByteArray("turos-csusza").Result),
+                new Food(categories[2],"tiramisu","krémes",1190, ImageToByteArrayConverter.PathToByteArray("tiramisu").Result),
+                new Food(categories[3],"gin","igazi angol gin",1570, ImageToByteArrayConverter.PathToByteArray("marine_drygin").Result),
+                new Food(categories[3],"fanta","cukormentes",850, ImageToByteArrayConverter.PathToByteArray("fanta-orange-zero").Result),
+                new Food(categories[4],"földimogyoró","pörkölt, sós",550, ImageToByteArrayConverter.PathToByteArray("peanuts").Result)
             };
             foreach (Food food in foods)
             {
