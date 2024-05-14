@@ -1,11 +1,11 @@
-import { json } from "react-router-dom";
 import "../App.css";
 import React, { useEffect, useState } from "react";
 
-export default function Profile() {
+export default function CommonProfile() {
   useEffect(() => {
     document.title = "Profile | DineTab";
   }, []);
+
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,7 +32,6 @@ export default function Profile() {
       setEmail(result.email);
       setPhoneNumber(result.phoneNumber);
       setPassword(result.password);
-      console.log(result)
     } catch (error) {
       console.error(error);
     }
@@ -62,13 +61,52 @@ export default function Profile() {
 
   const cancelModify = () => {
     setModifiable(false);
-    {/*fv. hívás: Visszatölti a régi az utolsó mentett adatokat ugyanaz, mint az oldal betöltésekor*/}
+    location.reload(); // elég csak frissíteni az oldalt
   };
+
 
   const saveChanges = () => {
     setModifiable(false);
+    //-----------------------------------------------
+
+    const newData = {
+      userName: userName,
+      phoneNumber: phoneNumber,
+      email: email
+    };
+
+    const putRequestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newData)
+  };
+
+  
+
+  fetch(`https://localhost:7114/api/User/editUserDate/${userName}`  , putRequestOptions)
+    .then(response => {
+      if (response.ok) {
+        // Sikeres mentés esetén itt lehet kezelni a választ
+        alert("Változtatások mentve1");
+        console.log("1")
+      } else {
+        console.log("2")
+        throw new Error('Hiba történt a mentés során2');
+      }
+    })
+    .catch(error => {
+      // Hiba esetén itt lehet kezelni a hibát
+      console.log("3")
+      console.error('Hiba történt3:', error);
+      alert("Hiba történt a mentés során4");
+      console.log("4")
+    });
+        
+    
+    //-----------------------------------------
+
+
     {/*elmenti adatbázisba az adatokat, ha változtak, a mezők validáljanak + esetleg egy üzenet sikeres mentés esetén*/}
-    alert("Változtatások mentve");
   }
 
   return (
@@ -106,6 +144,7 @@ export default function Profile() {
                   className="form-control"
                   id="nameForProfile"
                   name="nameForProfile"
+                  onChange={(e) => setUserName(e.target.value)}
                   placeholder= {userName}
                   disabled={!modifiable}
                   required
@@ -128,6 +167,7 @@ export default function Profile() {
                   id="telForProfile"
                   name="telForProfile"
                   placeholder= {phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   disabled={!modifiable}
                   required
                 />
@@ -148,6 +188,7 @@ export default function Profile() {
                   className="form-control"
                   id="emailForProfile"
                   name="emailForProfile"
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder={email}
                   disabled={!modifiable}
                   required
@@ -169,6 +210,7 @@ export default function Profile() {
                   className="form-control"
                   id="passwordForProfile"
                   name="passwordForProfile"
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder={password}
                   disabled={!modifiable}
                   required

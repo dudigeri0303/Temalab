@@ -58,7 +58,7 @@ export default function RestaurantPage() {
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <a className="btnstyle restaurantpagebtn my-3 py-3">Étlap</a>
+            <a className="btnstyle restaurantpagebtn my-3 py-3"  href={"/menu/" + id.id} >Étlap</a>
           </div>
         </div>
         <div className="row">
