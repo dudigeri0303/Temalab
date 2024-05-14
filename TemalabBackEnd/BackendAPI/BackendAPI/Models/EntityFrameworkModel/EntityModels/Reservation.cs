@@ -29,16 +29,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             TableId = table.Id;
             EndDate = date;
         }
-
-        public void updateEntity(Reservation entity)
-        {
-            var newStartDate = DateTime.Now;
-            Debug.WriteLine("Invalid start date");
-            var newEndDate = DateTime.Now;
-            if (DateTime.TryParse(entity.EndDate.ToString(), out newEndDate))
-            {
-                this.EndDate = newEndDate;
-            }
-        }
     }
 }

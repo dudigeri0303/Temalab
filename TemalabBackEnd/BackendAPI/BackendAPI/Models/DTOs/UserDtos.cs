@@ -11,3 +11,5 @@ public record struct UserLoginDto
 
 
 public record UserDatasDto(string? Name, string? PhoneNumber, string? Email);
+
+public record UpdateUserDto(string? UserName, string? Email, string? PhoneNumber);

@@ -11,10 +11,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public string Id { get; set; }
 
         public Menu() { }
-
-        public void updateEntity(Menu entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

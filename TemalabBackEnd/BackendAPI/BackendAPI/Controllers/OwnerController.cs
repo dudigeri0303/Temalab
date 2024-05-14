@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using BackendAPI.Models.EntityFrameworkModel.EntityModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,10 @@ namespace BackendAPI.Controllers
             foreach (Owner owner in ownerConnections)
             {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
-                restaurantModels.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"));
+                List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurant.Id, "RestaurantId");
+                List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
+                openingHours.ForEach(openingHour => openingHourDtos.Add(new OpeningHourDto(openingHour.DayName, openingHour.OpeningHour)));
+                restaurantModels.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos));
             }
             return Ok(restaurantModels);
         }
@@ -47,10 +51,18 @@ namespace BackendAPI.Controllers
                     restaurantDto.PostCode != null && restaurantDto.PhoneNumber != null && user != null)
                 {
                     Restaurant restaurant = new Restaurant(restaurantDto.Name, restaurantDto.Description, restaurantDto.Label,
-                      restaurantDto.City, restaurantDto.Street, Int32.Parse(restaurantDto.HouseNumber), Int32.Parse(restaurantDto.PostCode),
-                      restaurantDto.PhoneNumber, "00-24");
+                      restaurantDto.City, restaurantDto.Street, Int32.Parse(restaurantDto.HouseNumber), Int32.Parse(restaurantDto.PostCode), restaurantDto.PhoneNumber);
+                    
+                    List<OpeningHourDto> openingHourDtos = restaurantDto.openingHours; 
+                    
                     await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
                     await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));
+                    
+                    foreach (var ohdto in openingHourDtos) 
+                    {
+                        await this.crudOperator.InsertNewRow<RestaurantOpeningHours>(new RestaurantOpeningHours(restaurant, ohdto.dayName, ohdto.openingHour));
+                    }
+                    
                     return Ok(restaurant);
                 }
                 return BadRequest("Something went wrong");

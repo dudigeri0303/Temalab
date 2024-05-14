@@ -25,16 +25,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             NumOfSeats = numofseats;
             IsReserved = false;
         }
-        public void updateEntity(Table entity)
-        {
-            if(entity.NumOfSeats > 0) 
-            {
-                this.NumOfSeats = entity.NumOfSeats;
-            }
-            if(this.IsReserved != entity.IsReserved) 
-            {
-                this.IsReserved = entity.IsReserved;
-            }
-        }
     }
 }

@@ -22,10 +22,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             UserId = user.Id;
             Token = token;
         }
-
-        public void updateEntity(Admin entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

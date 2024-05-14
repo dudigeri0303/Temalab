@@ -1,4 +1,5 @@
 ﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.EntityFrameworkModel.EntityModels;
 using Microsoft.AspNetCore.Identity;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
@@ -98,12 +99,37 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REASTAURANTS
             var restaurants = new Restaurant[]
             {
-                new Restaurant("Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
-                new Restaurant("Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
+                new Restaurant("Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563"),
+                new Restaurant("Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422")
             };
             foreach (Restaurant restaurant in restaurants)
             {
                 databaseContext.Restaurants.Add(restaurant);
+            }
+            databaseContext.SaveChanges();
+
+            //OPENINGHOURS
+            var openingHours = new RestaurantOpeningHours[]
+            {
+                new RestaurantOpeningHours(restaurants[0], "Hétfő", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Kedd", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Szerda", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Csütörtök", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Péntek", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Szombat", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Vasárnap", "10-20"),
+
+                new RestaurantOpeningHours(restaurants[1], "Hétfő", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Kedd", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Szerda", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Csütörtök", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Péntek", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Szombat", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Vasárnap", "12-15"),
+            };
+            foreach (var oh in openingHours) 
+            {
+                databaseContext.RestaurantOpeningHours.Add(oh);
             }
             databaseContext.SaveChanges();
 

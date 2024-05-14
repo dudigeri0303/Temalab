@@ -218,8 +218,7 @@ namespace BackendAPI.Migrations
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HouseNumber = table.Column<int>(type: "int", nullable: false),
                     PostCode = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OpeningHours = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -302,6 +301,25 @@ namespace BackendAPI.Migrations
                         principalTable: "Restaurants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RestaurantOpeningHours",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RestaurantId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OpeningHour = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RestaurantOpeningHours", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RestaurantOpeningHours_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -462,6 +480,11 @@ namespace BackendAPI.Migrations
                 column: "TableId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RestaurantOpeningHours_RestaurantId",
+                table: "RestaurantOpeningHours",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Restaurants_MenuId",
                 table: "Restaurants",
                 column: "MenuId");
@@ -514,6 +537,9 @@ namespace BackendAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reservations");
+
+            migrationBuilder.DropTable(
+                name: "RestaurantOpeningHours");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

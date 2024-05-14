@@ -30,7 +30,7 @@ namespace BackendAPI.Controllers
                 {
                     List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(category.Id, "CategoryId");
                     List<FoodDto> items = new List<FoodDto>();
-                    foods.ForEach(f => items.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price)));
+                    foods.ForEach(f => items.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price, f.Image)));
                     menuItems.Add(items);
                 }
                 return Ok(menuItems);
@@ -45,7 +45,7 @@ namespace BackendAPI.Controllers
             if(foods.Any()) 
             {
                 List<FoodDto> foodDtos = new List<FoodDto>();
-                foods.ForEach(f => foodDtos.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price)));
+                foods.ForEach(f => foodDtos.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price, f.Image)));
                 return Ok(foodDtos);
             }
             return BadRequest("There are no foods for this category");
@@ -86,7 +86,7 @@ namespace BackendAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("addImageToFood/")]
+        [HttpPut("addImageToFood/")]
         [Authorize(Roles ="Owner")]
         public async Task<ActionResult> AddImageToFood(string foodId, ImageDto imageDto) 
         {
@@ -95,6 +95,7 @@ namespace BackendAPI.Controllers
                 byte[] imageBytes = await ImageToByteArrayConverter.FileToByteArray(imageDto.imageFile);
                 Food? food = await this.crudOperator.GetRowById<Food>(foodId);
                 food!.Image = imageBytes;
+                this.crudOperator.SaveDatabaseChanges();
                 return Ok(food);
             }
             catch(Exception ex)

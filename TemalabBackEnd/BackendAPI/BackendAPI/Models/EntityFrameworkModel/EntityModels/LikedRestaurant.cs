@@ -28,10 +28,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             Restaurant = restaurant;
             RestaurantId = restaurant.Id;
         }
-
-        public void updateEntity(LikedRestaurant entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

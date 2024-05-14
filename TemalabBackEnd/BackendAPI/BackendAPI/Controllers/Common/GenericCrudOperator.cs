@@ -79,16 +79,21 @@ namespace BackendAPI.Controllers.Common
                 Debug.WriteLine(ex.Message);
             }
         }
-        public async Task UpdateUserPropertiesByID<T>(int id, T updatedEntity)
+        public async Task<T> GetRowByForeignId<T>(string foreignId, string propertyName)
             where T : class
+        
         {
             DbSet<T> dbSet = GetDbsetForGeneric<T>();
-            T? entity = await dbSet.FindAsync(id);
-            if (entity != null)
-            {
-                ((IEntityModelBase<T>)entity).updateEntity(updatedEntity);
-                _dbContext.SaveChanges();
-            }
+            return await dbSet.Where(entity => EF.Property<string>(entity, propertyName) == foreignId).FirstOrDefaultAsync(); 
+        }
+        public void SaveDatabaseChanges() 
+        {
+            _dbContext.SaveChanges();
+        }
+        public void UpdateRow<T>(T entity)
+            where T : class
+        {
+            this._dbContext.Update(entity);
         }
         #endregion
     }

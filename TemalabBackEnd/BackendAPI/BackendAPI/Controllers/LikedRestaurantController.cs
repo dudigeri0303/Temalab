@@ -32,7 +32,7 @@ namespace BackendAPI.Controllers
                     Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(lr.RestaurantId);
                     if (restaurant != null) 
                     {
-                        likedRestaurantModels.Add(new LikedRestaurantDto(lr.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber.ToString()}")); 
+                        likedRestaurantModels.Add(new LikedRestaurantDto(lr.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber.ToString()}", restaurant.Id)); 
                     }
                 }
                 return Ok(likedRestaurantModels);

@@ -1,8 +1,10 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using BackendAPI.Models.EntityFrameworkModel.EntityModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
@@ -28,7 +30,10 @@ namespace BackendAPI.Controllers
                 List<RestaurantDataDto> restaurantDtos = new List<RestaurantDataDto>();
                 foreach (var restaurant in restaurants) 
                 {
-                    restaurantDtos.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}"));
+                    List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurant.Id, "RestaurantId");
+                    List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
+                    openingHours.ForEach(openingHour => openingHourDtos.Add(new OpeningHourDto(openingHour.DayName, openingHour.OpeningHour)));
+                    restaurantDtos.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos));
                 }
                 return Ok(restaurantDtos);
             }
@@ -50,12 +55,15 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("GetRestaurantById")]
-        public async Task<ActionResult<RestaurantDataDto>> GetRestaurantById(string id)
+        public async Task<ActionResult<RestaurantDataDto>> GetRestaurantById(string restaurantId)
         {
             try
             {
-                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
-                RestaurantDataDto restaurantDto = new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}");
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+                List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurantId, "RestaurantId");
+                List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
+                openingHours.ForEach(oh => openingHourDtos.Add(new OpeningHourDto(oh.DayName, oh.OpeningHour)));
+                RestaurantDataDto restaurantDto = new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos);
                 return Ok(restaurantDto);
             }
             catch (Exception ex) 
@@ -78,6 +86,34 @@ namespace BackendAPI.Controllers
                 }
             }
             return BadRequest("Couldnt find the menu");
+        }
+
+        [HttpPut("updateRestaurantById/")]
+        [Authorize(Roles = "Owner")]
+        public async Task<ActionResult<Restaurant>> UpdateRestaurantById(string restaurantId, UpdateRestaurantDto updateRestaurantDto) 
+        {
+            Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+            if(restaurant != null)
+            {
+                try
+                {
+                    restaurant.Name = updateRestaurantDto.Name!;
+                    restaurant.PostCode = Int32.Parse(updateRestaurantDto.PostCode!);
+                    restaurant.City = updateRestaurantDto.City!;
+                    restaurant.Street = updateRestaurantDto.Street!;
+                    restaurant.HouseNumber = Int32.Parse(updateRestaurantDto?.HouseNumber!);
+                    restaurant.PhoneNumber = updateRestaurantDto.PhoneNumber!;
+                    restaurant.Description = updateRestaurantDto.Description!;
+                    restaurant.Label = updateRestaurantDto.Label!;
+                    this.crudOperator.UpdateRow<Restaurant>(restaurant);
+                    return Ok(restaurant);
+                }
+                catch (Exception ex) 
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            return NotFound("Restaurant nod found");
         }
         #endregion
     }

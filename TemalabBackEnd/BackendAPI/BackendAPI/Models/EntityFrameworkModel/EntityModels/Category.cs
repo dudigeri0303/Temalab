@@ -21,9 +21,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             MenuId = menu.Id;
             Name = name;
         }
-        public void updateEntity(Category entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
