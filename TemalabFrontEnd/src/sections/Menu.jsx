@@ -2,14 +2,15 @@ import { useEffect } from "react";
 import "../App.css";
 import Navbar from "../components/MenuNavbar";
 import CheckAuth from "../common/CheckAuth";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Menu() {
 
   //--------------------------------------------------
+
+  const navigate = useNavigate(); 
 
   const [menuItems, setMenuItems] = useState([]);
   const [category, setCategory] = useState([]);
