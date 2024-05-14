@@ -114,12 +114,6 @@ export default function CommonProfile() {
       <section id="main" className="container py-3">
         <form method="post">
           <div className="row">
-            <div className="col-md-4">
-              <div className="mb-2">
-                <label className="form-label">Név/felhasználónév:</label>
-              </div>
-            </div>
-
             <div className="col-md-8">
               <div className="col-md-3 offset-md-4 mb-2">
                 <button onClick={modify} type="button" className="avgbtn float-md-right">

@@ -75,7 +75,7 @@ const LoginForm = () =>{
                     <h1 className='text-center mb-5'>DineTab - Bejelentkezés</h1>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label>Név</Form.Label>
                             <Form.Control type="text" placeholder="Enter username" onChange = {(e) => setUserName(e.target.value)}/>
                         </Form.Group>
 

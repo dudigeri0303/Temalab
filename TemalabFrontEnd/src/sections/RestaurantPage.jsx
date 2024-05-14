@@ -72,10 +72,8 @@ export default function RestaurantPage() {
     try {
       const response = await fetch("https://localhost:7114/api/Review/getAvargeRatingByRestaurantId?restaurantId=" + id.id, requestOptions);
       const data = await response.json();
-      setRestRate(data);
-      setMissRate(missRate - data);
-      console.log(missRate)
-      console.log(data);
+      setRestRate(parseInt(data));
+      setMissRate(missRate - parseInt(data));
     } catch (error) {
       console.error(error);
     }

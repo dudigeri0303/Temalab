@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "../App.css";
-import Navbar from "../components/MenuNavbar";
+import Navbar from "../components/Navbar";
 import CheckAuth from "../common/CheckAuth";
 import { useParams } from 'react-router-dom';
 import { useState } from "react";
