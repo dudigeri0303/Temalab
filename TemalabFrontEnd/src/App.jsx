@@ -48,7 +48,7 @@ function App() {
           <Route path="/template" element={<Template/>} />
           <Route path='/navbartest' element={<Navbar/>} />
           <Route path="/deleteUser" element={<AdminDeleteUser/>} />
-          <Route path="/Menu" element={<Menu/>} />
+          <Route path="/menu/:id" element={<Menu/>} />
           <Route path="/customerProfile" element={<CustomerProfile/>} />
           <Route path="/customerReservations" element={<CustomerReservations/>} />
           <Route path="/favorites" element={<CustomerFavorites/>} />
