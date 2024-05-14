@@ -62,7 +62,11 @@ namespace TemalabBackEnd.Controllers
                     //Lehet hogy szar megoldás, és ki kéne találni valami jobbat
                     User? user = await this.userManager.FindByNameAsync(loginDto.UserName);
                     var userRoles = await this.userManager.GetRolesAsync(user);
-                    if (userRoles.Contains("Owner"))
+                    if (userRoles.Contains("Admin"))
+                    {
+                        loginDto.UserRole = "admin";
+                    }
+                    else if (userRoles.Contains("Owner"))
                     {
                         loginDto.UserRole = "owner";
                     }
@@ -120,6 +124,7 @@ namespace TemalabBackEnd.Controllers
 
         //Osszes user lekerdezese
         [HttpGet("getAllUsers/")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
             var users = await userManager.Users.ToListAsync();
@@ -129,6 +134,57 @@ namespace TemalabBackEnd.Controllers
                 return Ok(users);
             }
             return NotFound("No users found");
+        }
+
+        //Szerintem a user role-ok közül is törölni kell a user role-jait
+        //Ahogy nézem törli a user rolet is, need double check
+        [HttpDelete("deleteUserByIdWithAdmin/")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteUserByIdWithAdmin(string userId) 
+        {
+            try 
+            {
+                User? user = await this.userManager.FindByIdAsync(userId);
+                await this.userManager.DeleteAsync(user);
+                return Ok("User deleted succesfully");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+        [HttpDelete("deleteUserById/")]
+        [Authorize(Roles = "Customer")]
+        public async Task<ActionResult> DeleteUserByIdWith()
+        {
+            try
+            {
+                string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                User? user = await this.userManager.FindByIdAsync(userId);
+                await this.userManager.DeleteAsync(user);
+                return Ok("User deleted succesfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpPut("updateUserForLoggedInUser/")]
+        public async Task<ActionResult> UpdateUserForLoggedInUser(UpdateUserDto userDto)
+        {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User? user = await this.userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                user.UserName = userDto.UserName;
+                user.Email = userDto.Email;
+                user.PhoneNumber = userDto.PhoneNumber;
+                await this.userManager.UpdateAsync(user);
+                return Ok("User data updated succesfully!");
+            }
+            return NotFound("User not found:(");
         }
         #endregion
     }

@@ -18,7 +18,8 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public string Description { get; set; }
         [Column]
         public int Price { get; set; }
-
+        [Column]
+        public byte[]? Image { get; set; }
         public Food(){ }
 
         public Food(Category category, string name, string description, int price)
@@ -28,11 +29,16 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             Name = name;
             Description = description;
             Price = price;
+            Image = new byte[] { };
         }
-        public void updateEntity(Food entity)
+        public Food(Category category, string name, string description, int price, byte[] image)
         {
-            throw new NotImplementedException();
+            Category = category;
+            CategoryId = Category.Id;
+            Name = name;
+            Description = description;
+            Price = price;
+            Image = image;
         }
-    
     }
 }

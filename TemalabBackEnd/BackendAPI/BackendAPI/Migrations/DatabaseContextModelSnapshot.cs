@@ -22,6 +22,28 @@ namespace BackendAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BackendAPI.Models.EntityFrameworkModel.EntityModels.RestaurantOpeningHours", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OpeningHour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RestaurantId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("RestaurantOpeningHours", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -211,6 +233,9 @@ namespace BackendAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -334,10 +359,6 @@ namespace BackendAPI.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OpeningHours")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -475,6 +496,15 @@ namespace BackendAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BackendAPI.Models.EntityFrameworkModel.EntityModels.RestaurantOpeningHours", b =>
+                {
+                    b.HasOne("TemalabBackEnd.Models.EntityFrameworkModel.EntityModels.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId");
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

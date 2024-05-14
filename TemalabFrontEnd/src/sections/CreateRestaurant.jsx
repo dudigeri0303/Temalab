@@ -33,6 +33,11 @@ export default function CreateRestaurant() {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+    const openingHoursArray = Object.entries(daysWithOpeningHours).map(([day, data]) => ({
+      dayName: data.dayName,
+      openingHour: data.openingHour
+    }));
+
     const raw = JSON.stringify({
       "name": name,
       "postCode": postCode,
@@ -41,7 +46,8 @@ export default function CreateRestaurant() {
       "houseNumber": houseNumber,
       "phoneNumber": phoneNumber,
       "description": description,
-      "label": label
+      "label": label,
+      "openingHours" : openingHoursArray
     });
 
     const requestOptions = {
@@ -86,13 +92,13 @@ export default function CreateRestaurant() {
   }
 
   const [daysWithOpeningHours, setDaysWithOpeningHours] = useState({
-    Hétfő: ": zárva",
-    Kedd: ": zárva",
-    Szerda: ": zárva",
-    Csütörtök: ": zárva",
-    Péntek: ": zárva",
-    Szombat: ": zárva",
-    Vasárnap: ": zárva",
+    Hétfő: {dayName: "Hétfő", openingHour: "zárva"},
+    Kedd: {dayName: "Kedd", openingHour: "zárva"},
+    Szerda: {dayName: "Szerda", openingHour: "zárva"},
+    Csütörtök: {dayName: "Csütörtök", openingHour: "zárva"},
+    Péntek:  {dayName: "Péntek", openingHour: "zárva"},
+    Szombat: {dayName: "Szombat", openingHour: "zárva"},
+    Vasárnap: {dayName: "Vasárnap", openingHour: "zárva"}
   });
 
   const updateOpeningHours = () => {
@@ -104,26 +110,26 @@ export default function CreateRestaurant() {
 
   //object to array, majd végigmappol a listán és minden kulcshoz/naphoz hozzárendel egy listaelemet-t, ami a nyitvatartást tartalmazza
   const updatedOpeningHours = Object.entries(daysWithOpeningHours).map(
-    (day) => <li className="li-oph" key={day}>{day}</li>
+    (day) => <li className="li-oph" key={day[0]}>{day[1].dayName} : {day[1].openingHour}</li>
   );
 
   const addDayOpeningHour = () => {
-    {
-      const selectedDay = document.getElementById("days").value;
-      const selectedOpenHour = openHour;
-      const selectedCloseHour = closeHour;
-
-      const openingHours = ": " + selectedOpenHour + "-" + selectedCloseHour;
-
-      daysWithOpeningHours[selectedDay] = openingHours;
-      updateOpeningHours();
-    }
+    const selectedDay = document.getElementById("days").value;
+    const selectedOpenHour = openHour;
+    const selectedCloseHour = closeHour;
+  
+    const openingHours = selectedOpenHour + "-" + selectedCloseHour;
+  
+    setDaysWithOpeningHours(prevState => ({
+      ...prevState,
+      [selectedDay]: { ...prevState[selectedDay], openingHour: openingHours }
+    }));
   };
 
   const closeDay = () => {
     const selectedDay = document.getElementById("days").value;
     const openingHours = " zárva";
-    daysWithOpeningHours[selectedDay] = openingHours;
+    daysWithOpeningHours[selectedDay].openingHour = openingHours;
     updateOpeningHours();
   };
 

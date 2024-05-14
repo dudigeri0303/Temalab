@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BackendAPI.Controllers.Common;
+using BackendAPI.Models.EntityFrameworkModel.EntityModels;
+using Microsoft.AspNetCore.Identity;
 using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
@@ -97,12 +99,37 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REASTAURANTS
             var restaurants = new Restaurant[]
             {
-                new Restaurant("Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563","0-24"),
-                new Restaurant("Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422","12-24")
+                new Restaurant("Etterem","lorem ipsum","finom","Budapest","Tudosok krt",2,1117,"553345563"),
+                new Restaurant("Etterem2","lorem ipsum dingdong","nagyonfinom","Bukarest","Blaha",69,1083,"344453422")
             };
             foreach (Restaurant restaurant in restaurants)
             {
                 databaseContext.Restaurants.Add(restaurant);
+            }
+            databaseContext.SaveChanges();
+
+            //OPENINGHOURS
+            var openingHours = new RestaurantOpeningHours[]
+            {
+                new RestaurantOpeningHours(restaurants[0], "Hétfő", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Kedd", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Szerda", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Csütörtök", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Péntek", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Szombat", "10-20"),
+                new RestaurantOpeningHours(restaurants[0], "Vasárnap", "10-20"),
+
+                new RestaurantOpeningHours(restaurants[1], "Hétfő", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Kedd", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Szerda", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Csütörtök", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Péntek", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Szombat", "12-15"),
+                new RestaurantOpeningHours(restaurants[1], "Vasárnap", "12-15"),
+            };
+            foreach (var oh in openingHours) 
+            {
+                databaseContext.RestaurantOpeningHours.Add(oh);
             }
             databaseContext.SaveChanges();
 
@@ -149,13 +176,13 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //FOODS
             var foods = new Food[]
             {
-                new Food(categories[0],"piritós","roppanós",299),
-                new Food(categories[0],"humus","friss",799),
-                new Food(categories[1],"túrós csusza","kemencés",2990),
-                new Food(categories[2],"tiramisu","krémes",1190),
-                new Food(categories[3],"gin","igazi angol gin",1570),
-                new Food(categories[3],"fanta","cukormentes",850),
-                new Food(categories[4],"földimogyoró","pörkölt, sós",550)
+                new Food(categories[0],"piritós","roppanós",299, ImageToByteArrayConverter.PathToByteArray("bread-toast").Result),
+                new Food(categories[0],"humus","friss",799, ImageToByteArrayConverter.PathToByteArray("humus-nahut").Result),
+                new Food(categories[1],"túrós csusza","kemencés",2990, ImageToByteArrayConverter.PathToByteArray("turos-csusza").Result),
+                new Food(categories[2],"tiramisu","krémes",1190, ImageToByteArrayConverter.PathToByteArray("tiramisu").Result),
+                new Food(categories[3],"gin","igazi angol gin",1570, ImageToByteArrayConverter.PathToByteArray("marine_drygin").Result),
+                new Food(categories[3],"fanta","cukormentes",850, ImageToByteArrayConverter.PathToByteArray("fanta-orange-zero").Result),
+                new Food(categories[4],"földimogyoró","pörkölt, sós",550, ImageToByteArrayConverter.PathToByteArray("peanuts").Result)
             };
             foreach (Food food in foods)
             {

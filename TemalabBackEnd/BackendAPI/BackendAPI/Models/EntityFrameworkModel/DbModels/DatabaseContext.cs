@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BackendAPI.Models.EntityFrameworkModel.EntityModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -19,6 +20,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Food> Foods { get; set; }
+        public DbSet<RestaurantOpeningHours> RestaurantOpeningHours { get; set; }
 
         public Dictionary<Type, object> EntityTables { get; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -27,6 +29,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 { typeof(Admin), Admins},
                 { typeof(Owner), Owners},
+                { typeof(RestaurantOpeningHours), RestaurantOpeningHours},
                 { typeof(Restaurant), Restaurants},
                 { typeof(Table), Tables},
                 { typeof(LikedRestaurant), LikedRestaurants},
@@ -50,6 +53,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             modelBuilder.Entity<Menu>().ToTable("Menus");
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Food>().ToTable("Foods");
+            modelBuilder.Entity<RestaurantOpeningHours>().ToTable("RestaurantOpeningHours");
         }
     }
 }

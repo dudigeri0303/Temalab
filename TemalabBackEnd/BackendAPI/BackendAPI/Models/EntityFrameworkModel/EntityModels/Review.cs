@@ -31,16 +31,5 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             Rating = rating;
             Description = description;
         }
-        public void updateEntity(Review entity)
-        {
-            if(entity.Rating  > 0 && entity.Rating <=5)
-            {
-                this.Rating = entity.Rating;
-            }
-            if (entity.Description != "string" && entity.Description.Trim() != "") 
-            {
-                this.Description = entity.Description;
-            }
-        }
     }
 }

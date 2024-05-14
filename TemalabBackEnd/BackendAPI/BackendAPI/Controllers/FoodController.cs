@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -29,7 +30,7 @@ namespace BackendAPI.Controllers
                 {
                     List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(category.Id, "CategoryId");
                     List<FoodDto> items = new List<FoodDto>();
-                    foods.ForEach(f => items.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price)));
+                    foods.ForEach(f => items.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price, f.Image)));
                     menuItems.Add(items);
                 }
                 return Ok(menuItems);
@@ -44,13 +45,14 @@ namespace BackendAPI.Controllers
             if(foods.Any()) 
             {
                 List<FoodDto> foodDtos = new List<FoodDto>();
-                foods.ForEach(f => foodDtos.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price)));
+                foods.ForEach(f => foodDtos.Add(new FoodDto(f.Id, f.Name, f.Description, f.Price, f.Image)));
                 return Ok(foodDtos);
             }
             return BadRequest("There are no foods for this category");
         }
         
         [HttpDelete("deleteFoodByID/")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> DeleteFoodByID(string foodId) 
         {
             try
@@ -65,6 +67,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("addNewFoodToCategory/")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<Food>> AddNewFoodToCategory(string categoryId, CreateFoodDto foodDto) 
         {
             try 
@@ -79,6 +82,23 @@ namespace BackendAPI.Controllers
                 return NotFound("Category was not found by the id");
             }
             catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("addImageToFood/")]
+        [Authorize(Roles ="Owner")]
+        public async Task<ActionResult> AddImageToFood(string foodId, ImageDto imageDto) 
+        {
+            try 
+            {
+                byte[] imageBytes = await ImageToByteArrayConverter.FileToByteArray(imageDto.imageFile);
+                Food? food = await this.crudOperator.GetRowById<Food>(foodId);
+                food!.Image = imageBytes;
+                this.crudOperator.SaveDatabaseChanges();
+                return Ok(food);
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
