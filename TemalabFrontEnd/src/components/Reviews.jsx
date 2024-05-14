@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import CardReview from "../components/CardReview";
 import { useParams } from 'react-router-dom';
 
 export default function Reviews({ showModal, setShowModal, children }) {
+  const [reviews, setReviews] = useState([]);
+  
+  useEffect(() => {
+    getReviews();
+  },[reviews])
+  
   const handleClose = async () => {
-    await getReviews();
     setShowModal(false);
   };
 
   const id = useParams();
   console.log(id)
-
-  const [reviews, setReviews] = useState([]);
 
   const getReviews = async () => {
     const myHeaders = new Headers();
@@ -30,7 +33,6 @@ export default function Reviews({ showModal, setShowModal, children }) {
       );
       const data = await response.json();
       setReviews(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
