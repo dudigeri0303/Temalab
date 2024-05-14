@@ -4,10 +4,16 @@ import Navbar from "../components/OwnerNavbar";
 import CardOwnerMain from "../components/CardOwnerMain";
 import SearchByName from "../components/SearchByName";
 import OwnerRestaurants from "../components/OwnerRestaurants";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function OwnerMain() {
+
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     document.title = " Főoldal | DineTab";
+    CheckAuth("owner",navigate)
   }, []);
 
   const createRestEvent = () => {

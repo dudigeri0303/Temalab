@@ -1,13 +1,17 @@
+import CheckAuth from "../common/CheckAuth";
 import GoogleMap from "../components/GoogleMap";
 import OwnerNavbar from "../components/OwnerNavbar";
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function OwnerRestaurantPage(){
+
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         document.title = "Étterem | DineTab";
         getRestaurant();
+        CheckAuth("owner",navigate)
     }, []);
 
     const [restaurant, setRestaurant] = useState([]);

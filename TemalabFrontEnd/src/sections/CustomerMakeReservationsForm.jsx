@@ -1,10 +1,16 @@
 import "../App.css";
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerMakeReservationsForm() {
+
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     document.title = "Foglalás megerősítése | DineTab";
+    CheckAuth("customer",navigate)
   }, []);
 
   const makeReservation = () => {

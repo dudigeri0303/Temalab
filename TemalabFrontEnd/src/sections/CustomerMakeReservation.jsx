@@ -2,10 +2,16 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import TimePicker from "react-time-picker";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerMakeReservations() {
+
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     document.title = "Étterem foglalás | DineTab";
+    CheckAuth("customer",navigate)
   }, []);
 
     const today = new Date().toISOString().split("T")[0];

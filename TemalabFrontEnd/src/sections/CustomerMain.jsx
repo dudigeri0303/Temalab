@@ -4,10 +4,18 @@ import Navbar from "../components/Navbar";
 import SearchByName from "../components/SearchByName";
 import CardCustomerMain from "../components/CardCustomerMain";
 import AllRestaurants from "../components/AllRestaurants";
+import { useNavigate } from "react-router-dom";
+import CryptoJS from 'crypto-js';
+import CheckAuth from "../common/CheckAuth";
 
 export default function CustomerMain() {
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = " Főoldal | DineTab";
+    console.log("asd:" + CryptoJS.AES.decrypt(localStorage.getItem('loggedIn'),'kulcs').toString(CryptoJS.enc.Utf8))
+    CheckAuth("customer",navigate)
   }, []);
 
   return (
