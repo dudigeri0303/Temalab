@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import "../App.css";
 import Navbar from "../components/MenuNavbar";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 const foods = [];
 
@@ -25,6 +28,13 @@ addFood("Leves", "Gyümölcs", 3500);
 addFood("Leves", "Tejszines", 3500);
 
 export default function Menu() {
+
+  const navigate = useNavigate(); 
+
+    useEffect(() => {
+      CheckAuth("customer",navigate)
+    },[])
+
     const groupedFoods = foods.reduce((acc, food) => {
         if (!acc[food.category]) {
           acc[food.category] = [];

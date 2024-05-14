@@ -3,6 +3,11 @@ input {
   color: black;
 }
 
+.formtext{
+  border: none;
+  border-radius: 5px;
+}
+
 .likebtn {
   background-color: transparent;
   border: none;

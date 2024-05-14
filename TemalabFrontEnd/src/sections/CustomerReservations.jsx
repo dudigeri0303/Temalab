@@ -2,11 +2,17 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import CardCustomerReservation from "../components/CardCustomerReservation";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerReservations() {
+
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     document.title = "Foglalások | DineTab";
     getReservations();
+    CheckAuth("customer",navigate)
   }, []);
 
   const goToMainPageCustomer = () => {

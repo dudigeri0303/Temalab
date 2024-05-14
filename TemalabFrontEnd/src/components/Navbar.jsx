@@ -2,12 +2,13 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from "react-router-dom";
+import CryptoJS from 'crypto-js';
 
 export default function NavbarAll(){
     const navigate = useNavigate(); 
 
     const logOut = async () => {
-        localStorage.setItem('loggedIn',false)
+        localStorage.setItem('loggedIn',CryptoJS.AES.encrypt('false','kulcs').toString())
         const requestOptions = {
             method: "POST",
             redirect: "follow",

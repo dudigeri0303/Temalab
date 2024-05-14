@@ -2,11 +2,17 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import CardUserFav from "../components/CardUserFav";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerFavorites() {
+
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     document.title = "Kedvencek | DineTab";
     getFavouriteRestaurants();
+    CheckAuth("customer",navigate)
   }, []);
 
   const goToMainPageCustomer = () => {

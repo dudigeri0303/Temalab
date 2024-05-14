@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CategoryComponent from '../components/CategoryComponent';
+import CheckAuth from '../common/CheckAuth';
 
 export default function MenuCreator(){
+
+    const navigate = useNavigate(); 
+    const [clicked,setClicked] = useState(false);
+
     useEffect(() => {
         document.title = "Étlap | DineTab";
-        getCategories();
+        CheckAuth("owner",navigate)
     }, []);
+
+    useEffect(() => {
+        getCategories();
+    },[clicked])
 
     const [category,setCategory] = useState([]);
     const [newCategCame, setNewCategCame] = useState("");
@@ -53,22 +62,31 @@ export default function MenuCreator(){
         } catch (error) {
             console.error(error);
         }
+        setClicked(!clicked);
+    }
 
-        window.location.reload()
+    const navback = () => {
+        navigate('/restaurantowner/' + id.id)
     }
 
     return(
         <>
             <div className='container'>
+                <button onClick={navback} className='btnstyle w-25 p-2 mt-3'>Vissza</button>
                 {category.map((categ) => (
-                    <div key={categ.id}>
+                    <div key={categ.id} className='mt-5'>
+                        <hr/>
                         <CategoryComponent dataf={categ}/>
                     </div>
                 ))}
                 {console.log(category)}
-                <div>
-                    <button type='submit' onClick={postCategory}>Add Category</button>
-                    <input type='text' onChange={(e) => setNewCategCame(e.target.value)}/>
+                <div className='mt-5 row'>
+                    <div className='col-12 col-md-4 d-flex align-items-center justify-content-center'>
+                        <button type='submit' className='btnstyle p-2' onClick={postCategory}>Kategória hozzáadása</button>
+                    </div>
+                    <div className='col-12 col-md-8 d-flex align-items-center justify-content-center mt-3 mt-md-0'>
+                        <input className='formtext w-75' type='text' onChange={(e) => setNewCategCame(e.target.value)}/>
+                    </div>
                 </div>
             </div>
         </>

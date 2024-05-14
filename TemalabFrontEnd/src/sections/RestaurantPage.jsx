@@ -3,13 +3,21 @@ import GoogleMap from "../components/GoogleMap";
 import React, { useEffect, useState } from "react";
 import Reviews from "../components/Reviews";
 import AddReview from "../components/AddReview";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import CheckAuth from "../common/CheckAuth";
 
 export default function RestaurantPage() {
+
+  const navigate = useNavigate();
+
+  const [restRate, setRestRate] = useState(0);
+  const [missRate, setMissRate] = useState(5);
 
   useEffect(() => {
     document.title = "Étterem | DineTab";
     getFavouriteRestaurants();
+    getRateOfRest();
+    CheckAuth("customer",navigate)
   }, []);
 
   const [currentImage, setCurrentImage] = useState("/heart-empty.svg");
@@ -27,7 +35,6 @@ export default function RestaurantPage() {
 
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-
   const [restaurant, setRestaurant] = useState([]);
 
   const getFavouriteRestaurants = async () =>{
@@ -51,6 +58,28 @@ export default function RestaurantPage() {
     }
   }
 
+  const getRateOfRest = async () => {
+    const myHeaders = new Headers();
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+    };
+
+    try {
+      const response = await fetch("https://localhost:7114/api/Review/getAvargeRatingByRestaurantId?restaurantId=" + id.id, requestOptions);
+      const data = await response.json();
+      setRestRate(data);
+      setMissRate(missRate - data);
+      console.log(missRate)
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -107,11 +136,12 @@ export default function RestaurantPage() {
             </div>
           </div>
           <div className="col-12 col-lg-4 d-flex justify-content-center my-2 py-3">
-            <img src="/star-full.svg" className="starstyle"></img>
-            <img src="/star-full.svg" className="starstyle"></img>
-            <img src="/star-full.svg" className="starstyle"></img>
-            <img src="/star-empty.svg" className="starstyle"></img>
-            <img src="/star-empty.svg" className="starstyle"></img>
+            {Array.from({length: restRate},(_, index) => (
+              <img key={index} src="/star-full.svg" className="starstyle"></img>
+            ))}
+            {Array.from({length: missRate},(_,index) => (
+              <img key={index} src="/star-empty.svg" className="starstyle"></img>
+            ))}
             <a className="ms-5" href="#" onClick={toggleImage}>
               <img src={currentImage} className="heartstyle"></img>
             </a>

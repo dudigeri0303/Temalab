@@ -4,10 +4,16 @@ import OwnerNavbar from "../components/OwnerNavbar";
 import TimePicker from "react-time-picker";
 import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
+import CheckAuth from "../common/CheckAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateRestaurant() {
+
+  const navigate = useNavigate(); 
+
   useEffect(() => {
     document.title = "Étterem hozzáadás | DineTab";
+    CheckAuth("owner",navigate)
   }, []);
 
   const [name, setName] = useState('');

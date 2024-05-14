@@ -25,10 +25,17 @@ export default function FoodComponent({data}){
     
     return(
         <>
-            <div className="d-flex justify-content-between">
-                <p>{data.name}</p>
-                <p>{data.price} Ft</p>
-                <button type="submit" onClick={deletefood}>Törlés</button>
+            <div className="row div-card mb-3">
+                <div className="col-6 col-md-4 mt-3">
+                    <h5 className="text-white">{data.name}</h5>
+                    <p className="fst-italic text-white">{data.description}</p>
+                </div>
+                <div className="col-6 col-md-4 d-flex justify-content-center">
+                    <p className="text-white">{data.price} Ft</p>
+                </div>
+                <div className="d-flex align-items-center justify-content-end col-12 col-md-4">
+                    <button type="submit" className="btnstyle p-2" onClick={deletefood}>Törlés</button>
+                </div>
             </div>
         </>
     )

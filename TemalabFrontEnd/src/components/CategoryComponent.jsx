@@ -2,14 +2,18 @@ import { useState, useEffect } from 'react';
 import FoodComponent from './FoodComponent';
 
 export default function CategoryComponent({dataf}){
+    const [clicked, setClicked] = useState(false);
     
     useEffect(() => {
         getCategories()
-    },[])
+    },[clicked])
     
     const [foods,setFoods] = useState([]);
     const [fname, setFName] = useState("");
     const [fprice, setFPrice] = useState("");
+    const [fdesc, setFDesc] = useState("");
+    const [showDiv, setShowDiv] = useState(false);
+    const [showBtn, setShowBtn] = useState(true);
     
     const getCategories = async () =>{
         const myHeaders = new Headers();
@@ -37,7 +41,7 @@ export default function CategoryComponent({dataf}){
         myHeaders.append("Content-Type", "application/json");
         const raw = JSON.stringify({
             "name": fname,
-            "description": "",
+            "description": fdesc,
             "price": fprice
         });
         const requestOptions = {
@@ -54,8 +58,12 @@ export default function CategoryComponent({dataf}){
         } catch (error) {
             console.error(error);
         }
+        setClicked(!clicked)
+    }
 
-        window.location.reload()
+    const clicknew = () => {
+        setShowDiv(!showDiv)
+        setShowBtn(!showBtn)
     }
     
     return (
@@ -68,13 +76,33 @@ export default function CategoryComponent({dataf}){
             ))}
             {console.log(foods)}
             {console.log(dataf.id)}
-            <div>
-                <button type='submit' onClick={postfood}>Add Food</button>
-                <label>Név:</label>
-                <input type='text' onChange={(e) => setFName(e.target.value)}/>
-                <label>Ár:</label>
-                <input type='text' onChange={(e) => setFPrice(e.target.value)}/>
+            {showBtn && 
+            <div className='row'>
+                <button className='btnstyle p-2 col-12' onClick={clicknew}>Új étel hozzáadása</button>
             </div>
+            }
+            {showDiv && 
+            <div className='row'>
+                <div className='col-12 col-md-2 d-flex justify-content-center'>
+                    <button type='submit' className='btnstyle p-3' onClick={postfood}>Hozzáad</button>
+                </div>
+                <div className='col-12 col-md-3 d-flex flex-column'>
+                    <label>Név:</label>
+                    <input className='formtext' type='text' onChange={(e) => setFName(e.target.value)}/>
+                </div>
+                <div className='col-12 col-md-2 d-flex flex-column'>
+                    <label>Ár:</label>
+                    <input className='formtext' type='text' onChange={(e) => setFPrice(e.target.value)}/>
+                </div>
+                <div className='col-12 col-md-3 d-flex flex-column'>
+                    <label>Leírás:</label>
+                    <input className='formtext' type='text' onChange={(e) => setFDesc(e.target.value)}/>
+                </div>
+                <div className='col-12 col-md-2 d-flex justify-content-center mt-3 mt-md-0'>
+                    <button className='btnstyle p-3' onClick={clicknew}>Mégse</button>
+                </div>
+            </div>
+            }
         </>
     )
 }

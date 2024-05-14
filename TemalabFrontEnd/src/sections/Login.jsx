@@ -44,15 +44,20 @@ const LoginForm = () =>{
                 if(parsedResult.userRole === 'owner'){
                     localStorage.setItem('loggedIn', CryptoJS.AES.encrypt('owner','kulcs').toString())
                 }
+
+                //navigációs utvonal beállítása a user role alaőján
+                let path = ""
+                if(parsedResult.userRole === 'customer'){
+                    path = `/mainPageCustomer`;
+                } 
+                if(parsedResult.userRole == "owner"){
+                    path = `/mainPageOwner`
+                }
+                if(parsedResult.userRole === "admin"){
+                    path = `/deleteUser`
+                }
+                navigate(path)
             }
-            
-            //navigációs utvonal beállítása a user role alaőján
-            let path = `/mainPageCustomer`; 
-            if(parsedResult.userRole == "owner"){
-                path = `/mainPageOwner`
-            }
-            
-            navigate(path);
         } catch (error) {
             console.error(error);
         }
@@ -62,8 +67,6 @@ const LoginForm = () =>{
         let path = `/register`; 
         navigate(path);   
     };
-
-    
     
     return(
         <>
@@ -80,11 +83,11 @@ const LoginForm = () =>{
                             <Form.Label>Jelszó</Form.Label>
                             <Form.Control type="password" placeholder="Password" onChange = {(e) => setPassword(e.target.value)}/>
                         </Form.Group>
-                        <div className='d-flex flex-wrap justify-content-between'>
-                            <button className='btnstyle px-1 py-2 text-center loginbtn m-auto mt-3' href='#' type="button" onClick={handleLogin}>Bejelentkezés</button>
-                            <a className='btnstyle px-1 py-2 text-center loginbtn m-auto mt-3' href='#' type='button' onClick={redirectToRegisttrationPage}>Regisztráció</a> 
-                        </div>
                     </Form>
+                    <div className='d-flex flex-wrap justify-content-between'>
+                        <button className='btnstyle px-1 py-2 text-center loginbtn m-auto mt-3' type="button" onClick={handleLogin}>Bejelentkezés</button>
+                        <a className='btnstyle px-1 py-2 text-center loginbtn m-auto mt-3' href='#' type='button' onClick={redirectToRegisttrationPage}>Regisztráció</a> 
+                    </div>
                 </div>
             </div>
         </>
