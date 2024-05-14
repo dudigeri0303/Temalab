@@ -3,6 +3,7 @@ import GoogleMap from "../components/GoogleMap";
 import OwnerNavbar from "../components/OwnerNavbar";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import Table from "../components/Table";
 
 export default function OwnerRestaurantPage(){
 
@@ -15,6 +16,7 @@ export default function OwnerRestaurantPage(){
     }, []);
 
     const [restaurant, setRestaurant] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     const id = useParams();
     console.log(id)
@@ -49,9 +51,13 @@ export default function OwnerRestaurantPage(){
                         <a href={"/createmenu/" + restaurant.id} className="btnstyle restaurantpagebtn my-3 py-3">Étlap</a>
                     </div>
                 </div>
+                <Table showModal={showModal} setShowModal={setShowModal}></Table>
+
                 <div className="row">
                     <div className="col-12">
-                        <a className="btnstyle restaurantpagebtn my-3 py-3">Asztalok kezelése</a>
+                    <a className="btnstyle restaurantpagebtn my-3 py-3" onClick={() => setShowModal(true)}>
+                    Asztalok kezelése
+                            </a>
                     </div>
                 </div>
                 <div className="row">
