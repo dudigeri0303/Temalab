@@ -1,16 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
+
 export default function Table({ showModal, setShowModal, children }) {
+
+  const [tables, setTables] = useState([]);
+  const [numOfSeatsPerTable, setnumOfSeatsPerTable] = useState(0);
+
   const handleClose = () => {
     setShowModal(false);
   };
 
   //asztal mentése, modal bezárása, visszajelzés
   const saveCreateTableEvent = () => {
-    setShowModal(false);
+    postTable();
     alert("Asztal hozzáadva!");
+    setShowModal(false);
   };
+
+
+  const postTable = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        numOfSeats: numOfSeatsPerTable,
+      }),
+      credentials: "include",
+      xhrFields: { withCredentials: true },
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        "https://localhost:7114/api/Table/addTableToRestaurant?restaurantId=002f9b2a-4598-4794-a6a5-b3458648ab94",
+        requestOptions
+      );
+      const data = await response.json();
+      setTables(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+    const handleChange = (event) => {
+    setnumOfSeatsPerTable(parseInt(event.target.value));
+  };
+
+  
 
   return (
     <>
@@ -34,21 +72,8 @@ export default function Table({ showModal, setShowModal, children }) {
                       id="numberForTable"
                       name="numberForTable"
                       placeholder="Férőhely"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="col-md-7">
-                  <div className="mb-3 text-center">
-                    <label htmlFor="idForTable" className="label-modal">
-                      Asztal ID
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="idForTable"
-                      name="idForTable"
-                      placeholder="Asztalok megkülönböztetésére"
+                      value={numOfSeatsPerTable}
+                      onChange={handleChange}
                       required
                     />
                   </div>
