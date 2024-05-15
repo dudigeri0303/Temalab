@@ -1,7 +1,16 @@
 import "../App.css";
 
 export default function CardOwnerTables({id, numOfSeats, isReserved, onDelete,}) {
-  
+
+
+  const confirmDelete = () => {
+    const confirmed = window.confirm("Biztosan törölni szeretné ezt az asztalt?");
+    if (confirmed) {
+      onDelete(id);
+      window.alert("Asztal törölve: " + id)
+    }
+  };
+
   return (
     <>
       <section id="main" className="container py-2">
@@ -21,7 +30,7 @@ export default function CardOwnerTables({id, numOfSeats, isReserved, onDelete,})
                 <button
                   type="button"
                   className="cardbtn float-end"
-                  onClick={() => onDelete(id)}
+                  onClick={confirmDelete}
                 >
                   Töröl
                 </button>
