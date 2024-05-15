@@ -1,6 +1,7 @@
 import "../App.css";
 
-export default function CardOwnerTables({id, numOfSeats, isReserved }) {
+export default function CardOwnerTables({id, numOfSeats, isReserved, onDelete,}) {
+  
   return (
     <>
       <section id="main" className="container py-2">
@@ -17,7 +18,11 @@ export default function CardOwnerTables({id, numOfSeats, isReserved }) {
                 <label className="card-Altext">IsFoglalt: {isReserved}</label>
               </div>
               <div className="col-sm">
-                <button type="button" className="cardbtn float-end">
+                <button
+                  type="button"
+                  className="cardbtn float-end"
+                  onClick={() => onDelete(id)}
+                >
                   Töröl
                 </button>
               </div>

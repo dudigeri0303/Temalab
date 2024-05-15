@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-
-export default function Table({id, showModal, setShowModal, children }) {
-
+export default function Table({ id, showModal, setShowModal, children }) {
   const [tables, setTables] = useState([]);
   const [numOfSeatsPerTable, setnumOfSeatsPerTable] = useState(0);
 
@@ -42,63 +40,61 @@ export default function Table({id, showModal, setShowModal, children }) {
     }
   };
 
-    const handleChange = (event) => {
+  const handleChange = (event) => {
     setnumOfSeatsPerTable(parseInt(event.target.value));
   };
-
-  
 
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
         <div className="section-bg">
-        <Modal.Header closeButton>
-          <Modal.Title>Asztal hozzáadása</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <section id="main" className="container py-3">
-            <form method="post">
-              <div className="row justify-content-center">
-                <div className="col-md-6">
-                  <div className="mb-3 text-center">
-                    <label htmlFor="numberForTable" className="label-modal">
-                      Asztal férőhely
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="numberForTable"
-                      name="numberForTable"
-                      placeholder="Férőhely"
-                      value={numOfSeatsPerTable}
-                      onChange={handleChange}
-                      required
-                    />
+          <Modal.Header closeButton>
+            <Modal.Title>Asztal hozzáadása</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <section id="main" className="container py-3">
+              <form method="post">
+                <div className="row justify-content-center">
+                  <div className="col-md-6">
+                    <div className="mb-3 text-center">
+                      <label htmlFor="numberForTable" className="label-modal">
+                        Asztal férőhely
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="numberForTable"
+                        name="numberForTable"
+                        placeholder="Férőhely"
+                        value={numOfSeatsPerTable}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </form>
-          </section>
-          {children}
-        </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center">
-                <button
-                  type="button"
-                  className="avgbtn"
-                  onClick={saveCreateTableEvent}
-                >
-                  Mentés
-                </button>
-                <button
-                  type="button"
-                  className="avgbtn"
-                  onClick={() => {
-                    setShowModal(false);
-                  }}
-                >
-                  Mégse
-                </button>
-        </Modal.Footer>
+              </form>
+            </section>
+            {children}
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-center">
+            <button
+              type="button"
+              className="avgbtn"
+              onClick={saveCreateTableEvent}
+            >
+              Mentés
+            </button>
+            <button
+              type="button"
+              className="avgbtn"
+              onClick={() => {
+                setShowModal(false);
+              }}
+            >
+              Mégse
+            </button>
+          </Modal.Footer>
         </div>
       </Modal>
     </>

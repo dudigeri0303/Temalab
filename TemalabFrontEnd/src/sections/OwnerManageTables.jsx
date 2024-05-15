@@ -40,6 +40,19 @@ export default function OwnerManageTables() {
     }
   };
 
+  const deleteTable = async (tableId) => {
+    try {
+      const response = await fetch(
+        `https://localhost:7114/api/Table/deleteTableById?tableId=${tableId}`,
+        { method: "DELETE" }
+      );
+      getTables(); //újrarenderel
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
   return (
     <>
       <OwnerNavbar />
@@ -51,6 +64,7 @@ export default function OwnerManageTables() {
             id={table.id}
             numOfSeats={table.numOfSeats}
             isReserved={table.isReserved.toString()}
+            onDelete={deleteTable}
           />
         ))}
       </div>
