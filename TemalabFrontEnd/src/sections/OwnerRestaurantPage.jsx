@@ -5,9 +5,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import Reviews from "../components/Reviews";
 
+
 export default function OwnerRestaurantPage(){
 
     const navigate = useNavigate(); 
+    //const navigate2 = useNavigate(); 
+
 
     useEffect(() => {
         document.title = "Étterem | DineTab";
@@ -19,7 +22,6 @@ export default function OwnerRestaurantPage(){
     const [showModal, setShowModal] = useState(false);
 
     const id = useParams();
-    console.log(id)
 
     const getRestaurant = async () =>{
         const myHeaders = new Headers();
@@ -54,7 +56,7 @@ export default function OwnerRestaurantPage(){
 
                 <div className="row">
                     <div className="col-12">
-                    <a href={"/ownerManageTables/"} className="btnstyle restaurantpagebtn my-3 py-3">
+                    <a href={`/ownerManageTables/${id.id}`} className="btnstyle restaurantpagebtn my-3 py-3">
                     Asztalok kezelése
                             </a>
                     </div>

@@ -1,22 +1,21 @@
 import "../App.css";
 import React, { useEffect, useState } from "react";
 import OwnerNavbar from "../components/OwnerNavbar";
-import { useParams } from 'react-router-dom';
 import CardOwnerTables from "../components/CardOwnerTables";
+import { useNavigate, useParams } from 'react-router-dom';
+import CheckAuth from "../common/CheckAuth";
 
 export default function OwnerManageTables() {
 
     const [tables, setTables] = useState([]);
+    const { id } = useParams();
+    const navigate = useNavigate(); 
 
   useEffect(() => {
     document.title = " Asztalok Kezelése | DineTab";
+    CheckAuth("owner",navigate)
     getTables();
-  }, [tables]);
-
-  const id = useParams();
-  console.log(id)
-
-
+  }, []);
 
   const getTables = async () => {
     const myHeaders = new Headers();
@@ -30,7 +29,7 @@ export default function OwnerManageTables() {
 
     try {
       const response = await fetch(
-        "https://localhost:7114/api/Table/listTablesByRestaurantId?restaurantId=14bc925e-bf07-4ade-9887-0af6ddc29f6d", requestOptions
+        `https://localhost:7114/api/Table/listTablesByRestaurantId?restaurantId=${id}`, requestOptions
       );
       const data = await response.json();
       setTables(data);
@@ -38,7 +37,6 @@ export default function OwnerManageTables() {
       console.error(error);
     }
   };
-
 
   return (
     <>

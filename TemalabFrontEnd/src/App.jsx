@@ -66,7 +66,7 @@ function App() {
           <Route path="/ownerProfile" element={<OwnerProfile/>}/>
           <Route path="/createmenu/:id" element={<MenuCreator/>}/>
           <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}
-          <Route path='/ownerManageTables' element={<OwnerManageTables/>}/>
+          <Route path='/ownerManageTables/:id' element={<OwnerManageTables/>}/>
         </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}
