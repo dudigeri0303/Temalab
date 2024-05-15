@@ -54,7 +54,7 @@ export default function OwnerRestaurantPage(){
 
                 <div className="row">
                     <div className="col-12">
-                    <a className="btnstyle restaurantpagebtn my-3 py-3">
+                    <a href={"/ownerManageTables/"} className="btnstyle restaurantpagebtn my-3 py-3">
                     Asztalok kezelése
                             </a>
                     </div>

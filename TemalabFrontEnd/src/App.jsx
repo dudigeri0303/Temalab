@@ -24,6 +24,7 @@ import CryptoJS from 'crypto-js';
 import CustomerMakeReservations from './sections/CustomerMakeReservation';
 import CustomerMakeReservationsForm from './sections/CustomerMakeReservationsForm';
 import NotFound from './components/NotFound';
+import OwnerManageTables from './sections/OwnerManageTables';
 
 function App() {
 
@@ -65,6 +66,7 @@ function App() {
           <Route path="/ownerProfile" element={<OwnerProfile/>}/>
           <Route path="/createmenu/:id" element={<MenuCreator/>}/>
           <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}
+          <Route path='/ownerManageTables' element={<OwnerManageTables/>}/>
         </Routes>
       </Router>
       <Footer /> {/*Minden oldalra render-elve lesz*/}
