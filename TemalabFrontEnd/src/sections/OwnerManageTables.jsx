@@ -55,7 +55,7 @@ export default function OwnerManageTables() {
         ))}
       </div>
 
-      <Table showModal={showModal} setShowModal={setShowModal}></Table>
+      <Table id={ id } showModal={ showModal } setShowModal={ setShowModal }></Table>
       <div className="row">
         <div className="col-12 d-flex justify-content-center">
           <button

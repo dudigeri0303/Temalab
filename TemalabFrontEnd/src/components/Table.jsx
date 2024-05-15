@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
 
-export default function Table({ showModal, setShowModal, children }) {
+export default function Table({id, showModal, setShowModal, children }) {
 
   const [tables, setTables] = useState([]);
   const [numOfSeatsPerTable, setnumOfSeatsPerTable] = useState(0);
@@ -10,14 +10,12 @@ export default function Table({ showModal, setShowModal, children }) {
   const handleClose = () => {
     setShowModal(false);
   };
-
   //asztal mentése, modal bezárása, visszajelzés
   const saveCreateTableEvent = () => {
     postTable();
     alert("Asztal hozzáadva!");
     setShowModal(false);
   };
-
 
   const postTable = async () => {
     const requestOptions = {
@@ -33,7 +31,7 @@ export default function Table({ showModal, setShowModal, children }) {
 
     try {
       const response = await fetch(
-        "https://localhost:7114/api/Table/addTableToRestaurant?restaurantId=002f9b2a-4598-4794-a6a5-b3458648ab94",
+        `https://localhost:7114/api/Table/addTableToRestaurant?restaurantId=${id}`,
         requestOptions
       );
       const data = await response.json();
