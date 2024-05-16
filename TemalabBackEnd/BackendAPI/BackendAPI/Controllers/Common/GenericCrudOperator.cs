@@ -94,6 +94,7 @@ namespace BackendAPI.Controllers.Common
             where T : class
         {
             this._dbContext.Update(entity);
+            this._dbContext.SaveChanges();
         }
         #endregion
     }
