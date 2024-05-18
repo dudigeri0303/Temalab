@@ -218,7 +218,8 @@ namespace BackendAPI.Migrations
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HouseNumber = table.Column<int>(type: "int", nullable: false),
                     PostCode = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumOfFreeSeats = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -304,6 +305,33 @@ namespace BackendAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reservations",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RestaurantId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReserverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DateTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumOfPeople = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reservations_AspNetUsers_ReserverId",
+                        column: x => x.ReserverId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reservations_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RestaurantOpeningHours",
                 columns: table => new
                 {
@@ -365,32 +393,6 @@ namespace BackendAPI.Migrations
                         name: "FK_Tables_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reservations",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TableId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReserverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reservations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reservations_AspNetUsers_ReserverId",
-                        column: x => x.ReserverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reservations_Tables_TableId",
-                        column: x => x.TableId,
-                        principalTable: "Tables",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -475,9 +477,9 @@ namespace BackendAPI.Migrations
                 column: "ReserverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_TableId",
+                name: "IX_Reservations_RestaurantId",
                 table: "Reservations",
-                column: "TableId");
+                column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RestaurantOpeningHours_RestaurantId",
@@ -545,13 +547,13 @@ namespace BackendAPI.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
+                name: "Tables");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Tables");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
