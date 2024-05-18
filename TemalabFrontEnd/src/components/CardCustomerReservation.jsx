@@ -33,10 +33,10 @@ export default function CardCustomerReservation({ data }) {
                 <label className="card-text">{data.restaurantName}</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label className="card-text">{data.tableId}</label>
+                <label className="card-text">{data.restaurantId}</label>
               </div>
               <div className="col-sm d-flex align-items-center">
-                <label className="card-text">{data.endDate}</label>
+                <label className="card-text">{data.dateTime}</label>
               </div>
               <div className="col-sm d-flex align-items-center">
                 <button type="button" className="cardbtn float-end" onClick={() => deleteReservation(data.id)}>
@@ -55,7 +55,7 @@ CardCustomerReservation.propTypes = {
   data: PropTypes.shape({
   id: PropTypes.string.isRequired,
   restaurantName: PropTypes.string.isRequired,
-  tableId: PropTypes.string.isRequired,
-  endDate: PropTypes.string.isRequired,
+  restaurantId: PropTypes.string.isRequired,
+  dateTime: PropTypes.string.isRequired,
   }).isRequired,
 };

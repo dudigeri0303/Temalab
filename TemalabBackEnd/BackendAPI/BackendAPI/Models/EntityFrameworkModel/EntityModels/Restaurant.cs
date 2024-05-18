@@ -29,6 +29,8 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public int PostCode { get; set; }
         [Column]
         public string PhoneNumber { get; set; }
+        [Column]
+        public int NumOfFreeSeats { get; set; }
         public Restaurant() { }
         public Restaurant(string name, string description, string label, string city, string street, int houseNumber, int postCode, string phoneNumber)
         {
@@ -42,6 +44,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             HouseNumber = houseNumber;
             PostCode = postCode;
             PhoneNumber = phoneNumber;
+            NumOfFreeSeats = 0;
         }
     }
 }

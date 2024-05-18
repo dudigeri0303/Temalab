@@ -59,6 +59,9 @@ namespace BackendAPI.Controllers
                 if (restaurant != null)
                 {
                     Table table = new Table(restaurant, tableDto.NumOfSeats);
+                    //Nagyon gagyi de itt kell hozzáadni a férőhelyek számét a foglalásban
+                    //létrejött változatások miatt
+                    restaurant.NumOfFreeSeats += table.NumOfSeats;
                     await this.crudOperator.InsertNewRow<Table>(table);
                     return Ok(table);
                 }

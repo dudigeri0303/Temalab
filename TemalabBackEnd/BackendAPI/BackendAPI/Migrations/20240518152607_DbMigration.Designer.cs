@@ -12,7 +12,7 @@ using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 namespace BackendAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240514132027_DbMigration")]
+    [Migration("20240518152607_DbMigration")]
     partial class DbMigration
     {
         /// <inheritdoc />
@@ -316,14 +316,18 @@ namespace BackendAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumOfPeople")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReserverId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("TableId")
+                    b.Property<string>("RestaurantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -331,7 +335,7 @@ namespace BackendAPI.Migrations
 
                     b.HasIndex("ReserverId");
 
-                    b.HasIndex("TableId");
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Reservations", (string)null);
                 });
@@ -364,6 +368,9 @@ namespace BackendAPI.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumOfFreeSeats")
+                        .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -640,15 +647,15 @@ namespace BackendAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TemalabBackEnd.Models.EntityFrameworkModel.EntityModels.Table", "Table")
+                    b.HasOne("TemalabBackEnd.Models.EntityFrameworkModel.EntityModels.Restaurant", "Restaurant")
                         .WithMany()
-                        .HasForeignKey("TableId")
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Reserver");
 
-                    b.Navigation("Table");
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("TemalabBackEnd.Models.EntityFrameworkModel.EntityModels.Restaurant", b =>

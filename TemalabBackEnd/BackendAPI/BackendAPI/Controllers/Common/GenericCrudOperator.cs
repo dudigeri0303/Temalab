@@ -1,11 +1,6 @@
-﻿using BackendAPI.Models.EntityFrameworkModel.Common;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Security.Claims;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
-using TemalabBackEnd.Models.EntityFrameworkModel.EntityModels;
 
 namespace BackendAPI.Controllers.Common
 {

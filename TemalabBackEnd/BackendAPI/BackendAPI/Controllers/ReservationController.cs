@@ -26,20 +26,17 @@ namespace BackendAPI.Controllers
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId != null)
             {
-                List<ReservationDto> reservationModels = new List<ReservationDto>();
+                List<ReservationDto> reservationDots = new List<ReservationDto>();
                 List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
                 foreach(var reservation in reservations)
                 {
-                    Table? table = await this.crudOperator.GetRowById<Table>(reservation.TableId);
-                    if (table != null)
+                    Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
+                    if(restaurant != null) 
                     {
-                        Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(table.RestaurantId);
-                        reservationModels.Add(new ReservationDto(reservation.Id, restaurant.Name, table.Id, reservation.EndDate.ToString()));
-                        await Console.Out.WriteLineAsync(reservation.EndDate.ToString());
+                        reservationDots.Add(new ReservationDto(reservation.Id, reservation.RestaurantId,  restaurant.Name, reservation.DateTime, reservation.NumOfPeople));
                     }
-                    else { Console.WriteLine("Table not found"); }
                 }
-                return Ok(reservationModels);
+                return Ok(reservationDots);
             }
             return NotFound("User not found");
         }
@@ -50,38 +47,40 @@ namespace BackendAPI.Controllers
         {
             try 
             {
-                //Nem biztos hogy jó. Elvileg a foglalás törlésekor a foglalt asztal IsReserved property-jét false ra állítja.
                 Reservation? reservation = await this.crudOperator.GetRowById<Reservation>(reservationId);
-                Table? table = await this.crudOperator.GetRowById<Table>(reservation.TableId);
-                if (table != null) 
-                {
-                    table.IsReserved = false;
-                    await this.crudOperator.DeleteRowById<Reservation>(reservationId);
-                    return Ok("Reservation deleted");
-                }
-                return BadRequest("Could not found the table for the reservation:(");
+                Restaurant? reserstaurant = await this.crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
+                //Ha lemondják a foglalást, akkor felszabadítjuk a megfelelő számú helyet
+                reserstaurant!.NumOfFreeSeats += reservation.NumOfPeople;
+                await this.crudOperator.DeleteRowById<Reservation>(reservationId);
+                return Ok("Reservation deleted");
             }
-            catch (Exception ex) { return BadRequest(ex.Message); }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message); 
+            }
         }
 
-        //TODO: foglalás leadása api endpoint
-
         [HttpPost("reserveTableForLoggedUser")]
-        public async Task<ActionResult<Reservation>> ReserveTableForLoggedUser(string tableId) 
+        public async Task<ActionResult<CreateReservationDto>> ReserveTableForLoggedUser(CreateReservationDto reservationDto) 
         {
             try
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 User? user = await this.userManager.FindByIdAsync(userId);
-                Table? table = await this.crudOperator.GetRowById<Table>(tableId);
-                if(table != null && user != null)
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(reservationDto.restaurantId);    
+                if(restaurant != null && user != null) 
                 {
-                    table.IsReserved = true;
-                    Reservation reservation = new Reservation(user, table, DateTime.Now);
-                    await this.crudOperator.InsertNewRow<Reservation>(reservation);
-                    return Ok(reservation);
+                    //Csak akkor van foglalás, ha van elég üres hely az étteremben
+                    if (restaurant.NumOfFreeSeats >= reservationDto.numOfPeople) 
+                    {
+                        restaurant.NumOfFreeSeats -= reservationDto.numOfPeople;
+                        Reservation reservation = new Reservation(user, restaurant, reservationDto.dateTime, reservationDto.numOfPeople);
+                        await this.crudOperator.InsertNewRow<Reservation>(reservation);
+                        return Ok(reservationDto);
+                    }
+                    return BadRequest("There are not enough free seats in the restaurant for he reservation!");
                 }
-                return BadRequest("Table or User was null!");
+                return BadRequest("Something went wrong:(");
             }
             catch (Exception ex) 
             {

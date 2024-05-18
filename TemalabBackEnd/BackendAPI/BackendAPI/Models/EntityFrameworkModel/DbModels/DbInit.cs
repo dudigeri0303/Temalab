@@ -152,6 +152,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
                 new Table(restaurants[0],6),
                 new Table(restaurants[0],8)
             };
+            restaurants[0].NumOfFreeSeats += tables[0].NumOfSeats;
+            restaurants[0].NumOfFreeSeats += tables[1].NumOfSeats;
+            restaurants[0].NumOfFreeSeats += tables[2].NumOfSeats;
+
             foreach (Table table in tables)
             {
                 databaseContext.Tables.Add(table);
@@ -220,10 +224,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //RESERVATIONS
             var reservations = new Reservation[]
             {
-                new Reservation(users[0],tables[0], DateTime.Now),
-                new Reservation(users[0],tables[2], DateTime.Now),
-                new Reservation(users[1],tables[1], DateTime.Now),
-                new Reservation(users[2],tables[2], DateTime.Now)
+                new Reservation(users[0],restaurants[0], DateTime.Now.ToString(), 4),
+                new Reservation(users[0],restaurants[1], DateTime.Now.ToString(), 4),
+                new Reservation(users[1],restaurants[1], DateTime.Now.ToString(), 4),
+                new Reservation(users[0],restaurants[0], DateTime.Now.ToString(), 4)
             };
             foreach (Reservation reservation in reservations)
             {
