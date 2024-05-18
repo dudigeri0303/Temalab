@@ -61,7 +61,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("reserveTableForLoggedUser")]
-        public async Task<ActionResult<Reservation>> ReserveTableForLoggedUser(CreateReservationDto reservationDto) 
+        public async Task<ActionResult<CreateReservationDto>> ReserveTableForLoggedUser(CreateReservationDto reservationDto) 
         {
             try
             {
@@ -76,7 +76,7 @@ namespace BackendAPI.Controllers
                         restaurant.NumOfFreeSeats -= reservationDto.numOfPeople;
                         Reservation reservation = new Reservation(user, restaurant, reservationDto.dateTime, reservationDto.numOfPeople);
                         await this.crudOperator.InsertNewRow<Reservation>(reservation);
-                        return Ok(reservation);
+                        return Ok(reservationDto);
                     }
                     return BadRequest("There are not enough free seats in the restaurant for he reservation!");
                 }
