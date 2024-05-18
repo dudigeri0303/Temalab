@@ -22,10 +22,14 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public string DateTime { get; set; }
         [Column]
         public int NumOfPeople {  get; set; }
+        [Column]
+        public int Lenght { get; set; }
+        [Column]
+        public string Comment { get; set; }
 
         public Reservation() { }
         
-        public Reservation(User reserver, Restaurant restaurant, string dateTime, int numOfPeople) 
+        public Reservation(User reserver, Restaurant restaurant, string dateTime, int numOfPeople, int lenght, string comment) 
         {
             Reserver = reserver;
             ReserverId = reserver.Id;
@@ -33,6 +37,8 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             RestaurantId = restaurant.Id;
             DateTime = dateTime;
             NumOfPeople = numOfPeople;
+            Lenght = lenght;
+            Comment = comment;
         }
     }
 }

@@ -150,11 +150,17 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             {
                 new Table(restaurants[0],4),
                 new Table(restaurants[0],6),
-                new Table(restaurants[0],8)
+                new Table(restaurants[0],8),
+                new Table(restaurants[1],4),
+                new Table(restaurants[1],6),
+                new Table(restaurants[1],8)
             };
             restaurants[0].NumOfFreeSeats += tables[0].NumOfSeats;
             restaurants[0].NumOfFreeSeats += tables[1].NumOfSeats;
             restaurants[0].NumOfFreeSeats += tables[2].NumOfSeats;
+            restaurants[1].NumOfFreeSeats += tables[3].NumOfSeats;
+            restaurants[1].NumOfFreeSeats += tables[4].NumOfSeats;
+            restaurants[1].NumOfFreeSeats += tables[5].NumOfSeats;
 
             foreach (Table table in tables)
             {
@@ -211,9 +217,9 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REVIEWS
             var reviews = new Review[]
             {
-                new Review(users[0],restaurants[0],4,"fincsa es mincsa"),
-                new Review(users[1],restaurants[0],4,"fincsa es mincsa"),
-                new Review(users[2],restaurants[0],4,"fincsa es mincsa")
+                new Review(users[0],restaurants[0],4,"fincsa es mincsa1"),
+                new Review(users[1],restaurants[0],4,"fincsa es mincsa2"),
+                new Review(users[2],restaurants[0],4,"fincsa es mincsa3")
             };
             foreach (Review review in reviews)
             {
@@ -224,10 +230,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //RESERVATIONS
             var reservations = new Reservation[]
             {
-                new Reservation(users[0],restaurants[0], DateTime.Now.ToString(), 4),
-                new Reservation(users[0],restaurants[1], DateTime.Now.ToString(), 4),
-                new Reservation(users[1],restaurants[1], DateTime.Now.ToString(), 4),
-                new Reservation(users[0],restaurants[0], DateTime.Now.ToString(), 4)
+                new Reservation(users[0],restaurants[0], DateTime.Now.ToString(), 4, 2, "Jó kis foglalása"),
+                new Reservation(users[0],restaurants[1], DateTime.Now.ToString(), 4, 1, "Hehehe"),
+                new Reservation(users[1],restaurants[1], DateTime.Now.ToString(), 4, 4, "Irgumburgum"),
+                new Reservation(users[0],restaurants[0], DateTime.Now.ToString(), 4, 2, "nemtom")
             };
             foreach (Reservation reservation in reservations)
             {
