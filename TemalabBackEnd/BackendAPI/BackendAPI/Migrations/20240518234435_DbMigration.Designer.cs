@@ -12,7 +12,7 @@ using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
 namespace BackendAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240518152607_DbMigration")]
+    [Migration("20240518234435_DbMigration")]
     partial class DbMigration
     {
         /// <inheritdoc />
@@ -316,9 +316,16 @@ namespace BackendAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DateTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Lenght")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumOfPeople")
                         .HasColumnType("int");

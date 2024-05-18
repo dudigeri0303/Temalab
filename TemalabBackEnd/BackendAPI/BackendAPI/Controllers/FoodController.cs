@@ -88,11 +88,11 @@ namespace BackendAPI.Controllers
         }
         [HttpPut("addImageToFood/")]
         [Authorize(Roles ="Owner")]
-        public async Task<ActionResult> AddImageToFood(string foodId, ImageDto imageDto) 
+        public async Task<ActionResult> AddImageToFood(string foodId, [FromForm]IFormFile imageFile)
         {
             try 
             {
-                byte[] imageBytes = await ImageToByteArrayConverter.FileToByteArray(imageDto.imageFile);
+                byte[] imageBytes = await ImageToByteArrayConverter.FileToByteArray(imageFile);
                 Food? food = await this.crudOperator.GetRowById<Food>(foodId);
                 food!.Image = imageBytes;
                 this.crudOperator.SaveDatabaseChanges();

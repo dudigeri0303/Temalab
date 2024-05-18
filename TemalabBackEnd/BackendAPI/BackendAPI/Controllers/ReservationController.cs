@@ -23,22 +23,51 @@ namespace BackendAPI.Controllers
         [HttpGet("getReservationsForLoggedInUser/")]
         public async Task<ActionResult<List<ReservationDto>>> GetReservationsByLoggedInUser() 
         {
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId != null)
+            try 
             {
-                List<ReservationDto> reservationDots = new List<ReservationDto>();
-                List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
-                foreach(var reservation in reservations)
+                string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                User? user = await this.userManager.FindByIdAsync(userId);
+                if (userId != null && user != null)
                 {
-                    Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
-                    if(restaurant != null) 
+                    List<ReservationDto> reservationDots = new List<ReservationDto>();
+                    List<Reservation> reservations = await this.crudOperator.DbContext.Reservations.Where(r => r.ReserverId == userId).ToListAsync();
+                    foreach (var reservation in reservations)
                     {
-                        reservationDots.Add(new ReservationDto(reservation.Id, reservation.RestaurantId,  restaurant.Name, reservation.DateTime, reservation.NumOfPeople));
+                        Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
+                        if (restaurant != null)
+                        {
+                            reservationDots.Add(new ReservationDto(reservation.Id, restaurant.Name, user.UserName, reservation.DateTime,
+                                reservation.NumOfPeople, reservation.Lenght, reservation.Comment));
+                        }
                     }
+                    return Ok(reservationDots);
                 }
-                return Ok(reservationDots);
+                return NotFound("User not found");
             }
-            return NotFound("User not found");
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
+        [HttpGet("getReservationsByRestaurantId")]
+        [Authorize(Roles = "Owner")]
+        public async Task<ActionResult<List<ReservationDto>>> GetReservationsByRestaurantId(string restaurantId) 
+        {
+            List<Reservation> reservations = await this.crudOperator.GetMultipleRowsByForeignId<Reservation>(restaurantId, "RestaurantId");
+            List<ReservationDto> reservationDtos = new List<ReservationDto>();
+            foreach(var reservation in reservations) 
+            {
+                User? user = await this.userManager.FindByIdAsync(reservation.ReserverId);
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
+                if(user !=  null && restaurant != null)
+                {
+                    reservationDtos.Add(new ReservationDto(reservation.Id, restaurant.Name, user.UserName, reservation.DateTime,
+                        reservation.NumOfPeople, reservation.Lenght, reservation.Comment));
+                }
+            }
+            return Ok(reservationDtos);
         }
 
         [Authorize(Roles = "Customer")]
@@ -74,7 +103,7 @@ namespace BackendAPI.Controllers
                     if (restaurant.NumOfFreeSeats >= reservationDto.numOfPeople) 
                     {
                         restaurant.NumOfFreeSeats -= reservationDto.numOfPeople;
-                        Reservation reservation = new Reservation(user, restaurant, reservationDto.dateTime, reservationDto.numOfPeople);
+                        Reservation reservation = new Reservation(user, restaurant, reservationDto.dateTime, reservationDto.numOfPeople, reservationDto.lenght, reservationDto.comment);
                         await this.crudOperator.InsertNewRow<Reservation>(reservation);
                         return Ok(reservationDto);
                     }

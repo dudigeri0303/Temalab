@@ -312,7 +312,9 @@ namespace BackendAPI.Migrations
                     RestaurantId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReserverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DateTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumOfPeople = table.Column<int>(type: "int", nullable: false)
+                    NumOfPeople = table.Column<int>(type: "int", nullable: false),
+                    Lenght = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
