@@ -61,6 +61,13 @@ namespace BackendAPI.Controllers
         {
             try
             {
+                //delete foods
+                List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(categoryId, "CategoryId");
+                foreach (Food food in foods)
+                {
+                    await this.crudOperator.DeleteRowById<Food>(food.Id);
+                }
+                //delete category
                 await this.crudOperator.DeleteRowById<Category>(categoryId);
                 return Ok("Category deleted succesfully!");
             }
