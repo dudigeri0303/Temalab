@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -52,6 +53,21 @@ namespace BackendAPI.Controllers
                 return Ok(categorieDtos);
             }
             return NotFound("Could not found the restaurant by the id");
+        }
+
+        [HttpDelete("deleteCategoryById/")]
+        [Authorize(Roles = "Owner")]
+        public async Task<ActionResult> DeleteCategoryById(string categoryId)
+        {
+            try
+            {
+                await this.crudOperator.DeleteRowById<Category>(categoryId);
+                return Ok("Category deleted succesfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         #endregion

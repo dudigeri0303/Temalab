@@ -115,6 +115,51 @@ namespace BackendAPI.Controllers
             }
             return NotFound("Restaurant nod found");
         }
+
+        [HttpDelete("deleteRestaurantById/")]
+        [Authorize(Roles = "Owner")]
+        public async Task<ActionResult> DeleteRestaurantById(string restaurantId)
+        {
+            try
+            {
+                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
+                if (restaurant != null)
+                {
+                    //delete categories and foods
+                    List<Category> categories = await this.crudOperator.GetMultipleRowsByForeignId<Category>(restaurant.MenuId, "MenuId");
+                    foreach (Category category in categories)
+                    {
+                        //delete foods
+                        List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(category.Id, "CategoryId");
+                        foreach (Food food in foods)
+                        {
+                            await this.crudOperator.DeleteRowById<Food>(food.Id);
+                        }
+                        await this.crudOperator.DeleteRowById<Category>(category.Id);
+                    }
+
+                    //delete menu
+                    Menu? menu = await this.crudOperator.GetRowById<Menu>(restaurant.MenuId);
+                    await this.crudOperator.DeleteRowById<Menu>(menu.Id);
+
+                    //delete reservations
+                    List<Reservation> reservations = await this.crudOperator.GetMultipleRowsByForeignId<Reservation>(restaurantId, "RestaurantId");
+                    foreach (Reservation reservation in reservations)
+                    {
+                        this.crudOperator.DbContext.Reservations.Remove(reservation);
+                    }
+
+                    //delete restaurant
+                    await this.crudOperator.DeleteRowById<Restaurant>(restaurantId);
+                    return Ok("Restaurant deleted");
+                }
+                return NotFound("Restaurant not found");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         #endregion
     }
 }
