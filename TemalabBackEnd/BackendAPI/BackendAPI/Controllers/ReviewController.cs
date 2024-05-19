@@ -12,7 +12,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class ReviewController : BaseEntityController
     {
-        public ReviewController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public ReviewController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 

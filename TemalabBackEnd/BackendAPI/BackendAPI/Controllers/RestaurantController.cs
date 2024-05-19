@@ -1,6 +1,8 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
 using BackendAPI.Models.EntityFrameworkModel.EntityModels;
+using BackendAPI.Services.Implementations;
+using BackendAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +17,13 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class RestaurantController : BaseEntityController
     {
-        public RestaurantController(DatabaseContext context, UserManager<User> userManager) : base(context, userManager)
+
+        private readonly IRestaurantService _restaurantService;
+
+        public RestaurantController([FromServices] DatabaseContext context, [FromServices] UserManager<User> userManager, [FromServices] IRestaurantService restaurantService)
+            : base(context, userManager)
         {
+            this._restaurantService = restaurantService;
         }
         #region UniqueOperations
 
@@ -120,53 +127,7 @@ namespace BackendAPI.Controllers
         [Authorize(Roles = "Owner")]
         public async Task<ActionResult> DeleteRestaurantById(string restaurantId)
         {
-            try
-            {
-                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
-                if (restaurant != null)
-                {
-                    //delete categories and foods
-                    List<Category> categories = await this.crudOperator.GetMultipleRowsByForeignId<Category>(restaurant.MenuId, "MenuId");
-                    foreach (Category category in categories)
-                    {
-                        //delete foods
-                        List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(category.Id, "CategoryId");
-                        foreach (Food food in foods)
-                        {
-                            await this.crudOperator.DeleteRowById<Food>(food.Id);
-                        }
-                        await this.crudOperator.DeleteRowById<Category>(category.Id);
-                    }                    
-
-                    //delete reservations
-                    List<Reservation> reservations = await this.crudOperator.GetMultipleRowsByForeignId<Reservation>(restaurantId, "RestaurantId");
-                    foreach (Reservation reservation in reservations)
-                    {
-                        this.crudOperator.DbContext.Reservations.Remove(reservation);
-                    }
-
-                    //delete opening hours
-                    List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurantId, "RestaurantId");
-                    foreach (RestaurantOpeningHours openingHour in openingHours)
-                    {
-                        this.crudOperator.DbContext.RestaurantOpeningHours.Remove(openingHour);
-                    }
-
-                    //delete menu
-                    await this.crudOperator.DeleteRowById<Menu>(restaurant.MenuId);
-
-                    //delete restaurant
-                    await this.crudOperator.DeleteRowById<Restaurant>(restaurantId);
-
-                    this.crudOperator.SaveDatabaseChanges();
-                    return Ok("Restaurant deleted");
-                }
-                return NotFound("Restaurant not found");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return await this._restaurantService.DeleteRestaurantById(restaurantId, this.crudOperator);
         }
         #endregion
     }

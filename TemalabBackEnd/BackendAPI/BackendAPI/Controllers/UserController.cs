@@ -1,5 +1,8 @@
-﻿using BackendAPI.Controllers.Common;
+﻿using BackendAPI.Controllers;
+using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using BackendAPI.Services.Implementations;
+using BackendAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +18,24 @@ namespace TemalabBackEnd.Controllers
     public class UserController : BaseEntityController
     {
         private readonly SignInManager<User> signInManager;
+        private IRestaurantService restaurantService;
+        private IOwnerService ownerService;
+        private IReservationService reservationService;
+        private ILikedRestaurantService likedRestaurantService;
 
-        public UserController(DatabaseContext dbContext, UserManager<User> userManager, SignInManager<User> signInManager) : base(dbContext, userManager) 
+        public UserController([FromServices] DatabaseContext dbContext, 
+            [FromServices] UserManager<User> userManager, 
+            [FromServices] SignInManager<User> signInManager,
+            [FromServices] IRestaurantService restaurantService, 
+            [FromServices] IOwnerService ownerService,
+            [FromServices] IReservationService reservationService,
+            [FromServices] ILikedRestaurantService likedRestaurantService) : base(dbContext, userManager) 
         {
             this.signInManager = signInManager;
+            this.restaurantService = restaurantService;
+            this.ownerService = ownerService;
+            this.reservationService = reservationService;
+            this.likedRestaurantService = likedRestaurantService;
         }
 
         #region UniqueOperations
@@ -33,7 +50,7 @@ namespace TemalabBackEnd.Controllers
                 Email = registerDto.Email,
                 PhoneNumber = registerDto.PhoneNumber,
             };
-            if(registerDto.Password.Equals(registerDto.PasswordAgain)) 
+            if(registerDto.Password!.Equals(registerDto.PasswordAgain)) 
             {
                 await this.userManager.CreateAsync(newUser, registerDto.Password);
                 if (registerDto.UserRole == "customer") { await this.userManager.AddToRoleAsync(newUser, "Customer"); }
@@ -61,7 +78,7 @@ namespace TemalabBackEnd.Controllers
                     //A loginModel-t visszaküldi, és ez alapján navigál a kliens
                     //Lehet hogy szar megoldás, és ki kéne találni valami jobbat
                     User? user = await this.userManager.FindByNameAsync(loginDto.UserName);
-                    var userRoles = await this.userManager.GetRolesAsync(user);
+                    var userRoles = await this.userManager.GetRolesAsync(user!);
                     if (userRoles.Contains("Admin"))
                     {
                         loginDto.UserRole = "admin";
@@ -94,32 +111,13 @@ namespace TemalabBackEnd.Controllers
         public async Task<ActionResult<UserDatasDto>> GetLoggedInUsersData()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user =  await this.userManager.FindByIdAsync(userId);
+            User? user =  await this.userManager.FindByIdAsync(userId!);
             if (user != null)
             {
                 UserDatasDto dataModel = new UserDatasDto(user.UserName, user.PhoneNumber, user.Email);
                 return Ok(dataModel);
             }
             return NotFound("User not found!");
-        }
-
-        //A paraméterként kapott UserDataModel alapján megváltoztatja a user bizonyos adatait.
-        //Validáció nincs, úgyhogy az még kell. Will Farell azt mondta, hogy a dbcontext-ben elvileg
-        //Van olyan update metódus, amivel ezt meg lehet egyszerűen csinálni.
-        [HttpPut("editUserDate/{name}"), Authorize]
-        public async Task<ActionResult> EditUserDataByName(UserDatasDto newDataModel) 
-        {
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user = await this.userManager.FindByIdAsync(userId);
-            if(user != null) 
-            {
-                user.UserName = newDataModel.Name;
-                user.Email = newDataModel.Email;
-                user.PhoneNumber = newDataModel.PhoneNumber;
-                await this.userManager.UpdateAsync(user);
-                return Ok("User data updated");
-            }
-            return BadRequest("Unsuccesfulupdate");
         }
 
         //Osszes user lekerdezese
@@ -145,7 +143,8 @@ namespace TemalabBackEnd.Controllers
             try 
             {
                 User? user = await this.userManager.FindByIdAsync(userId);
-                await this.userManager.DeleteAsync(user);
+                await this.DeleteUserDependencies(user!);
+                await this.userManager.DeleteAsync(user!);
                 return Ok("User deleted succesfully");
             }
             catch (Exception ex) 
@@ -161,8 +160,9 @@ namespace TemalabBackEnd.Controllers
             try
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                User? user = await this.userManager.FindByIdAsync(userId);
-                await this.userManager.DeleteAsync(user);
+                User? user = await this.userManager.FindByIdAsync(userId!);
+                await this.DeleteUserDependencies(user!);
+                await this.userManager.DeleteAsync(user!);
                 return Ok("User deleted succesfully");
             }
             catch (Exception ex)
@@ -171,20 +171,65 @@ namespace TemalabBackEnd.Controllers
             }
 
         }
+
+        //A paraméterként kapott UserDataModel alapján megváltoztatja a user bizonyos adatait.
+        //Validáció nincs, úgyhogy az még kell. Will Farell azt mondta, hogy a dbcontext-ben elvileg
+        //Van olyan update metódus, amivel ezt meg lehet egyszerűen csinálni.
         [HttpPut("updateUserForLoggedInUser/")]
         public async Task<ActionResult> UpdateUserForLoggedInUser(UpdateUserDto userDto)
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User? user = await this.userManager.FindByIdAsync(userId);
+            User? user = await this.userManager.FindByIdAsync(userId!);
             if (user != null)
             {
                 user.UserName = userDto.UserName;
                 user.Email = userDto.Email;
                 user.PhoneNumber = userDto.PhoneNumber;
                 await this.userManager.UpdateAsync(user);
+                this.crudOperator.SaveDatabaseChanges();
                 return Ok("User data updated succesfully!");
             }
             return NotFound("User not found:(");
+        }
+        #endregion
+
+        #region HelperMethods
+
+        private async Task DeleteUserDependencies(User user) 
+        {
+            var userRoles = await this.userManager.GetRolesAsync(user);
+            //Ha owner volt a user
+            if (userRoles.Contains("Owner"))
+            {
+                var actionResult = await this.ownerService.ListRestaurantsByOwner(user.Id, this.crudOperator);
+                if (actionResult.Result is OkObjectResult okResult && okResult.Value is List<RestaurantDataDto> restaurants)
+                {
+                    foreach (var restaurant in restaurants)
+                    {
+                        await this.restaurantService.DeleteRestaurantById(restaurant.Id!, this.crudOperator);
+                    }
+                }
+            }
+            //Ha customer volt a user
+            else if(userRoles.Contains("Customer"))
+            {
+                var reservationActionResult = await this.reservationService.GetReservationsByLoggedInUser(user, this.crudOperator);
+                if (reservationActionResult.Result is OkObjectResult okRestult && okRestult.Value is List<ReservationDto> reservations) 
+                {
+                    foreach (var reservation in reservations) 
+                    {
+                        await this.reservationService.DeleteReservationByIdForLoggedUser(reservation.Id!, this.crudOperator);
+                    }
+                }
+                var likedeRestaurantActionResult = await this.likedRestaurantService.GetLikedRestaurantByLoggedInUser(user.Id!, this.crudOperator);
+                if (likedeRestaurantActionResult.Result is OkObjectResult okResult && okResult.Value is List<LikedRestaurantDto> likedRestaurants) 
+                {
+                    foreach(var lr in likedRestaurants) 
+                    {
+                        await this.likedRestaurantService.DeleteLikedRestaurantByIdForLoggedUser(lr.Id!, this.crudOperator);
+                    }
+                } 
+            }
         }
         #endregion
     }

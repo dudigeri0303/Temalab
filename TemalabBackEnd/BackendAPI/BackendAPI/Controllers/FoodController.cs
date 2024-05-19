@@ -12,7 +12,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class FoodController : BaseEntityController
     {
-        public FoodController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public FoodController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 
@@ -23,7 +23,7 @@ namespace BackendAPI.Controllers
         {
             try {
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
-                string? menu = restaurant.MenuId;
+                string? menu = restaurant!.MenuId;
                 List<Category> categories = await this.crudOperator.GetMultipleRowsByForeignId<Category>(menu, "MenuId");
                 List<List<FoodDto>> menuItems = new List<List<FoodDto>>();
                 foreach (Category category in categories)

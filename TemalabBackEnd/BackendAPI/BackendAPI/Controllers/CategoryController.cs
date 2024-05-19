@@ -10,7 +10,7 @@ namespace BackendAPI.Controllers
 {
     public class CategoryController : BaseEntityController
     {
-        public CategoryController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public CategoryController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 
@@ -40,7 +40,7 @@ namespace BackendAPI.Controllers
             }          
         }
 
-       [HttpGet("listCategoriesByRestaurantId/")]
+        [HttpGet("listCategoriesByRestaurantId/")]
         public async Task<ActionResult<List<CategoryDto>>> ListCategoriesByRestaurantId(string restaurantId) 
         {
             Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);

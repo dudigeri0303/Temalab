@@ -11,7 +11,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class TableController : BaseEntityController
     {
-        public TableController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public TableController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 
