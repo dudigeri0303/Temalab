@@ -1,7 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
 using BackendAPI.Models.EntityFrameworkModel.EntityModels;
-using BackendAPI.Services.Implementations;
 using BackendAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +48,7 @@ namespace BackendAPI.Controllers
                     Restaurant restaurant = new Restaurant(restaurantDto.Name, restaurantDto.Description, restaurantDto.Label,
                       restaurantDto.City, restaurantDto.Street, Int32.Parse(restaurantDto.HouseNumber), Int32.Parse(restaurantDto.PostCode), restaurantDto.PhoneNumber);
                     
-                    List<OpeningHourDto> openingHourDtos = restaurantDto.openingHours; 
+                    List<OpeningHourDto> openingHourDtos = restaurantDto.openingHours!; 
                     
                     await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
                     await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));

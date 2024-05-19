@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -18,6 +19,7 @@ namespace BackendAPI.Controllers
 
         //[Authorize(Roles = "Customer")]
         [HttpGet("getAvargeRatingByRestaurantId/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<double>> GetAvargeRatingByRestaurantId(string restaurantId)
         {
             List<Review> reviews = await this.crudOperator.GetMultipleRowsByForeignId<Review>(restaurantId, "RestaurantId");
@@ -30,6 +32,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("getReviewsForRestaurantById/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<ReviewDto>> GetReviewsForRestaurantById(string restaurantId) 
         {
             try 
@@ -46,6 +49,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("createNewReviewForRestaurant/")]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<Review>> CreateNewReviewForRestaurant(string restaurantId, ReviewDto reviewDto) 
         {
             try 
@@ -68,6 +72,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpDelete("deleteReviewById/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult> DeleteReviewById(string reviewId) 
         {
             try 

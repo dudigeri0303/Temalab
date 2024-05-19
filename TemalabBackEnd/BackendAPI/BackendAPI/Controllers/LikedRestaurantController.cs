@@ -22,16 +22,16 @@ namespace BackendAPI.Controllers
         }
 
         #region UniqueApiCalls
-        [Authorize(Roles = "Customer")]
         [HttpGet("getLikedRestaurantForLoggedInUser/")]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<List<LikedRestaurantDto>>> GetLikedRestaurantByLoggedInUser()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return await this.likedRestaurantService.GetLikedRestaurantByLoggedInUser(userId!, this.crudOperator);
             
         }
-        [Authorize(Roles = "Customer")]
         [HttpPost("likeRestaurantForLoggedInUser")]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<LikedRestaurant>> LikeRestaurantForLoggedInUser(string restaurantId) 
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -53,8 +53,8 @@ namespace BackendAPI.Controllers
             return NotFound("User not found");
         }
 
-        [Authorize(Roles = "Customer")]
         [HttpDelete("deleteLikedRestaurantForLoggedUser/")]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult> DeleteLikedRestaurantByIdForLoggedUser(string likedRestaurantId)
         {
             return await this.likedRestaurantService.DeleteLikedRestaurantByIdForLoggedUser(likedRestaurantId, this.crudOperator);

@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -16,6 +17,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("listTablesByRestaurantId/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<TableDto>> ListTablesByRestaurantId(string restaurantId) 
         {
             try 
@@ -36,6 +38,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpDelete("deleteTableById/")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> DeleteTableById(string tableId) 
         {
             try 
@@ -50,6 +53,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("addTableToRestaurant")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<Table>> AddTableToRestaurant(string restaurantId, CreateTableDto tableDto) 
         {
             try 

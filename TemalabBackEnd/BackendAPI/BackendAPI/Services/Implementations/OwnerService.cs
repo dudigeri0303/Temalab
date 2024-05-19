@@ -19,7 +19,7 @@ namespace BackendAPI.Services.Implementations
                 List<RestaurantOpeningHours> openingHours = await crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurant.Id, "RestaurantId");
                 List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
                 openingHours.ForEach(openingHour => openingHourDtos.Add(new OpeningHourDto(openingHour.DayName, openingHour.OpeningHour)));
-                restaurantModels.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos));
+                restaurantModels.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", restaurant.PhoneNumber, openingHourDtos));
             }
             return new OkObjectResult(restaurantModels);
         }

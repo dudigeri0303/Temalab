@@ -15,8 +15,8 @@ namespace BackendAPI.Controllers
         }
 
         #region UniqueOperations
-
         [HttpPost("AddCategory")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<Category>> AddCategory(string restaurantId, CreateCategoryDto createCategoryDto)
         {
             try
@@ -41,6 +41,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("listCategoriesByRestaurantId/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<List<CategoryDto>>> ListCategoriesByRestaurantId(string restaurantId) 
         {
             Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
@@ -76,7 +77,6 @@ namespace BackendAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
         #endregion
     }
 }

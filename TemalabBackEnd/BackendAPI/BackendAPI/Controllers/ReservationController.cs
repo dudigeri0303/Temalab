@@ -44,7 +44,7 @@ namespace BackendAPI.Controllers
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
                 if(user !=  null && restaurant != null)
                 {
-                    reservationDtos.Add(new ReservationDto(reservation.Id, restaurant.Name, user.UserName, reservation.DateTime,
+                    reservationDtos.Add(new ReservationDto(reservation.Id, restaurant.Name, user.UserName, user.PhoneNumber, user.Email, reservation.DateTime,
                         reservation.NumOfPeople, reservation.Lenght, reservation.Comment));
                 }
             }
@@ -59,6 +59,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpPost("reserveTableForLoggedUser")]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult<CreateReservationDto>> ReserveTableForLoggedUser(CreateReservationDto reservationDto) 
         {
             try

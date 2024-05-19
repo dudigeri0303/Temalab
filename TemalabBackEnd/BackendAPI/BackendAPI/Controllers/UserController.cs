@@ -98,8 +98,8 @@ namespace TemalabBackEnd.Controllers
             return BadRequest("Fill in the fields!");
         }
 
-        [Authorize]
         [HttpPost("logOut/")]
+        [Authorize(Roles = "Owner, Customer, Admin")]
         public async Task<ActionResult> LogOut() 
         {
             await this.signInManager.SignOutAsync();
@@ -107,7 +107,8 @@ namespace TemalabBackEnd.Controllers
         }
 
         //A bejelentkezett user user page-nek megfelelő adataival tér vissza egy UserDataModelként
-        [HttpGet("getLoggedInUserData/"), Authorize]
+        [HttpGet("getLoggedInUserData/")]
+        [Authorize(Roles = "Owner, Customer, Admin")]
         public async Task<ActionResult<UserDatasDto>> GetLoggedInUsersData()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -154,8 +155,8 @@ namespace TemalabBackEnd.Controllers
             
         }
         [HttpDelete("deleteUserById/")]
-        [Authorize(Roles = "Customer")]
-        public async Task<ActionResult> DeleteUserByIdWith()
+        [Authorize(Roles = "Owner, Customer, Admin")]
+        public async Task<ActionResult> DeleteUserById()
         {
             try
             {
@@ -176,6 +177,7 @@ namespace TemalabBackEnd.Controllers
         //Validáció nincs, úgyhogy az még kell. Will Farell azt mondta, hogy a dbcontext-ben elvileg
         //Van olyan update metódus, amivel ezt meg lehet egyszerűen csinálni.
         [HttpPut("updateUserForLoggedInUser/")]
+        [Authorize(Roles = "Owner, Customer, Admin")]
         public async Task<ActionResult> UpdateUserForLoggedInUser(UpdateUserDto userDto)
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

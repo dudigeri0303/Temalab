@@ -39,7 +39,7 @@ namespace BackendAPI.Services.Implementations
                         Restaurant? restaurant = await crudOperator.GetRowById<Restaurant>(reservation.RestaurantId);
                         if (restaurant != null)
                         {
-                            reservationDots.Add(new ReservationDto(reservation.Id, restaurant.Name, user.UserName, reservation.DateTime,
+                            reservationDots.Add(new ReservationDto(reservation.Id, restaurant.Name, user.UserName, user.PhoneNumber, user.Email, reservation.DateTime,
                                 reservation.NumOfPeople, reservation.Lenght, reservation.Comment));
                         }
                     }

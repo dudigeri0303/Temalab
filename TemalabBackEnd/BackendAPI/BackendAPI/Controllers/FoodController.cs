@@ -19,6 +19,7 @@ namespace BackendAPI.Controllers
         #region UniqueOperations
 
         [HttpGet("GetMenuItems/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<List<List<FoodDto>>>> GetMenuItems(string restaurantId)
         {
             try {
@@ -39,6 +40,7 @@ namespace BackendAPI.Controllers
         }
 
         [HttpGet("getMenuItemsByCategoryId/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<FoodDto>> GetMenuItemsByCategoryId(string categoryId)
         {
             List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(categoryId, "CategoryId");
