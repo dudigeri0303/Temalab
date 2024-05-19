@@ -10,7 +10,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class AdminContoller : BaseEntityController
     {
-        public AdminContoller(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public AdminContoller([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
     }

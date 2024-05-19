@@ -1,6 +1,7 @@
+using BackendAPI.Services.Implementations;
+using BackendAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -67,6 +68,12 @@ namespace BackendAPI
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
             });
+
+            //Registering the services
+            builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+            builder.Services.AddScoped<IOwnerService, OwnerService>();
+            builder.Services.AddScoped<IReservationService, ReservationService>();
+            builder.Services.AddScoped<ILikedRestaurantService, LikedRestaurantService>();
 
 
             builder.Services.AddCors();

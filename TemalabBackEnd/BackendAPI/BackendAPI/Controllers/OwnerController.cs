@@ -1,6 +1,7 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
 using BackendAPI.Models.EntityFrameworkModel.EntityModels;
+using BackendAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,13 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class OwnerController : BaseEntityController
     {
-        public OwnerController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
-        {
 
+        private IOwnerService ownerService;
+
+        public OwnerController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager, [FromServices] IOwnerService ownerService) 
+            : base(dbContext, userManager)
+        {
+            this.ownerService = ownerService;
         }
         #region UniqueOperations
         [Authorize(Roles = "Owner")]
@@ -24,17 +29,7 @@ namespace BackendAPI.Controllers
         public async Task<ActionResult<List<RestaurantDataDto>>> ListRestaurantsByOwner()
         {
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<Owner> ownerConnections = await this.crudOperator.GetMultipleRowsByForeignId<Owner>(userId, "UserId");
-            List<RestaurantDataDto> restaurantModels = new List<RestaurantDataDto>();
-            foreach (Owner owner in ownerConnections)
-            {
-                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
-                List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurant.Id, "RestaurantId");
-                List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
-                openingHours.ForEach(openingHour => openingHourDtos.Add(new OpeningHourDto(openingHour.DayName, openingHour.OpeningHour)));
-                restaurantModels.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos));
-            }
-            return Ok(restaurantModels);
+            return await this.ownerService.ListRestaurantsByOwner(userId!, this.crudOperator);
         }
 
         [Authorize(Roles = "Owner")]
@@ -44,7 +39,7 @@ namespace BackendAPI.Controllers
             try
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                User? user = await this.userManager.FindByIdAsync(userId);
+                User? user = await this.userManager.FindByIdAsync(userId!);
                 //Ezt a ronda if statement-et valahogy ki kéne küszöbölni.
                 if (restaurantDto.Name != null && restaurantDto.Description != null && restaurantDto.Label != null &&
                     restaurantDto.City != null && restaurantDto.Street != null && restaurantDto.HouseNumber != null &&
@@ -53,7 +48,7 @@ namespace BackendAPI.Controllers
                     Restaurant restaurant = new Restaurant(restaurantDto.Name, restaurantDto.Description, restaurantDto.Label,
                       restaurantDto.City, restaurantDto.Street, Int32.Parse(restaurantDto.HouseNumber), Int32.Parse(restaurantDto.PostCode), restaurantDto.PhoneNumber);
                     
-                    List<OpeningHourDto> openingHourDtos = restaurantDto.openingHours; 
+                    List<OpeningHourDto> openingHourDtos = restaurantDto.openingHours!; 
                     
                     await this.crudOperator.InsertNewRow<Restaurant>(restaurant);
                     await this.crudOperator.InsertNewRow<Owner>(new Owner(user, restaurant));

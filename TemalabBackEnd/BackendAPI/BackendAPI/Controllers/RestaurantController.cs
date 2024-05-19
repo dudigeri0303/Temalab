@@ -1,6 +1,8 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
 using BackendAPI.Models.EntityFrameworkModel.EntityModels;
+using BackendAPI.Services.Implementations;
+using BackendAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +17,13 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class RestaurantController : BaseEntityController
     {
-        public RestaurantController(DatabaseContext context, UserManager<User> userManager) : base(context, userManager)
+
+        private readonly IRestaurantService _restaurantService;
+
+        public RestaurantController([FromServices] DatabaseContext context, [FromServices] UserManager<User> userManager, [FromServices] IRestaurantService restaurantService)
+            : base(context, userManager)
         {
+            this._restaurantService = restaurantService;
         }
         #region UniqueOperations
 
@@ -33,28 +40,15 @@ namespace BackendAPI.Controllers
                     List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurant.Id, "RestaurantId");
                     List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
                     openingHours.ForEach(openingHour => openingHourDtos.Add(new OpeningHourDto(openingHour.DayName, openingHour.OpeningHour)));
-                    restaurantDtos.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos));
+                    restaurantDtos.Add(new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", restaurant.PhoneNumber, openingHourDtos));
                 }
                 return Ok(restaurantDtos);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
-        [Authorize(Roles = "Customer")]
-        [HttpGet("listRestaurantsByOwner/")]
-        public async Task<ActionResult<List<Restaurant>>> ListRestaurantsByOwner() 
-        {
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<Owner> ownerConnections = await this.crudOperator.GetMultipleRowsByForeignId<Owner>(userId, "UserId");
-            List<Restaurant> restaurants = new List<Restaurant>();
-            foreach(Owner owner in ownerConnections) 
-            {
-                Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(owner.RestaurantId);
-                restaurants.Add(restaurant);
-            }
-            return Ok(restaurants);
-        }
 
         [HttpGet("GetRestaurantById")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<RestaurantDataDto>> GetRestaurantById(string restaurantId)
         {
             try
@@ -63,7 +57,7 @@ namespace BackendAPI.Controllers
                 List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurantId, "RestaurantId");
                 List<OpeningHourDto> openingHourDtos = new List<OpeningHourDto>();
                 openingHours.ForEach(oh => openingHourDtos.Add(new OpeningHourDto(oh.DayName, oh.OpeningHour)));
-                RestaurantDataDto restaurantDto = new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", openingHourDtos);
+                RestaurantDataDto restaurantDto = new RestaurantDataDto(restaurant.Id, restaurant.Name, restaurant.Label, restaurant.Description, $"{restaurant.City} {restaurant.Street} {restaurant.HouseNumber}", restaurant.PhoneNumber, openingHourDtos);
                 return Ok(restaurantDto);
             }
             catch (Exception ex) 
@@ -74,6 +68,7 @@ namespace BackendAPI.Controllers
 
         //Így működik a menu lekérése, viszont navigation property alapján nem, pedig kéne.(szerintem feleselges, mert a menu csak egy id)
         [HttpGet("GetRestaurantMenu")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<Menu>> GetRestaurantMenu(string id)
         {
             Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(id);
@@ -114,6 +109,13 @@ namespace BackendAPI.Controllers
                 }
             }
             return NotFound("Restaurant nod found");
+        }
+
+        [HttpDelete("deleteRestaurantById/")]
+        [Authorize(Roles = "Owner")]
+        public async Task<ActionResult> DeleteRestaurantById(string restaurantId)
+        {
+            return await this._restaurantService.DeleteRestaurantById(restaurantId, this.crudOperator);
         }
         #endregion
     }

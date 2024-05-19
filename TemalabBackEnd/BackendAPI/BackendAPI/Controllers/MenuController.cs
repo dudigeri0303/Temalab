@@ -10,7 +10,7 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class MenuController : BaseEntityController
     {
-        public MenuController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public MenuController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
     }

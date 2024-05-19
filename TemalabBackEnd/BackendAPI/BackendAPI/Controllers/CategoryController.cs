@@ -1,5 +1,6 @@
 ﻿using BackendAPI.Controllers.Common;
 using BackendAPI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TemalabBackEnd.Models.EntityFrameworkModel.DbModels;
@@ -9,13 +10,13 @@ namespace BackendAPI.Controllers
 {
     public class CategoryController : BaseEntityController
     {
-        public CategoryController(DatabaseContext dbContext, UserManager<User> userManager) : base(dbContext, userManager)
+        public CategoryController([FromServices] DatabaseContext dbContext, [FromServices] UserManager<User> userManager) : base(dbContext, userManager)
         {
         }
 
         #region UniqueOperations
-
         [HttpPost("AddCategory")]
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult<Category>> AddCategory(string restaurantId, CreateCategoryDto createCategoryDto)
         {
             try
@@ -39,7 +40,8 @@ namespace BackendAPI.Controllers
             }          
         }
 
-       [HttpGet("listCategoriesByRestaurantId/")]
+        [HttpGet("listCategoriesByRestaurantId/")]
+        [Authorize(Roles = "Owner, Customer")]
         public async Task<ActionResult<List<CategoryDto>>> ListCategoriesByRestaurantId(string restaurantId) 
         {
             Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
@@ -54,6 +56,27 @@ namespace BackendAPI.Controllers
             return NotFound("Could not found the restaurant by the id");
         }
 
+        [HttpDelete("deleteCategoryById/")]
+        [Authorize(Roles = "Owner")]
+        public async Task<ActionResult> DeleteCategoryById(string categoryId)
+        {
+            try
+            {
+                //delete foods
+                List<Food> foods = await this.crudOperator.GetMultipleRowsByForeignId<Food>(categoryId, "CategoryId");
+                foreach (Food food in foods)
+                {
+                    await this.crudOperator.DeleteRowById<Food>(food.Id);
+                }
+                //delete category
+                await this.crudOperator.DeleteRowById<Category>(categoryId);
+                return Ok("Category deleted succesfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         #endregion
     }
 }
