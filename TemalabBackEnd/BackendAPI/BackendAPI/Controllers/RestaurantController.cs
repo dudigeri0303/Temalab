@@ -136,11 +136,7 @@ namespace BackendAPI.Controllers
                             await this.crudOperator.DeleteRowById<Food>(food.Id);
                         }
                         await this.crudOperator.DeleteRowById<Category>(category.Id);
-                    }
-
-                    //delete menu
-                    Menu? menu = await this.crudOperator.GetRowById<Menu>(restaurant.MenuId);
-                    await this.crudOperator.DeleteRowById<Menu>(menu.Id);
+                    }                    
 
                     //delete reservations
                     List<Reservation> reservations = await this.crudOperator.GetMultipleRowsByForeignId<Reservation>(restaurantId, "RestaurantId");
@@ -149,8 +145,20 @@ namespace BackendAPI.Controllers
                         this.crudOperator.DbContext.Reservations.Remove(reservation);
                     }
 
+                    //delete opening hours
+                    List<RestaurantOpeningHours> openingHours = await this.crudOperator.GetMultipleRowsByForeignId<RestaurantOpeningHours>(restaurantId, "RestaurantId");
+                    foreach (RestaurantOpeningHours openingHour in openingHours)
+                    {
+                        this.crudOperator.DbContext.RestaurantOpeningHours.Remove(openingHour);
+                    }
+
+                    //delete menu
+                    await this.crudOperator.DeleteRowById<Menu>(restaurant.MenuId);
+
                     //delete restaurant
                     await this.crudOperator.DeleteRowById<Restaurant>(restaurantId);
+
+                    this.crudOperator.SaveDatabaseChanges();
                     return Ok("Restaurant deleted");
                 }
                 return NotFound("Restaurant not found");
