@@ -1,8 +1,6 @@
 import "../App.css";
 
 export default function CardAddReview({
-  idReview,
-  setIdReview,
   rate,
   setRate,
   review,
@@ -12,8 +10,7 @@ export default function CardAddReview({
 }) {
 
   const submitReview = () => {
-    postSubmit({ idReview, rate, review });
-    setIdReview("");
+    postSubmit({ rate, review });
     setRate();
     setReview("");
     handleClose();
@@ -25,15 +22,6 @@ export default function CardAddReview({
         <div className="row div-card">
           <div className="container">
             <div className="row">
-              <div className="col-sm-12 p-2 d-flex align-items-center justify-content-center">
-                <label className="card-Altext p-2">Id</label>
-                <input
-                  id="idReview"
-                  value={idReview}
-                  onChange={(e) => setIdReview(e.target.value)}
-                  type="string"
-                />
-              </div>
               <div className="col-sm-12 p-2 d-flex align-items-center justify-content-center">
                 <label className="card-Altext p-2">Értékelés</label>
                 <input
