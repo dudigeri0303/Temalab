@@ -50,7 +50,7 @@ export default function Reviews({ showModal, setShowModal, children }) {
         <Modal.Body>
           <div>
           {reviews.map((review) => (
-            <CardReview key={review.id} rating={review.rating} description={review.description} />
+            <CardReview key={review.id} userName={review.userName} rating={review.rating} description={review.description} />
           ))}
           </div>
         </Modal.Body>
