@@ -93,7 +93,6 @@ export default function OwnerRestaurantPage(){
                                     </div>
                                 ))}
                             </div>
-                            
                         </div>
                     </div>
                     <div className="col-12 col-md-6">

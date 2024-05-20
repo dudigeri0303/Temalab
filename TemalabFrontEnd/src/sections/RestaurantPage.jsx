@@ -220,6 +220,13 @@ export default function RestaurantPage() {
               <h6 className="contactustext">{restaurant.location}</h6>
               <h6 className="contactustext">{restaurant.phoneNumber}</h6>
               <h6 className="contactustext">{restaurant.description}</h6>
+              <div className="row">
+                  {restaurant?.openingHours?.map((open,index) => (
+                      <div key={index} className="col-6">
+                          <p className="contactustext">{open.dayName}: {open.openingHour}</p>
+                      </div>
+                  ))}
+              </div>
             </div>
           </div>
           <div className="col-12 col-lg-6">
