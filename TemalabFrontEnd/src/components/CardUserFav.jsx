@@ -21,7 +21,6 @@ export default function CardUserFav({ data }) {
       const response = await fetch("https://localhost:7114/api/LikedRestaurant/deleteLikedRestaurantForLoggedUser?likedRestaurantId=" + likedRestaurantId, requestOptions);
       const result = await response.text();
       console.log(result);
-      //window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +32,7 @@ export default function CardUserFav({ data }) {
     <>
       <section id="main" className="container py-2">
         <div className="position-relative">
-          <a href={"/restaurant/" + data.id}>
+          <a href={"/restaurant/" + data.restaurantId}>
             <div className="d-flex flex-sm-row justify-content-between div-card">
                 <div className="maincardmargin">
                   <div>

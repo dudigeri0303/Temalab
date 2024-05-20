@@ -8,18 +8,22 @@ import { useNavigate } from "react-router-dom";
 export default function CustomerReservations() {
 
   const navigate = useNavigate(); 
+  const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
     document.title = "Foglalások | DineTab";
-    getReservations();
     CheckAuth("customer",navigate)
   }, []);
+
+  useEffect(() => {
+    getReservations();
+  },[reservations])
 
   const goToMainPageCustomer = () => {
     window.open("/mainPageCustomer", "_self");
   };
 
-  const [reservations, setReservations] = useState([]);
+  
 
   const getReservations = async () => {
     const myHeaders = new Headers();
@@ -41,12 +45,6 @@ export default function CustomerReservations() {
       console.error(error);
     }
   };
-
-  //getReservations();
-
-  {
-    /*foglalások betöltése adatbázisból, ha nincs, akkor a lenti label és link jelenik meg, mint placeholder*/
-  }
 
   return (
     <div className="min-vh-100">

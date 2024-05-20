@@ -35,7 +35,7 @@ export default function OwnerRestaurantPage(){
         };
 
         try {
-        const response = await fetch("https://localhost:7114/api/Restaurant/GetRestaurantById?id=" + id.id, requestOptions);
+        const response = await fetch("https://localhost:7114/api/Restaurant/GetRestaurantById?restaurantId=" + id.id, requestOptions);
         const data = await response.json();
         setRestaurant(data);
         console.log(data);
@@ -63,9 +63,10 @@ export default function OwnerRestaurantPage(){
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <a className="btnstyle restaurantpagebtn my-3 py-3">Foglalások megtekintése</a>
+                        <a href={"/restaurantreservations/" + id.id} className="btnstyle restaurantpagebtn my-3 py-3">Foglalások megtekintése</a>
                     </div>
                 </div>
+                {console.log(restaurant)}
                 <div className="row">
                     <div className="col-12">
                 <a
@@ -82,8 +83,17 @@ export default function OwnerRestaurantPage(){
                         <div className="mx-auto">
                             <h3 className="contactustext">{restaurant.name} Elérhetőségei:</h3>
                             <p className="contactustext">{restaurant.location}</p>
-                            <p className="contactustext">tesztetterem@gmail.com</p>
-                            <p className="contactustext">+36 30 123 1452</p>
+                            <p className="contactustext">{restaurant.phoneNumber}</p>
+                            <p className="contactustext">{restaurant.description}</p>
+                            <h3 className="contactustext">Nyitvatartás:</h3>
+                            <div className="row">
+                                {restaurant?.openingHours?.map((open,index) => (
+                                    <div key={index} className="col-6">
+                                        <p className="contactustext">{open.dayName}: {open.openingHour}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            
                         </div>
                     </div>
                     <div className="col-12 col-md-6">

@@ -2,11 +2,17 @@ import "../App.css";
 import { useEffect, useState } from "react";
 import AdminNavbar from "../components/AdminNavbar";
 import CardAdminDeleteUser from "../components/CardAdminDeleteUser";
+import { useNavigate } from "react-router-dom";
+import CheckAuth from "../common/CheckAuth";
 
 export default function AdminDeleteUser() {
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Felhasználó törlése | DineTab";
     getUsers();
+    CheckAuth("admin",navigate)
   }, []);
 
   const [users, setUsers] = useState([]);
