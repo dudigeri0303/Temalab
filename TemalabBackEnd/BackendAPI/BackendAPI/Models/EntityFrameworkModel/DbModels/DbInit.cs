@@ -279,15 +279,15 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.DbModels
             //REVIEWS
             var reviews = new Review[]
             {
-                new Review(users[0],restaurants[0],4,"Zh előtt a legjobb!!"),
+                new Review(users[0],restaurants[0],4,"Zh előtt a legjobb!!", users[0].UserName!),
 
-                new Review(users[1],restaurants[1], 5, "Isteni csülök, jó hangulat, baráti árak!"),
+                new Review(users[1],restaurants[1], 5, "Isteni csülök, jó hangulat, baráti árak!", users[1].UserName!),
 
-                new Review(users[0],restaurants[2], 1, "Tészta paradicsomszósszal? Nemár! A gatyámat is ráköltöttem"),
-                new Review(users[1],restaurants[2], 3, "Átlagos pizza. Drága és mégcsak nem is olasz"),
+                new Review(users[0],restaurants[2], 1, "Tészta paradicsomszósszal? Nemár! A gatyámat is ráköltöttem", users[0].UserName!),
+                new Review(users[1],restaurants[2], 3, "Átlagos pizza. Drága és mégcsak nem is olasz", users[1].UserName!),
 
-                new Review(users[0],restaurants[3], 5, "Ez a nekem való kaja!!!"),
-                new Review(users[1],restaurants[3], 3, "Nem bírom annyira zsíros. De nem rossz.")
+                new Review(users[0],restaurants[3], 5, "Ez a nekem való kaja!!!", users[0].UserName!),
+                new Review(users[1],restaurants[3], 3, "Nem bírom annyira zsíros. De nem rossz.", users[1].UserName!)
             };
             foreach (Review review in reviews)
             {

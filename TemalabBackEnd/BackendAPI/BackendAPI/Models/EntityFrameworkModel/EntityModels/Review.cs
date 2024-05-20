@@ -21,8 +21,10 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
         public int Rating { get; set; }
         [Column]
         public string Description { get; set; }
+        [Column]
+        public string UserName { get; set; }
         public Review() { }
-        public Review(User user, Restaurant restaurant, int rating, string description) 
+        public Review(User user, Restaurant restaurant, int rating, string description, string userName) 
         {
             User = user;
             UserId = user.Id;
@@ -30,6 +32,7 @@ namespace TemalabBackEnd.Models.EntityFrameworkModel.EntityModels
             RestaurantId = restaurant.Id;
             Rating = rating;
             Description = description;
+            UserName = userName;
         }
     }
 }
