@@ -23,6 +23,7 @@ import { useEffect, useState } from 'react';
 import CryptoJS from 'crypto-js';
 import CustomerMakeReservations from './sections/CustomerMakeReservation';
 import CustomerMakeReservationsForm from './sections/CustomerMakeReservationsForm';
+import RestReservationPage from './sections/RestReservationPage';
 import NotFound from './components/NotFound';
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
           <Route path="/mainPageCustomer" element={<CustomerMain/>} />
           <Route path="/restaurant" element={<RestaurantPage/>}/>
           <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
-          <Route path='/customerMakeReservation' element={<CustomerMakeReservations/>}/>
+          <Route path='/customerMakeReservation/:id' element={<CustomerMakeReservations/>}/>
           <Route path='/customerMakeReservationForm' element={<CustomerMakeReservationsForm/>}/>
           <Route path="/createRestaurant" element={<CreateRestaurant/>} />
           <Route path="/navowner" element={<OwnerNavbar/>} />
@@ -64,6 +65,7 @@ function App() {
           <Route path="/restaurantowner/:id" element={<OwnerRestaurantPage/>}/>
           <Route path="/ownerProfile" element={<OwnerProfile/>}/>
           <Route path="/createmenu/:id" element={<MenuCreator/>}/>
+          <Route path='/restaurantreservations/:id' element={<RestReservationPage/>}/>
           <Route path="*" element={<NotFound />} /> {/* 404-es útvonal */}
         </Routes>
       </Router>

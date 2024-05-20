@@ -45,6 +45,10 @@ const LoginForm = () =>{
                     localStorage.setItem('loggedIn', CryptoJS.AES.encrypt('owner','kulcs').toString())
                 }
 
+                if(parsedResult.userRole == 'admin'){
+                    localStorage.setItem('loggedIn', CryptoJS.AES.encrypt('admin','kulcs').toString())
+                }
+
                 //navigációs utvonal beállítása a user role alaőján
                 let path = ""
                 if(parsedResult.userRole === 'customer'){

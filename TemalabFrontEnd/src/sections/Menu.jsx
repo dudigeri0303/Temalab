@@ -67,27 +67,41 @@ export default function Menu() {
     }
   };
 
+  const imgconv = new FileReader()
+
   return (
     <>
       <Navbar />
       <h1 className="display-1 text-center py-3">Menu</h1>
       {/* Kategóriák megjelenítése */}
-      {category.map((category, index) => (
-        <div key={index}>
-          <h2 className="display-5 py-2">{category.categoryName}</h2>
-          <ul>
-            {/* Az adott kategóriába tartozó ételek listázása */}
-            {menuItems[index] && menuItems[index].map((menuItem, itemIndex) => (
-              <li key={itemIndex}>
-                <span>{menuItem.name}</span>
-                <span className="menu-price">{menuItem.price} Ft</span>
-                <p>{menuItem.description}</p>
-                <hr></hr>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <div className="container">
+        {category.map((category, index) => (
+          <div key={index}>
+            <h2 className="display-5 py-2">{category.categoryName}</h2>
+            <ul>
+              {/* Az adott kategóriába tartozó ételek listázása */}
+              {menuItems[index] && menuItems[index].map((menuItem, itemIndex) => (
+                <div key={itemIndex}>
+                  <div className="row">
+                    <div className="col-4">
+                      <p>{menuItem.name}</p>
+                      <p>{menuItem.description}</p>
+                    </div>
+                    <div className="col-4">
+                      <p className="menu-price">{menuItem.price} Ft</p>
+                    </div>
+                    <div className="col-4">
+                      <img className="imgsizing" src={"data:image/jpeg;base64," + menuItem.image}/>
+                    </div>
+                  </div>
+                  <hr></hr>
+                </div>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      
     </>
   );
 }

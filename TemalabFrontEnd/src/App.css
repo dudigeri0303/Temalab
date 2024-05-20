@@ -8,6 +8,21 @@ input {
   border-radius: 5px;
 }
 
+.inputimg{
+  color: transparent;
+}
+
+.textares{
+  resize: none;
+  height: 200px;
+}
+
+.imgsizing{
+  height: 100px;
+  float: right;
+  border: black solid 2px;
+}
+
 .likebtn {
   background-color: transparent;
   border: none;
@@ -291,11 +306,6 @@ footer a:hover {
 .hr-menu{
   color: white;
   border-width: 4px;
-}
-
-.menu-price{
-  position: absolute;
-  right: 20px;
 }
 
 .ul-days {

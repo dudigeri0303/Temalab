@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import TimePicker from "react-time-picker";
 import CheckAuth from "../common/CheckAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CustomerMakeReservations() {
 
@@ -14,12 +14,18 @@ export default function CustomerMakeReservations() {
     CheckAuth("customer",navigate)
   }, []);
 
-    const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
+  const id = useParams();
 
   const [datepicker, setDatepicker] = useState(today);
   const [timepicker, setTimepicker] = useState("12:00");
   const [numberOfQuests, setNumberOfQuests] = useState(1);
-  const [timeValue, setTimeValue] = useState("");
+  const [timeValue, setTimeValue] = useState(1);
+  const [descValue, setDescValue] = useState("");
+
+  const descChange = (e) => {
+    setDescValue(e.target.value);
+  }
 
   const dateSelected = (e) => {
     const selectedDate = e.target.value;
@@ -38,10 +44,34 @@ export default function CustomerMakeReservations() {
     setTimeValue(event.target.value);
   };
 
-  const checkReservation = () => {
-    window.open("/customerMakeReservationForm", "_self");
+  
+  const reservetable = async() => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const raw = JSON.stringify({
+        "restaurantId": id.id,
+        "dateTime": datepicker + " " + timepicker,
+        "numOfPeople": numberOfQuests,
+        "lenght": timeValue,
+        "comment": descValue
+    });
+    const requestOptions = {
+        method: "POST",
+        credentials: 'include',
+        xhrFields: { withCredentials: true},
+        headers: myHeaders,
+        mode: 'cors',
+        body: raw,
+        redirect: "follow"
+    };
+    try {
+        await fetch("https://localhost:7114/api/Reservation/reserveTableForLoggedUser", requestOptions);
+        console.log("OK")
+        navigate("/customerReservations")
+    } catch (error) {
+        console.error(error);
+    }
   }
-
 
 
   return (
@@ -108,8 +138,14 @@ export default function CustomerMakeReservations() {
             ))}
           </select>
         </div>
+        <div className="row mb-2">
+            <div className="col-12">
+              <p className="form-label card-Altext">Megjegyzés</p>
+              <textarea onChange={descChange} className="w-100 form-control textares"></textarea>
+            </div>
+        </div>
         <div className="d-flex justify-content-center">
-          <button className="avgbtn" onClick={checkReservation}>Elérhetőség ellenőrzése</button>
+          <button className="avgbtn" onClick={reservetable}>Elérhetőség ellenőrzése</button>
         </div>
       </div>
     </>

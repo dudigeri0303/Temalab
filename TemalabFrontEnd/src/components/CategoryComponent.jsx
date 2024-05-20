@@ -3,19 +3,20 @@ import FoodComponent from './FoodComponent';
 
 export default function CategoryComponent({dataf}){
     const [clicked, setClicked] = useState(false);
+    const [foods,setFoods] = useState([]);
     
     useEffect(() => {
-        getCategories()
-    },[clicked])
+        getfoods()
+    },[foods])
     
-    const [foods,setFoods] = useState([]);
+    
     const [fname, setFName] = useState("");
     const [fprice, setFPrice] = useState("");
     const [fdesc, setFDesc] = useState("");
     const [showDiv, setShowDiv] = useState(false);
     const [showBtn, setShowBtn] = useState(true);
     
-    const getCategories = async () =>{
+    const getfoods = async () =>{
         const myHeaders = new Headers();
 
         const requestOptions = {
@@ -65,17 +66,40 @@ export default function CategoryComponent({dataf}){
         setShowDiv(!showDiv)
         setShowBtn(!showBtn)
     }
+
+    const delcateg = async() => {
+        const myHeaders = new Headers();
+
+        const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        credentials: 'include',
+        xhrFields: { withCredentials: true},
+        redirect: "follow"
+        };
+
+        try {
+            const response = await fetch("https://localhost:7114/deleteCategoryById?categoryId=" + dataf.id, requestOptions);
+            const result = await response.text();
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
+    
+        window.location.reload()
+    }
     
     return (
         <>
-            <h3>{dataf.categoryName}</h3>
+            <div className='d-flex justify-content-between'>
+                <h3>{dataf.categoryName}</h3>
+                <button className='btnstyle p-2 mb-2' onClick={delcateg}>Kategória törlése</button>
+            </div>
             {foods.map((food) => (
                 <div key={food.id}>
                     <FoodComponent data={food}/>
                 </div>
             ))}
-            {console.log(foods)}
-            {console.log(dataf.id)}
             {showBtn && 
             <div className='row'>
                 <button className='btnstyle p-2 col-12' onClick={clicknew}>Új étel hozzáadása</button>

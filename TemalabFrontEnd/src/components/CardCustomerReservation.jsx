@@ -17,7 +17,6 @@ export default function CardCustomerReservation({ data }) {
       const response = await fetch("https://localhost:7114/api/Reservation/deleteReservationForLoggedUser?reservationId=" + reservationId, requestOptions);
       const result = await response.text();
       console.log(result);
-      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -29,17 +28,24 @@ export default function CardCustomerReservation({ data }) {
         <div className="row div-card">
           <div className="container">
             <div className="row">
-              <div className="col-sm d-flex align-items-center">
-                <label className="card-text">{data.restaurantName}</label>
+              <div className="col-12 col-md-4 row">
+                <div className="col-6 d-flex align-items-center">
+                  <label className="card-text">{data.userName}</label>
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                  <label className="card-text">{data.numOfPeople} Fő</label>
+                </div>
               </div>
-              <div className="col-sm d-flex align-items-center">
-                <label className="card-text">{data.restaurantId}</label>
+              <div className="col-12 col-md-4 row">
+                <div className="col-12 col-md-6 d-flex align-items-center">
+                  <label className="card-text">{data.restaurantName}</label>
+                </div>
+                <div className="col-12 col-md-6 d-flex align-items-center">
+                  <label className="card-text">{data.dateTime}</label>
+                </div>
               </div>
-              <div className="col-sm d-flex align-items-center">
-                <label className="card-text">{data.dateTime}</label>
-              </div>
-              <div className="col-sm d-flex align-items-center">
-                <button type="button" className="cardbtn float-end" onClick={() => deleteReservation(data.id)}>
+              <div className="col-4 d-flex align-items-center justify-content-end">
+                <button type="button" className="cardbtn float-right" onClick={() => deleteReservation(data.id)}>
                   Lemond
                 </button>
               </div>

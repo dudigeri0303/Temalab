@@ -1,10 +1,20 @@
 import "../App.css";
 import PropTypes from 'prop-types';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function CardCustomerMain({data}) {
 
   const [currentImage, setCurrentImage] = useState("/heart-empty.svg");
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    listOfLiked()
+    likes.forEach(element => {
+      if(element.restaurantId === data.id){
+        setCurrentImage("/heart-full.svg")
+      }
+    });
+  },[likes])
 
   const toggleImage = () => {
     setCurrentImage(
@@ -14,26 +24,72 @@ export default function CardCustomerMain({data}) {
     );
   };
 
-  const likeRestaurant = async (restaurantId) =>{
+  const listOfLiked = async () => {
     const myHeaders = new Headers();
 
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: myHeaders,
       credentials: 'include',
       xhrFields: { withCredentials: true},
       redirect: "follow"
     };
 
-    toggleImage()
-
     try {
-      const response = await fetch("https://localhost:7114/api/LikedRestaurant/likeRestaurantForLoggedInUser?restaurantId=" + restaurantId, requestOptions);
-      const result = await response.text();
-      console.log(result)
+      const response = await fetch("https://localhost:7114/api/LikedRestaurant/getLikedRestaurantForLoggedInUser", requestOptions);
+      const result = await response.json();
+      setLikes(result)
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const likeRestaurant = async (restaurantId) =>{
+    const myHeaders = new Headers();
+
+    if(currentImage === "/heart-empty.svg"){
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        credentials: 'include',
+        xhrFields: { withCredentials: true},
+        redirect: "follow"
+      };
+  
+      try {
+        const response = await fetch("https://localhost:7114/api/LikedRestaurant/likeRestaurantForLoggedInUser?restaurantId=" + restaurantId, requestOptions);
+        const result = await response.text();
+        console.log(result)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    else{
+
+      let deletable = ""
+
+      likes.forEach(element => {
+        if(element.restaurantId === data.id){
+          deletable = element.id
+        }
+      });
+
+      const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        credentials: 'include',
+        xhrFields: { withCredentials: true},
+        redirect: "follow"
+      };
+  
+      try {
+        await fetch("https://localhost:7114/api/LikedRestaurant/deleteLikedRestaurantForLoggedUser?likedRestaurantId=" + deletable, requestOptions);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    toggleImage()
   };
 
   return (
