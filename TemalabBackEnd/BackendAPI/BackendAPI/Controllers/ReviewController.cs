@@ -40,7 +40,7 @@ namespace BackendAPI.Controllers
                 List<Review> reviews = await this.crudOperator.GetAllRows<Review>();
                 List<Review> reviewsByRestaurantID = reviews.Where(r => r.RestaurantId == restaurantId).ToList();
                 List<ReviewDto> reviewDtos = new List<ReviewDto>();
-                reviewsByRestaurantID.ForEach(r => reviewDtos.Add(new ReviewDto(r.Id, r.Rating, r.Description)));
+                reviewsByRestaurantID.ForEach(r => reviewDtos.Add(new ReviewDto(r.Id, r.UserName, r.Rating, r.Description)));
                 return Ok(reviewDtos);
             } catch (Exception ex) 
             {
@@ -50,16 +50,16 @@ namespace BackendAPI.Controllers
 
         [HttpPost("createNewReviewForRestaurant/")]
         [Authorize(Roles = "Customer")]
-        public async Task<ActionResult<Review>> CreateNewReviewForRestaurant(string restaurantId, ReviewDto reviewDto) 
+        public async Task<ActionResult<Review>> CreateNewReviewForRestaurant(string restaurantId, CreateReviewDto reviewDto) 
         {
             try 
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                User? user = await this.userManager.FindByIdAsync(userId);
+                User? user = await this.userManager.FindByIdAsync(userId!);
                 Restaurant? restaurant = await this.crudOperator.GetRowById<Restaurant>(restaurantId);
                 if(user != null && restaurant != null) 
                 {
-                    Review review = new Review(user, restaurant, reviewDto.Rating, reviewDto.Description);
+                    Review review = new Review(user, restaurant, reviewDto.Rating, reviewDto.Description, user.UserName!);
                     await this.crudOperator.InsertNewRow<Review>(review);
                     return Ok(review);
                 }
