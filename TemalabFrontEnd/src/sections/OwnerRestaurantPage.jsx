@@ -3,10 +3,14 @@ import GoogleMap from "../components/GoogleMap";
 import OwnerNavbar from "../components/OwnerNavbar";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import Reviews from "../components/Reviews";
+
 
 export default function OwnerRestaurantPage(){
 
     const navigate = useNavigate(); 
+    //const navigate2 = useNavigate(); 
+
 
     useEffect(() => {
         document.title = "Étterem | DineTab";
@@ -15,9 +19,9 @@ export default function OwnerRestaurantPage(){
     }, []);
 
     const [restaurant, setRestaurant] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     const id = useParams();
-    console.log(id)
 
     const getRestaurant = async () =>{
         const myHeaders = new Headers();
@@ -49,9 +53,12 @@ export default function OwnerRestaurantPage(){
                         <a href={"/createmenu/" + restaurant.id} className="btnstyle restaurantpagebtn my-3 py-3">Étlap</a>
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="col-12">
-                        <a className="btnstyle restaurantpagebtn my-3 py-3">Asztalok kezelése</a>
+                    <a href={`/ownerManageTables/${id.id}`} className="btnstyle restaurantpagebtn my-3 py-3">
+                    Asztalok kezelése
+                            </a>
                     </div>
                 </div>
                 <div className="row">
@@ -59,6 +66,17 @@ export default function OwnerRestaurantPage(){
                         <a className="btnstyle restaurantpagebtn my-3 py-3">Foglalások megtekintése</a>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-12">
+                <a
+                className="btnstyle restaurantpagebtn my-3 py-3"
+                onClick={() => setShowModal(true)}
+              >
+                Értékelések
+              </a>
+              </div>
+              </div>
+                <Reviews showModal={showModal} setShowModal={setShowModal}></Reviews>
                 <div className="row">
                     <div className="col-12 col-md-6 contactus d-flex align-items-center">
                         <div className="mx-auto">
