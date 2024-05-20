@@ -130,6 +130,17 @@ body {
   border-radius: 15px;
 }
 
+.cardbtn2 {
+  background-color: #ffc300;
+  border-radius: 5px;
+  color: black;
+  font-size: 26px;
+  padding: 5px 20px;
+  border: none 0px;
+  margin: 20px;
+  border-radius: 15px;
+}
+
 .likepos{
   right: 5%;
   top: 35%;

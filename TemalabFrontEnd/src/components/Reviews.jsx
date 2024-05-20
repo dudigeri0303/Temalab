@@ -9,6 +9,7 @@ export default function Reviews({ showModal, setShowModal, children }) {
   useEffect(() => {
     getReviews();
   },[reviews])
+
   
   const handleClose = async () => {
     setShowModal(false);
@@ -49,7 +50,7 @@ export default function Reviews({ showModal, setShowModal, children }) {
         <Modal.Body>
           <div>
           {reviews.map((review) => (
-            <CardReview key={review.id} id={review.id} rating={review.rating} description={review.description} />
+            <CardReview key={review.id} rating={review.rating} description={review.description} />
           ))}
           </div>
         </Modal.Body>

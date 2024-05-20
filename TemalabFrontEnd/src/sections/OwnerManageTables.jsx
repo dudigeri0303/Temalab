@@ -16,7 +16,8 @@ export default function OwnerManageTables() {
     document.title = " Asztalok Kezelése | DineTab";
     CheckAuth("owner", navigate);
     getTables();
-  }, []);
+  }, [showModal]);
+  //mert ha a showModal változik akkor újrarenderel
 
   const getTables = async () => {
     const myHeaders = new Headers();
@@ -41,12 +42,20 @@ export default function OwnerManageTables() {
   };
 
   const deleteTable = async (tableId) => {
+    const requestOptions = {
+      method: "DELETE",
+      credentials: "include",
+    };
+
     try {
       const response = await fetch(
         `https://localhost:7114/api/Table/deleteTableById?tableId=${tableId}`,
-        { method: "DELETE" }
+        requestOptions
       );
-      getTables(); //újrarenderel
+      if (!response.ok) {
+        throw new Error("Aztal törlése sikertelen");
+      }
+      getTables(); // Újrarenderel
     } catch (error) {
       console.error(error);
     }
