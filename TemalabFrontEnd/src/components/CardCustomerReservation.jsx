@@ -1,20 +1,24 @@
 import "../App.css";
-import PropTypes from 'prop-types'; 
+import PropTypes from "prop-types";
 
 export default function CardCustomerReservation({ data }) {
-  const deleteReservation = async (reservationId)=> {
+  const deleteReservation = async (reservationId) => {
     const myHeaders = new Headers();
 
     const requestOptions = {
       method: "DELETE",
       headers: myHeaders,
-      credentials: 'include',
-      xhrFields: { withCredentials: true},
-      redirect: "follow"
+      credentials: "include",
+      xhrFields: { withCredentials: true },
+      redirect: "follow",
     };
 
     try {
-      const response = await fetch("https://localhost:7114/api/Reservation/deleteReservationForLoggedUser?reservationId=" + reservationId, requestOptions);
+      const response = await fetch(
+        "https://localhost:7114/api/Reservation/deleteReservationForLoggedUser?reservationId=" +
+          reservationId,
+        requestOptions
+      );
       const result = await response.text();
       console.log(result);
     } catch (error) {
@@ -24,44 +28,46 @@ export default function CardCustomerReservation({ data }) {
 
   return (
     <>
-      <section id="main" className="container py-2 div-card">
-        <div className="row div-card">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 col-md-4 row">
-                <div className="col-6 d-flex align-items-center">
-                  <label className="card-text">{data.userName}</label>
-                </div>
-                <div className="col-6 d-flex align-items-center">
-                  <label className="card-text">{data.numOfPeople} Fő</label>
-                </div>
+      <div className="container">
+        <div className="div-card">
+          <div className="row">
+            <div className="row col-12 col-md-4">
+              <div className="col-12">
+                <p className="card-Altext">{data.userName}</p>
               </div>
-              <div className="col-12 col-md-4 row">
-                <div className="col-12 col-md-6 d-flex align-items-center">
-                  <label className="card-text">{data.restaurantName}</label>
-                </div>
-                <div className="col-12 col-md-6 d-flex align-items-center">
-                  <label className="card-text">{data.dateTime}</label>
-                </div>
+              <div className="col-12">
+                <p className="card-Altext">{data.numOfPeople} Fő</p>
               </div>
-              <div className="col-4 d-flex align-items-center justify-content-end">
-                <button type="button" className="cardbtn float-right" onClick={() => deleteReservation(data.id)}>
-                  Lemond
-                </button>
+              <div className="col-12">
+                <p className="card-Altext">{data.dateTime}</p>
               </div>
+            </div>
+            <div className="row col-12 col-md-4 d-flex justify-content-center align-items-center">
+              <div className="col-12">
+                <p className="card-Altext">{data.restaurantName}</p>
+              </div>
+            </div>
+            <div className="card-Altext col-12 col-md-4 d-flex justify-content-end align-items-center">
+              <button
+                type="button"
+                className="cardbtn2 float-right"
+                onClick={() => deleteReservation(data.id)}
+              >
+                Lemond
+              </button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }
 
 CardCustomerReservation.propTypes = {
   data: PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  restaurantName: PropTypes.string.isRequired,
-  restaurantId: PropTypes.string.isRequired,
-  dateTime: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    restaurantName: PropTypes.string.isRequired,
+    restaurantId: PropTypes.string.isRequired,
+    dateTime: PropTypes.string.isRequired,
   }).isRequired,
 };
