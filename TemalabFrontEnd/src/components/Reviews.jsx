@@ -8,7 +8,9 @@ export default function Reviews({ showModal, setShowModal, children }) {
   
   useEffect(() => {
     getReviews();
-  },[reviews])
+  },[])
+
+//},[reviews])
   
   const handleClose = async () => {
     setShowModal(false);
