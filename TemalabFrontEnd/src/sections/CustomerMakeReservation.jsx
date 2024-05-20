@@ -145,7 +145,7 @@ export default function CustomerMakeReservations() {
             </div>
         </div>
         <div className="d-flex justify-content-center">
-          <button className="avgbtn" onClick={reservetable}>Elérhetőség ellenőrzése</button>
+          <button className="avgbtn" onClick={reservetable}>Asztal foglalása</button>
         </div>
       </div>
     </>
