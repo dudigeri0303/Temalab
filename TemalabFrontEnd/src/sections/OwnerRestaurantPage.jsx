@@ -69,12 +69,12 @@ export default function OwnerRestaurantPage(){
                 {console.log(restaurant)}
                 <div className="row">
                     <div className="col-12">
-                <a
-                className="btnstyle restaurantpagebtn my-3 py-3"
+                <button
+                className="w-100 btnstyle restaurantpagebtn my-3 py-3"
                 onClick={() => setShowModal(true)}
               >
                 Értékelések
-              </a>
+              </button>
               </div>
               </div>
                 <Reviews showModal={showModal} setShowModal={setShowModal}></Reviews>
