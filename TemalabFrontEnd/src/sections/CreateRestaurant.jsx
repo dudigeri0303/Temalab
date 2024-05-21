@@ -63,6 +63,7 @@ export default function CreateRestaurant() {
       const response = await fetch("https://localhost:7114/api/Owner/createNewRestaurantWithOwner", requestOptions);
       const result = await response.text();
     } catch (error) {
+      alert('Sikertelen létrehozás!')
       console.error(error);
     }
     alert("Étterem hozzáadva");

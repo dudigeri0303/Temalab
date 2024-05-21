@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import "../App.css";
-//import React from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
-//Kicsit szétbarmoltam a kártyát, de az adatkötés működik a json response alapján
 export default function CardUserFav({ data }) {
 
   const deleteFavouriteRestaurant = async (likedRestaurantId) => {
@@ -20,11 +18,9 @@ export default function CardUserFav({ data }) {
     try {
       const response = await fetch("https://localhost:7114/api/LikedRestaurant/deleteLikedRestaurantForLoggedUser?likedRestaurantId=" + likedRestaurantId, requestOptions);
       const result = await response.text();
-      console.log(result);
     } catch (error) {
       console.error(error);
     }
-
     window.location.reload()
   };
 

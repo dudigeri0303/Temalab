@@ -59,7 +59,6 @@ export default function CardCustomerMain({data}) {
       try {
         const response = await fetch("https://localhost:7114/api/LikedRestaurant/likeRestaurantForLoggedInUser?restaurantId=" + restaurantId, requestOptions);
         const result = await response.text();
-        console.log(result)
       } catch (error) {
         console.error(error);
       }
@@ -88,7 +87,6 @@ export default function CardCustomerMain({data}) {
         console.error(error);
       }
     }
-
     toggleImage()
   };
 

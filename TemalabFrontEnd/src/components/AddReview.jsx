@@ -6,11 +6,9 @@ import { useParams } from "react-router-dom";
 export default function AddReview({ showModal2, setShowModal2, children }) {
   const handleClose = () => {
     setShowModal2(false);
-    //location.reload();
   };
 
   const id = useParams();
-  console.log(id);
 
   const [reviews, setReviews] = useState([]);
   const [idReview, setIdReview] = useState("");
@@ -39,7 +37,6 @@ export default function AddReview({ showModal2, setShowModal2, children }) {
       );
       const data = await response.json();
       setReviews(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

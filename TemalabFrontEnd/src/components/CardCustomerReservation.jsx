@@ -20,7 +20,6 @@ export default function CardCustomerReservation({ data }) {
         requestOptions
       );
       const result = await response.text();
-      console.log(result);
     } catch (error) {
       console.error(error);
     }

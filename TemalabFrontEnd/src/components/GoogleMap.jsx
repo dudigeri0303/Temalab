@@ -1,8 +1,6 @@
 export default function GoogleMap(props){
 
-  console.log(props.location)
   const ujcim = props.location?.replace(/ /g, '+')
-  console.log(ujcim)
   
   return(
     <>

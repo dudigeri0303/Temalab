@@ -1,7 +1,5 @@
 export default function OwnerRestReservs({data}){
 
-    console.log(data + "idebent")
-
     return(
         <>
             <div className="container">

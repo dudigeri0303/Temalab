@@ -16,7 +16,6 @@ export default function OwnerNavbar(){
         try {
             const response = await fetch("https://localhost:7114/api/User/logOut", requestOptions);
             const result = await response.text();
-            console.log(result)
             let path = `/`; 
             navigate(path);
         } catch (error) {

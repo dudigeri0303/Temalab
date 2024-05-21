@@ -48,28 +48,33 @@ export default function CommonProfile() {
   const deleteProfile = () => {
     const IsProfileDeleted = window.confirm("Biztos törlöd a profilod?");
     if (IsProfileDeleted) {
-      const deleteUser = async(dataId) =>{
-        // itt lesz majd a delet user csak nincs rá rest api
-      console.log(dataId)
-      const myHeaders = new Headers();
+      console.log('eljut a profil torlesehez');
   
-      const requestOptions = {
-        method: "DELETE",
-        headers: myHeaders,
-        credentials: 'include',
-        xhrFields: { withCredentials: true},
-        redirect: "follow"
+      const deleteUser = async () => {
+        const myHeaders = new Headers();
+  
+        const requestOptions = {
+          method: "DELETE",
+          headers: myHeaders,
+          credentials: 'include',
+          xhrFields: { withCredentials: true },
+          redirect: "follow"
+        };
+  
+        try {
+          const response = await fetch("https://localhost:7114/api/User/deleteUserById", requestOptions);
+          if (response.ok) {
+            window.open("/", "_self");
+            alert("Profil törölve");
+          } else {
+            throw new Error('Hiba történt a profil törlése során');
+          }
+        } catch (error) {
+          console.error(error);
+        }
       };
   
-      try {
-        await fetch("https://localhost:7114/api/User/deleteUserById", requestOptions);
-
-      } catch (error) {
-        console.error(error);
-      }
-    };
-      alert("Profil törölve")
-      window.open("/", "_self");
+      deleteUser();
     }
   };
 
@@ -115,7 +120,6 @@ export default function CommonProfile() {
 
     function handleError(error) {
       console.error('Hiba történt:', error);
-      alert("Hiba történt a mentés során");
     }
   };
 
