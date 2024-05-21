@@ -63,6 +63,7 @@ const LoginForm = () =>{
                 navigate(path)
             }
         } catch (error) {
+            alert('Sikertelen bejelentkezés');
             console.error(error);
         }
     };

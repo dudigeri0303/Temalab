@@ -58,6 +58,7 @@ const RegisterForm = () => {
       let path = `/`; 
       navigate(path);
     } catch (error) {
+      alert('Sikertelen regisztráció!')
       console.error(error);
     }
   };
