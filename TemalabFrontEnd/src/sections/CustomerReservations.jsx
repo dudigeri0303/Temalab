@@ -40,7 +40,6 @@ export default function CustomerReservations() {
       const response = await fetch("https://localhost:7114/api/Reservation/getReservationsForLoggedInUser", requestOptions);
       const data = await response.json();
       setReservations(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

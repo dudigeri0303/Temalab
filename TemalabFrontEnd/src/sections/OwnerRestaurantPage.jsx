@@ -38,7 +38,6 @@ export default function OwnerRestaurantPage(){
         const response = await fetch("https://localhost:7114/api/Restaurant/GetRestaurantById?restaurantId=" + id.id, requestOptions);
         const data = await response.json();
         setRestaurant(data);
-        console.log(data);
         } catch (error) {
         console.error(error);
         }
@@ -84,7 +83,6 @@ export default function OwnerRestaurantPage(){
                             <h3 className="contactustext">{restaurant.name} Elérhetőségei:</h3>
                             <p className="contactustext">{restaurant.location}</p>
                             <p className="contactustext">{restaurant.phoneNumber}</p>
-                            <p className="contactustext">{restaurant.description}</p>
                             <h3 className="contactustext">Nyitvatartás:</h3>
                             <div className="row">
                                 {restaurant?.openingHours?.map((open,index) => (

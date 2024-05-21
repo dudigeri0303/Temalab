@@ -59,8 +59,6 @@ export default function RestaurantPage() {
     );
   };
 
-  console.log(id)
-
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [restaurant, setRestaurant] = useState([]);
@@ -80,7 +78,6 @@ export default function RestaurantPage() {
       const response = await fetch("https://localhost:7114/api/Restaurant/GetRestaurantById?restaurantId=" + id.id, requestOptions);
       const data = await response.json();
       setRestaurant(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -122,7 +119,6 @@ export default function RestaurantPage() {
       try {
         const response = await fetch("https://localhost:7114/api/LikedRestaurant/likeRestaurantForLoggedInUser?restaurantId=" + id.id, requestOptions);
         const result = await response.text();
-        console.log(result)
       } catch (error) {
         console.error(error);
       }
@@ -219,7 +215,6 @@ export default function RestaurantPage() {
               <h6 className="contactustext">{restaurant.name} elérhetőségei:</h6>
               <h6 className="contactustext">{restaurant.location}</h6>
               <h6 className="contactustext">{restaurant.phoneNumber}</h6>
-              <h6 className="contactustext">{restaurant.description}</h6>
               <div className="row">
                   {restaurant?.openingHours?.map((open,index) => (
                       <div key={index} className="col-6">

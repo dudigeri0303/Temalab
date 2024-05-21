@@ -32,7 +32,6 @@ export default function AdminDeleteUser() {
       const response = await fetch("https://localhost:7114/api/User/getAllUsers", requestOptions);
       const data = await response.json();
       setUsers(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

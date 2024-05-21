@@ -33,7 +33,6 @@ const LoginForm = () =>{
         try {
             const response = await fetch("https://localhost:7114/api/User/Login", requestOptions);
             const result = await response.text();
-            console.log(result)
             const parsedResult = JSON.parse(result);
 
             if(response.ok){

@@ -21,7 +21,6 @@ export default function MenuCreator(){
     const [newCategCame, setNewCategCame] = useState("");
     
     const id = useParams();
-    console.log(id)
 
     const getCategories = async () =>{
         const myHeaders = new Headers();
@@ -38,7 +37,6 @@ export default function MenuCreator(){
         const response = await fetch("https://localhost:7114/listCategoriesByRestaurantId?restaurantId=" + id.id, requestOptions);
         const data = await response.json();
         setCategory(data);
-        console.log(data);
         } catch (error) {
         console.error(error);
         }
@@ -56,9 +54,7 @@ export default function MenuCreator(){
             redirect: "follow"
         };
         try {
-            const response = await fetch("https://localhost:7114/AddCategory?restaurantId=" + id.id + "&Name=" + newCategCame, requestOptions);
-            const result = await response.text();
-            console.log(result)
+            await fetch("https://localhost:7114/AddCategory?restaurantId=" + id.id + "&Name=" + newCategCame, requestOptions);
         } catch (error) {
             console.error(error);
         }
@@ -79,7 +75,6 @@ export default function MenuCreator(){
                         <CategoryComponent dataf={categ}/>
                     </div>
                 ))}
-                {console.log(category)}
                 <div className='mt-5 row'>
                     <div className='col-12 col-md-4 d-flex align-items-center justify-content-center'>
                         <button type='submit' className='btnstyle p-2' onClick={postCategory}>Kategória hozzáadása</button>

@@ -62,18 +62,12 @@ export default function CreateRestaurant() {
     try {
       const response = await fetch("https://localhost:7114/api/Owner/createNewRestaurantWithOwner", requestOptions);
       const result = await response.text();
-      console.log(result)
     } catch (error) {
       console.error(error);
     }
     alert("Étterem hozzáadva");
     window.open("/mainPageOwner", "_self");
   };
-
-    /*
-    kicsit duplikált, de így tud csak frissülni mindkét select
-    lehetne mergerlni a 2 useState-et, de elég körülményes
-    */
   
   const [openHour, setOpenHour] = useState("0:00");
   const [closeHour, setCloseHour] = useState("23:59");
@@ -85,11 +79,6 @@ export default function CreateRestaurant() {
   const closingTime = (time) => {
     setCloseHour(time);
   };
-
-  {
-    /*kulcs értékpárok előre eltárolva, így megadásnál 1 naphoz csak 1 érték adható,
-    napok sem duplikálódnak, valamit sorrend is fix, ha nincs megadva nyitvatartás, akkor zárva a default érték*/
-  }
 
   const [daysWithOpeningHours, setDaysWithOpeningHours] = useState({
     Hétfő: {dayName: "Hétfő", openingHour: "zárva"},

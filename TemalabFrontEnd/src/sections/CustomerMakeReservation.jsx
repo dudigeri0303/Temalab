@@ -16,7 +16,6 @@ export default function CustomerMakeReservations() {
 
   const today = new Date().toISOString().split("T")[0];
   const id = useParams();
-
   const [datepicker, setDatepicker] = useState(today);
   const [timepicker, setTimepicker] = useState("12:00");
   const [numberOfQuests, setNumberOfQuests] = useState(1);
@@ -66,7 +65,6 @@ export default function CustomerMakeReservations() {
     };
     try {
         await fetch("https://localhost:7114/api/Reservation/reserveTableForLoggedUser", requestOptions);
-        console.log("OK")
         navigate("/customerReservations")
     } catch (error) {
         console.error(error);

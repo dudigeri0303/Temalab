@@ -14,7 +14,6 @@ export default function CustomerMain() {
 
   useEffect(() => {
     document.title = " Főoldal | DineTab";
-    console.log("asd:" + CryptoJS.AES.decrypt(localStorage.getItem('loggedIn'),'kulcs').toString(CryptoJS.enc.Utf8))
     CheckAuth("customer",navigate)
   }, []);
 

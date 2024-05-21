@@ -52,7 +52,6 @@ const RegisterForm = () => {
     try {
       const response = await fetch("https://localhost:7114/api/User/register/", requestOptions);
       const result = await response.text();
-      console.log(result)
       
       //sikeres regisztráció esetén navigáció a login oldalra
       let path = `/`; 

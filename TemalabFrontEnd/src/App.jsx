@@ -7,7 +7,6 @@ import CreateRestaurant from './sections/CreateRestaurant';
 import CustomerProfile from './sections/CustomerProfile';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import Template from './sections/Template';
 import CustomerReservations from './sections/CustomerReservations';
 import AdminDeleteUser from './sections/AdminDeleteUser';
 import CustomerFavorites from './sections/CustomerFavorites';
@@ -22,7 +21,6 @@ import OwnerProfile from './sections/OwnerProfile';
 import { useEffect, useState } from 'react';
 import CryptoJS from 'crypto-js';
 import CustomerMakeReservations from './sections/CustomerMakeReservation';
-import CustomerMakeReservationsForm from './sections/CustomerMakeReservationsForm';
 import RestReservationPage from './sections/RestReservationPage';
 import NotFound from './components/NotFound';
 import OwnerManageTables from './sections/OwnerManageTables';
@@ -38,17 +36,14 @@ function App() {
 
   useEffect(() => {
     setLoggedCheck(CryptoJS.AES.decrypt(localStorage.getItem('loggedIn'),'kulcs').toString(CryptoJS.enc.Utf8))
-    console.log(loggedCheck)
   },[localStorage.getItem('loggedIn')])
 
   return (
     <>
-    {console.log("logged:" + loggedCheck)}
       <Router>
         <Routes>
           <Route path="/" element={<Login/>} />
           <Route path="/register" element={<RegisterForm/>} />
-          <Route path="/template" element={<Template/>} />
           <Route path='/navbartest' element={<Navbar/>} />
           <Route path="/deleteUser" element={<AdminDeleteUser/>} />
           <Route path="/menu/:id" element={<Menu/>} />
@@ -59,7 +54,6 @@ function App() {
           <Route path="/restaurant" element={<RestaurantPage/>}/>
           <Route path='/restaurant/:id' element={<RestaurantPage/>}/>
           <Route path='/customerMakeReservation/:id' element={<CustomerMakeReservations/>}/>
-          <Route path='/customerMakeReservationForm' element={<CustomerMakeReservationsForm/>}/>
           <Route path="/createRestaurant" element={<CreateRestaurant/>} />
           <Route path="/navowner" element={<OwnerNavbar/>} />
           <Route path="/mainPageOwner" element={<OwnerMain/>} />

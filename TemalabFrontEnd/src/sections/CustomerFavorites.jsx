@@ -35,9 +35,7 @@ export default function CustomerFavorites() {
     try {
       const response = await fetch("https://localhost:7114/api/LikedRestaurant/getLikedRestaurantForLoggedInUser", requestOptions);
       const data = await response.json();
-      setRestaurants(data); 
-      console.log(data);
-      
+      setRestaurants(data);
     } catch (error) {
       console.error(error);
     }

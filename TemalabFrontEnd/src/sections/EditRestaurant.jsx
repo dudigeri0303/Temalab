@@ -9,7 +9,6 @@ export default function EditRestaurant() {
     const id = useParams();
     //const [restaurant, setRestaurantData] = useState("");
 
-
     const [name, setName] = useState('');
     const [postCode, setPostCode] = useState('');
     const [city, setCity] = useState('');

@@ -29,7 +29,6 @@ export default function RestReservationPage() {
           const response = await fetch(`https://localhost:7114/api/Reservation/getReservationsByRestaurantId?restaurantId=${id}`, requestOptions);
           const data = await response.json();
           setReservations(data); 
-          console.log(data);
         } catch (error) {
           console.error(error);
         }

@@ -39,7 +39,6 @@ export default function Menu() {
       const response = await fetch("https://localhost:7114/listCategoriesByRestaurantId?restaurantId=" + id.id, requestOptions);
       const data = await response.json();
       setCategory(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -48,8 +47,6 @@ export default function Menu() {
   const goBack= () => {
     window.open("/restaurant/" + id.id, "_self");
   };
-
-
 
   const getMenuItems = async () => {
     const myHeaders = new Headers();
@@ -66,7 +63,6 @@ export default function Menu() {
       const response = await fetch("https://localhost:7114/api/Food/GetMenuItems?restaurantId=" + id.id, requestOptions);
       const data = await response.json();
       setMenuItems(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

@@ -81,7 +81,7 @@ export default function CommonProfile() {
 
   const cancelModify = () => {
     setModifiable(false);
-    location.reload(); // elég csak frissíteni az oldalt
+    location.reload();
   };
 
 
