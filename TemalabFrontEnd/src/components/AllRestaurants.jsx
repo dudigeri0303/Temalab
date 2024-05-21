@@ -26,11 +26,9 @@ export default function AllRestaurants({ children }) {
       );
       const data = await response.json();
       setRestaurants(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
-
   return <> {children(restaurants)} </>;
 }

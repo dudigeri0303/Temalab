@@ -64,6 +64,7 @@ export default function CreateRestaurant() {
       const result = await response.text();
       console.log(result)
     } catch (error) {
+      alert('Sikertelen létrehozás!')
       console.error(error);
     }
     alert("Étterem hozzáadva");

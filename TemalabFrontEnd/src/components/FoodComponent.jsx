@@ -24,7 +24,6 @@ export default function FoodComponent({data}){
         try {
             const response = await fetch("https://localhost:7114/api/Food/deleteFoodByID?foodId=" + data.id, requestOptions);
             const result = await response.text();
-            console.log(result);
         } catch (error) {
             console.error(error);
         }
@@ -44,14 +43,8 @@ export default function FoodComponent({data}){
             return;
         }
 
-        console.log(img);
-
         let formdata = new FormData();
         formdata.append('imageFile', img);
-
-        for (let [key, value] of formdata.entries()) {
-            console.log(`${key}:`, value);
-        }
 
         const requestOptions = {
             method: "PUT",
@@ -67,7 +60,6 @@ export default function FoodComponent({data}){
                 throw new Error(`Error: ${response.status} - ${errorText}`);
             }
             const result = await response.text();
-            console.log(result);
         } catch (error) {
             console.error(error);
         }

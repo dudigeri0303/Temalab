@@ -16,7 +16,6 @@ export default function Reviews({ showModal, setShowModal, children }) {
   };
 
   const id = useParams();
-  console.log(id)
 
   const getReviews = async () => {
     const myHeaders = new Headers();

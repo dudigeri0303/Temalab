@@ -31,7 +31,6 @@ export default function CategoryComponent({dataf}){
         const response = await fetch("https://localhost:7114/api/Food/getMenuItemsByCategoryId?categoryId=" + dataf.id, requestOptions);
         const data = await response.json();
         setFoods(data);
-        console.log(data);
         } catch (error) {
         console.error(error);
         }
@@ -81,7 +80,6 @@ export default function CategoryComponent({dataf}){
         try {
             const response = await fetch("https://localhost:7114/deleteCategoryById?categoryId=" + dataf.id, requestOptions);
             const result = await response.text();
-            console.log(result);
         } catch (error) {
             console.error(error);
         }

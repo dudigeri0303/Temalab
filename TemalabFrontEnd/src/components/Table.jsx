@@ -34,7 +34,6 @@ export default function Table({ id, showModal, setShowModal, children }) {
       );
       const data = await response.json();
       setTables(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
