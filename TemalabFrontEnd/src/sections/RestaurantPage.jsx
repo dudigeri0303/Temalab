@@ -174,12 +174,12 @@ export default function RestaurantPage() {
         <div className="row">
           <div className="col-12 col-lg-8">
             <div>
-              <a
-                className="btnstyle restaurantpagebtn my-3 py-3"
+              <button
+                className="btnstyle w-100 restaurantpagebtn my-3 py-3"
                 onClick={() => setShowModal(true)}
               >
                 Értékelések
-              </a>
+              </button>
               <Reviews showModal={showModal} setShowModal={setShowModal}>
                 <button className="avgbtn" onClick={() => setShowModal2(true)}>
                   + Új vélemény
