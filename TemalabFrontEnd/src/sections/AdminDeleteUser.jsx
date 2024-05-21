@@ -46,11 +46,11 @@ export default function AdminDeleteUser() {
       ) : (
         <section id="main" className="container py-2">
           <div className="row">
-            {users.map((user) => (
-              <div className="col-12 mb-3" key={user.id}>
-                <CardAdminDeleteUser data={user} />
-              </div>
-            ))}
+          {users.filter(user => user.userName !== "admin").map((user) => (
+            <div className="col-12 mb-3" key={user.id}>
+              <CardAdminDeleteUser data={user} />
+            </div>
+          ))}
           </div>
         </section>
       )}
