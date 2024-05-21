@@ -5,7 +5,27 @@ export default function CardAdminDeleteUser({data}) {
 
   const deleteUser = async(dataId) =>{
       // itt lesz majd a delet user csak nincs rá rest api
-  }
+    console.log(dataId)
+    const myHeaders = new Headers();
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      credentials: 'include',
+      xhrFields: { withCredentials: true},
+      redirect: "follow"
+    };
+
+    try {
+      const response = await fetch("https://localhost:7114/api/User/deleteUserByIdWithAdmin?userId=" + dataId, requestOptions);
+      const result = await response.text();
+      console.log(result);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <section id="main" className="container py-2">

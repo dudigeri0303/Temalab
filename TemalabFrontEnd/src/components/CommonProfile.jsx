@@ -1,5 +1,5 @@
 import "../App.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CommonProfile() {
   useEffect(() => {
@@ -15,11 +15,10 @@ export default function CommonProfile() {
   const getUserData = async () => {
     const myHeaders = new Headers();
 
-
     const requestOptions = {
       method: "GET",
       credentials: 'include',
-      xhrFields: { withCredentials: true},
+      xhrFields: { withCredentials: true },
       headers: myHeaders,
       redirect: "follow"
     };
@@ -32,27 +31,28 @@ export default function CommonProfile() {
       setEmail(result.email);
       setPhoneNumber(result.phoneNumber);
       setPassword(result.password);
+
+      // Dinamikusan állítjuk be a placeholder-eket a felhasználó adataival
+      document.getElementById("nameForProfile").placeholder = result.name;
+      document.getElementById("telForProfile").placeholder = result.phoneNumber;
+      document.getElementById("emailForProfile").placeholder = result.email;
+      document.getElementById("passwordForProfile").placeholder = result.password;
     } catch (error) {
       console.error(error);
     }
-  }
-  getUserData();
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const deleteProfile = () => {
     const IsProfileDeleted = window.confirm("Biztos törlöd a profilod?");
     if (IsProfileDeleted) {
-      {
-        /*Profil törlése method hívás*/
-        alert("Profil törölve")
-      }
+      alert("Profil törölve")
       window.open("/", "_self");
-      {
-        /*Visszairányít a login oldalra _self, hogy ne új lapon nyissa meg*/
-      }
     }
   };
 
-  {/*reactban:state hook kell, hogy azonnal renderelje a változást*/}
   const [modifiable, setModifiable] = useState(false);
 
   const modify = () => {
@@ -67,7 +67,6 @@ export default function CommonProfile() {
 
   const saveChanges = () => {
     setModifiable(false);
-    //-----------------------------------------------
 
     const newData = {
       userName: userName,
@@ -78,36 +77,27 @@ export default function CommonProfile() {
     const putRequestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(newData)
-  };
+    };
 
-  
+    fetch("https://localhost:7114/api/User/updateUserForLoggedInUser", putRequestOptions)
+      .then(handleResponse)
+      .catch(handleError);
 
-  fetch(`https://localhost:7114/api/User/editUserDate/${userName}`  , putRequestOptions)
-    .then(response => {
+    function handleResponse(response) {
       if (response.ok) {
-        // Sikeres mentés esetén itt lehet kezelni a választ
-        alert("Változtatások mentve1");
-        console.log("1")
+        alert("Változtatások mentve");
       } else {
-        console.log("2")
-        throw new Error('Hiba történt a mentés során2');
+        throw new Error('Hiba történt a mentés során');
       }
-    })
-    .catch(error => {
-      // Hiba esetén itt lehet kezelni a hibát
-      console.log("3")
-      console.error('Hiba történt3:', error);
-      alert("Hiba történt a mentés során4");
-      console.log("4")
-    });
-        
-    
-    //-----------------------------------------
+    }
 
-
-    {/*elmenti adatbázisba az adatokat, ha változtak, a mezők validáljanak + esetleg egy üzenet sikeres mentés esetén*/}
-  }
+    function handleError(error) {
+      console.error('Hiba történt:', error);
+      alert("Hiba történt a mentés során");
+    }
+  };
 
   return (
     <>
@@ -138,8 +128,8 @@ export default function CommonProfile() {
                   className="form-control"
                   id="nameForProfile"
                   name="nameForProfile"
+                  value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  placeholder= {userName}
                   disabled={!modifiable}
                   required
                 />
@@ -149,7 +139,7 @@ export default function CommonProfile() {
             <div className="col-md-5">
               <div className="mb-6 d-flex justify-content-center">
                 <label htmlFor="telForProfile" className="form-label">
-                  Tel:
+                  Telefon:
                 </label>
               </div>
             </div>
@@ -160,7 +150,7 @@ export default function CommonProfile() {
                   className="form-control"
                   id="telForProfile"
                   name="telForProfile"
-                  placeholder= {phoneNumber}
+                  value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   disabled={!modifiable}
                   required
@@ -182,8 +172,8 @@ export default function CommonProfile() {
                   className="form-control"
                   id="emailForProfile"
                   name="emailForProfile"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder={email}
                   disabled={!modifiable}
                   required
                 />
@@ -204,8 +194,8 @@ export default function CommonProfile() {
                   className="form-control"
                   id="passwordForProfile"
                   name="passwordForProfile"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={password}
                   disabled={!modifiable}
                   required
                 />

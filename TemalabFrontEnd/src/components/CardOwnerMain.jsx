@@ -2,6 +2,11 @@ import "../App.css";
 import PropTypes from 'prop-types'; 
 
 export default function CardOwnerMain({data}) {
+
+  const goEdit = () => {
+    window.open("/editrestaurant/" + data.id, "_self");
+  }
+
   return (
     <>
       <section id="main" className="container py-2 div-card position-relative">
@@ -21,7 +26,7 @@ export default function CardOwnerMain({data}) {
           </div>
         </a>
         <div className="position-absolute likeposowner">
-          <button type="button" className="cardbtn float-end">
+          <button type="button" className="cardbtn float-end" onClick={goEdit}>
             Szerkesztés
           </button>
         </div>

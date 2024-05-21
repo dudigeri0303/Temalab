@@ -1,6 +1,6 @@
 import "../App.css";
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CardCustomerMain({data}) {
 
@@ -103,7 +103,7 @@ export default function CardCustomerMain({data}) {
                       <label className="card-text">{data.name}</label>
                     </div>
                     <div>
-                      <label className="card-text">{data.desctiption}</label>
+                      <label className="card-text">{data.description}</label>
                     </div>
                     <div>
                       <label className="card-Altext">{data.label}</label>

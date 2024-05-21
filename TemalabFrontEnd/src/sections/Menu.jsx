@@ -45,6 +45,11 @@ export default function Menu() {
     }
   };
 
+  const goBack= () => {
+    window.open("/restaurant/" + id.id, "_self");
+  };
+
+
 
   const getMenuItems = async () => {
     const myHeaders = new Headers();
@@ -101,7 +106,7 @@ export default function Menu() {
           </div>
         ))}
       </div>
-      
+      <button type="button" className="avgbtn" onClick={goBack}>Vissza</button>
     </>
   );
 }
